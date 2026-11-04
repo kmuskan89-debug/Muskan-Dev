@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import SkillCard from "../components/SkillCard";
-import AIExploringCanvas from "../three/AIExploringCanvas";
 import PullQuote from "../components/PullQuote";
 import { skills, personalInfo } from "../data/content";
+
+// Lazy-loaded lightweight 3D canvas
+const AIExploringCanvas = lazy(() => import("../three/AIExploringCanvas"));
 
 // Icons
 import {
@@ -12,18 +14,18 @@ import {
   SiC,
   SiReact,
   SiHtml5,
-  SiCss3,
   SiTailwindcss,
   SiNodedotjs,
   SiExpress,
   SiJsonwebtokens,
   SiMongodb,
+  SiMysql,
   SiGit,
   SiGithub,
   SiPostman,
   SiVercel,
 } from "react-icons/si";
-import { FaJava } from "react-icons/fa";
+import { FaJava, FaCss3Alt } from "react-icons/fa";
 import { VscVscode } from "react-icons/vsc";
 import { FiServer, FiDatabase, FiCpu, FiBox, FiCheckCircle } from "react-icons/fi";
 
@@ -48,7 +50,7 @@ const SKILL_ITEMS = [
   // Frontend
   { name: "React.js", category: "Frontend", icon: SiReact, color: "#61DAFB" },
   { name: "HTML5", category: "Frontend", icon: SiHtml5, color: "#E34F26" },
-  { name: "CSS3", category: "Frontend", icon: SiCss3, color: "#1572B6" },
+  { name: "CSS3", category: "Frontend", icon: FaCss3Alt, color: "#1572B6" },
   { name: "Tailwind CSS", category: "Frontend", icon: SiTailwindcss, color: "#06B6D4" },
 
   // Backend
@@ -60,6 +62,7 @@ const SKILL_ITEMS = [
   // Database
   { name: "MongoDB", category: "Database", icon: SiMongodb, color: "#47A248" },
   { name: "Mongoose", category: "Database", icon: FiDatabase, color: "#880000" },
+  { name: "MySQL", category: "Database", icon: SiMysql, color: "#4479A1" },
 
   // Tools
   { name: "Git", category: "Tools", icon: SiGit, color: "#F05032" },
@@ -76,7 +79,7 @@ const SKILL_ITEMS = [
 
 export default function Skills() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [isInView, setIsInView] = useState(true);
+  const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -148,7 +151,7 @@ export default function Skills() {
               </h3>
 
               <p className="text-sm sm:text-base text-[#8A97AB] max-w-xl leading-relaxed">
-                Expanding full-stack engineering into neural networks, machine learning fundamentals, and intelligent web agents alongside scalable MERN architectures.
+                Currently exploring AI and Machine Learning concepts alongside core full-stack web development.
               </p>
 
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-1">
@@ -163,22 +166,32 @@ export default function Skills() {
               </div>
             </div>
 
-            {/* Small Lightweight 3D Torus/Icosahedron Object */}
-            <div className="flex items-center justify-center">
-              <AIExploringCanvas isVisible={isInView} />
+            {/* Small Lightweight 3D Torus/Icosahedron Object (Decorative) */}
+            <div aria-hidden="true" className="flex items-center justify-center">
+              <Suspense
+                fallback={
+                  <div className="w-[180px] h-[180px] rounded-2xl bg-[#060B16]/50 animate-pulse flex items-center justify-center">
+                    <div className="w-6 h-6 border-2 border-[#4DA3FF]/30 border-t-[#5EEAD4] rounded-full animate-spin" />
+                  </div>
+                }
+              >
+                <AIExploringCanvas isVisible={isInView} />
+              </Suspense>
             </div>
           </div>
         </motion.div>
 
         {/* Category Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none select-none">
+        <div role="tablist" aria-label="Skill categories" className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none select-none">
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat;
             return (
               <button
                 key={cat}
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => setActiveCategory(cat)}
-                className={`relative px-4 py-2 rounded-full text-xs sm:text-sm font-mono font-medium transition-colors whitespace-nowrap z-10 ${
+                className={`relative px-4 py-2.5 min-h-[44px] rounded-full text-xs sm:text-sm font-mono font-medium transition-colors whitespace-nowrap z-10 cursor-pointer flex items-center justify-center ${
                   isActive ? "text-[#060B16] font-semibold" : "text-[#8A97AB] hover:text-[#E8EDF3] bg-white/[0.03] border border-white/5 hover:border-white/10"
                 }`}
               >

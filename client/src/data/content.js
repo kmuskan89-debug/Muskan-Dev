@@ -3,9 +3,10 @@ export const personalInfo = {
   location: "Banur, Punjab",
   email: "muskank14019@gmail.com",
   phone: "+91 8700519719",
-  linkedin: "https://linkedin.com/in/muskan-kumari-4a7105327",
+  linkedin: "https://www.linkedin.com/in/muskan-kumari-4a7105327",
   github: "https://github.com/kmuskan89-debug",
   leetcode: "https://leetcode.com/u/k_muskan89/",
+  resume: "/Muskan_Kumari_Resume.pdf",
   objective: "MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to contribute to scalable web applications.",
   currentlyLearning: "AI / Machine Learning (alongside web development)"
 };
@@ -31,7 +32,7 @@ export const skills = {
   languages: ["JavaScript (ES6+)", "Java", "Python", "C"],
   frontend: ["React.js", "HTML5", "CSS3", "Tailwind CSS"],
   backend: ["Node.js", "Express.js", "REST APIs", "JWT Authentication"],
-  database: ["MongoDB", "Mongoose"],
+  database: ["MongoDB", "Mongoose", "MySQL"],
   tools: ["Git", "GitHub", "Postman", "VS Code", "Vercel", "MongoDB Atlas"],
   coreCs: ["Data Structures & Algorithms", "OOPs"]
 };
@@ -41,7 +42,7 @@ export const projects = [
     title: "DevSpace - Collaborative Project Management Platform",
     description: "full-stack platform with workspaces, team collaboration, Kanban boards, task tracking, Scrum backlog, sprint management, and analytics with role-based access control.",
     stack: ["React", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "JWT"],
-    image: "/projects/devspace-placeholder.jpg",
+    image: "/projects/devspace-placeholder.png",
     liveUrl: "https://example.com/devspace",
     githubUrl: "https://github.com/kmuskan89-debug/devspace"
   },
@@ -49,7 +50,7 @@ export const projects = [
     title: "UNIQUE eGYAN - Academic Resource Distribution Platform",
     description: "notes and PYQ discovery, syllabus browsing, PDF preview/download, secure student and admin auth, admin dashboard for content management and PDF uploads.",
     stack: ["React", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Cloudinary", "JWT"],
-    image: "/projects/unique-egyan-placeholder.jpg",
+    image: "/projects/unique-egyan-placeholder.webp",
     liveUrl: "https://example.com/unique-egyan",
     githubUrl: "https://github.com/kmuskan89-debug/unique-egyan"
   },

@@ -108,6 +108,33 @@ const validateProject = [
   handleValidationErrors,
 ];
 
+const isValidHttpUrlOrEmpty = (value) => {
+  if (value === undefined || value === null || value === "") return true;
+  if (typeof value !== "string") return false;
+  const trimmed = value.trim();
+  if (trimmed === "") return true;
+  try {
+    const url = new URL(trimmed);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
+
+const isValidImageUrlOrEmpty = (value) => {
+  if (value === undefined || value === null || value === "") return true;
+  if (typeof value !== "string") return false;
+  const trimmed = value.trim();
+  if (trimmed === "") return true;
+  if (trimmed.startsWith("/")) return true; // root-relative public asset
+  try {
+    const url = new URL(trimmed);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
+
 // Project update validator (fields optional)
 const validateProjectUpdate = [
   body("title")
@@ -129,17 +156,20 @@ const validateProjectUpdate = [
     .withMessage("Slug must contain lowercase letters, numbers, and hyphens only"),
   body("techStack")
     .optional()
-    .isArray()
-    .withMessage("techStack must be an array of strings"),
+    .custom((val) => Array.isArray(val) || typeof val === "string")
+    .withMessage("techStack must be an array of strings or comma-separated string"),
   body("liveUrl")
     .optional()
-    .trim(),
+    .custom(isValidHttpUrlOrEmpty)
+    .withMessage("liveUrl must be a valid http/https URL or empty"),
   body("githubUrl")
     .optional()
-    .trim(),
+    .custom(isValidHttpUrlOrEmpty)
+    .withMessage("githubUrl must be a valid http/https URL or empty"),
   body("imageUrl")
     .optional()
-    .trim(),
+    .custom(isValidImageUrlOrEmpty)
+    .withMessage("imageUrl must be a valid http/https URL, root-relative path, or empty"),
   body("featured")
     .optional()
     .isBoolean()

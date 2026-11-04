@@ -123,9 +123,6 @@ export default function About() {
                   <h4 className="text-base md:text-lg font-bold text-[#E8EDF3]">
                     {personalInfo.currentlyLearning}
                   </h4>
-                  <p className="text-xs text-[#8A97AB] leading-relaxed">
-                    Expanding full-stack architectures into intelligent, ML-integrated workflows.
-                  </p>
                 </div>
               </div>
             </motion.div>
@@ -141,7 +138,7 @@ export default function About() {
             >
               <div className="glass-card rounded-xl p-3 flex items-center gap-2.5 border border-white/5">
                 <FiMapPin className="text-[#4DA3FF] shrink-0" />
-                <span className="text-xs font-mono text-[#8A97AB]">Banur, Punjab</span>
+                <span className="text-xs font-mono text-[#8A97AB]">{personalInfo.location}</span>
               </div>
               <div className="glass-card rounded-xl p-3 flex items-center gap-2.5 border border-white/5">
                 <FiCode className="text-[#5EEAD4] shrink-0" />

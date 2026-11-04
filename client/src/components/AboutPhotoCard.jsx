@@ -79,7 +79,7 @@ export default function AboutPhotoCard() {
           {/* Inner Photo Container */}
           <div className="w-full h-full rounded-[22px] overflow-hidden bg-[#0E1626] relative">
             <img
-              src="/me.png"
+              src="/me.webp"
               alt="Muskan Kumari"
               className="w-full h-full object-cover object-[center_20%] transition-transform duration-700 ease-out group-hover:scale-105"
             />
@@ -95,8 +95,9 @@ export default function AboutPhotoCard() {
           </div>
         </motion.div>
 
-        {/* Floating Glass Chip 1: MERN (Top Right) */}
+        {/* Floating Glass Chip 1: MERN (Top Right - Decorative) */}
         <motion.div
+          aria-hidden="true"
           animate={
             shouldReduceMotion
               ? {}
@@ -115,8 +116,9 @@ export default function AboutPhotoCard() {
           <span>MERN</span>
         </motion.div>
 
-        {/* Floating Glass Chip 2: DSA (Bottom Left) */}
+        {/* Floating Glass Chip 2: DSA (Bottom Left - Decorative) */}
         <motion.div
+          aria-hidden="true"
           animate={
             shouldReduceMotion
               ? {}
@@ -135,8 +137,9 @@ export default function AboutPhotoCard() {
           <span>DSA</span>
         </motion.div>
 
-        {/* Floating Glass Chip 3: AI/ML (Bottom Right) */}
+        {/* Floating Glass Chip 3: AI/ML (Bottom Right - Decorative) */}
         <motion.div
+          aria-hidden="true"
           animate={
             shouldReduceMotion
               ? {}

@@ -77,11 +77,36 @@ const createProject = async (req, res, next) => {
 const updateProject = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let updateData = { ...req.body };
+    const {
+      title,
+      description,
+      techStack,
+      imageUrl,
+      liveUrl,
+      githubUrl,
+      featured,
+      order,
+    } = req.body;
 
-    if (updateData.title && !updateData.slug) {
-      updateData.slug = slugify(updateData.title);
+    const updateData = {};
+    if (title !== undefined) {
+      updateData.title = title;
+      updateData.slug = slugify(title);
     }
+    if (description !== undefined) updateData.description = description;
+    if (techStack !== undefined) {
+      updateData.techStack = Array.isArray(techStack)
+        ? techStack
+        : String(techStack)
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+    }
+    if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
+    if (liveUrl !== undefined) updateData.liveUrl = liveUrl;
+    if (githubUrl !== undefined) updateData.githubUrl = githubUrl;
+    if (featured !== undefined) updateData.featured = Boolean(featured);
+    if (order !== undefined) updateData.order = Number(order);
 
     const project = await Project.findByIdAndUpdate(id, updateData, {
       new: true,

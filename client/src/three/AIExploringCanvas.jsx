@@ -82,3 +82,4 @@ export default function AIExploringCanvas({ isVisible = true }) {
     </div>
   );
 }
+

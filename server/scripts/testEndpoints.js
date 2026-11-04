@@ -10,6 +10,7 @@ const Project = require("../models/Project");
 const MONGO_URI_TEST = process.env.MONGO_URI_TEST;
 const MONGO_URI_MAIN = process.env.MONGO_URI;
 
+
 if (!MONGO_URI_TEST) {
   console.error("❌ FATAL: MONGO_URI_TEST is not defined in server/.env");
   console.error("   Automated tests are strictly disallowed from running against the main database.");

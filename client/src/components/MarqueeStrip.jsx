@@ -14,6 +14,7 @@ export default function MarqueeStrip() {
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       className="relative w-full overflow-hidden py-10 my-12 pointer-events-none select-none"
     >
       {/* -2 degree rotation wrapper */}

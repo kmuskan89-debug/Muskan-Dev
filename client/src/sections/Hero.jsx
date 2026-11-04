@@ -82,14 +82,16 @@ export default function Hero({ preloaderComplete = true }) {
       id="home"
       className="relative min-h-screen w-full flex flex-col justify-center items-center px-6 overflow-hidden bg-[#060B16]"
     >
-      {/* 1. React Three Fiber Canvas Background */}
-      <Suspense
-        fallback={
-          <div className="absolute inset-0 bg-[#060B16] bg-[radial-gradient(circle_at_center,_#0E1626_0%,_#060B16_100%)] pointer-events-none" />
-        }
-      >
-        <HeroCanvas isVisible={isVisible} />
-      </Suspense>
+      {/* 1. React Three Fiber Canvas Background (Decorative) */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <Suspense
+          fallback={
+            <div className="absolute inset-0 bg-[#060B16] bg-[radial-gradient(circle_at_center,_#0E1626_0%,_#060B16_100%)] pointer-events-none" />
+          }
+        >
+          <HeroCanvas isVisible={isVisible} />
+        </Suspense>
+      </div>
 
       {/* 2. Foreground Content Container */}
       <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center text-center gap-7 pt-16">
@@ -123,7 +125,7 @@ export default function Hero({ preloaderComplete = true }) {
           variants={containerVariants}
           initial="hidden"
           animate={preloaderComplete ? "visible" : "hidden"}
-          className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight font-heading flex flex-wrap justify-center text-[#E8EDF3] drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
+          className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight font-heading flex flex-wrap justify-center text-[#E8EDF3] drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] leading-[1.1] max-w-full"
         >
           {nameLetters.map((char, index) => (
             <motion.span
@@ -173,7 +175,7 @@ export default function Hero({ preloaderComplete = true }) {
             <a
               href="#projects"
               onClick={handleScrollToProjects}
-              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_25px_rgba(77,163,255,0.35)] hover:shadow-[0_0_35px_rgba(94,234,212,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full text-sm font-semibold bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_25px_rgba(77,163,255,0.35)] hover:shadow-[0_0_35px_rgba(94,234,212,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono"
             >
               <span>View My Work</span>
               <FiArrowRight className="transition-transform group-hover:translate-x-1 text-base" />
@@ -182,10 +184,10 @@ export default function Hero({ preloaderComplete = true }) {
 
           <Magnetic strength={0.35}>
             <a
-              href="/Muskan_Kumari_Resume.pdf"
+              href={personalInfo.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium border border-white/10 hover:border-[#4DA3FF]/50 bg-[#0E1626]/80 hover:bg-[#0E1626] text-[#E8EDF3] backdrop-blur-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+              className="inline-flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full text-sm font-medium border border-white/10 hover:border-[#4DA3FF]/50 bg-[#0E1626]/80 hover:bg-[#0E1626] text-[#E8EDF3] backdrop-blur-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
             >
               <span>Download Resume</span>
               <FiDownload className="text-[#5EEAD4] text-base" />
@@ -199,7 +201,13 @@ export default function Hero({ preloaderComplete = true }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.8 }}
-        className="absolute bottom-8 z-20 flex flex-col items-center gap-2 cursor-pointer group"
+        role="button"
+        tabIndex={0}
+        aria-label="Scroll to explore about section"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") handleScrollDown();
+        }}
+        className="absolute bottom-8 z-20 flex flex-col items-center gap-2 cursor-pointer group p-2 min-h-[44px] justify-center"
         onClick={handleScrollDown}
       >
         <span className="text-[11px] font-mono tracking-[0.2em] text-[#8A97AB] group-hover:text-[#5EEAD4] uppercase transition-colors">

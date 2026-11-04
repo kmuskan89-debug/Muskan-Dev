@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { useLenis } from "./SmoothScroll";
 import Magnetic from "./Magnetic";
+import { personalInfo } from "../data/content";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { FiDownload } from "react-icons/fi";
 
@@ -25,12 +26,27 @@ export default function Navbar() {
   // Hide on scroll down, reveal on scroll up
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
-    if (latest > previous && latest > 120) {
+    if (latest > previous && latest > 120 && !mobileMenuOpen) {
       setHidden(true);
     } else {
       setHidden(false);
     }
   });
+
+  // Lock background scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      lenis?.stop();
+    } else {
+      document.body.style.overflow = "";
+      lenis?.start();
+    }
+    return () => {
+      document.body.style.overflow = "";
+      lenis?.start();
+    };
+  }, [mobileMenuOpen, lenis]);
 
   // Track active section via IntersectionObserver
   useEffect(() => {
@@ -93,7 +109,8 @@ export default function Navbar() {
             <a
               href="#home"
               onClick={(e) => handleNavClick(e, "#home")}
-              className="flex items-center gap-2 pl-3 py-1 group"
+              aria-label="Muskan Kumari - Home"
+              className="flex items-center gap-2 pl-3 py-1 group min-h-[44px]"
             >
               <span className="font-mono font-bold text-sm tracking-wider gradient-text-accent">
                 // MK
@@ -135,7 +152,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center pr-1">
             <Magnetic strength={0.3}>
               <a
-                href="/Muskan_Kumari_Resume.pdf"
+                href={personalInfo.resume}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_15px_rgba(77,163,255,0.3)] hover:shadow-[0_0_20px_rgba(94,234,212,0.5)] transition-all transform hover:-translate-y-0.5 active:translate-y-0"
@@ -146,12 +163,13 @@ export default function Navbar() {
             </Magnetic>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Hamburger Toggle (44px min tap target) */}
           <div className="flex md:hidden pr-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle mobile navigation menu"
-              className="p-2 rounded-lg text-[#E8EDF3] hover:text-[#5EEAD4] hover:bg-white/5 transition-colors"
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-[#E8EDF3] hover:text-[#5EEAD4] hover:bg-white/5 transition-colors flex items-center justify-center cursor-pointer"
             >
               {mobileMenuOpen ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
             </button>
@@ -186,7 +204,7 @@ export default function Navbar() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ delay: index * 0.06, duration: 0.3 }}
-                      className={`text-2xl font-bold font-mono tracking-tight flex items-center justify-between ${
+                      className={`text-2xl font-bold font-mono tracking-tight flex items-center justify-between min-h-[48px] py-2 ${
                         isActive ? "text-[#5EEAD4]" : "text-[#8A97AB] hover:text-[#E8EDF3]"
                       }`}
                     >
@@ -201,7 +219,7 @@ export default function Navbar() {
 
               <div className="pt-6 border-t border-white/10">
                 <a
-                  href="/Muskan_Kumari_Resume.pdf"
+                  href={personalInfo.resume}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 text-sm font-mono font-semibold py-3 px-6 rounded-xl bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_20px_rgba(77,163,255,0.4)]"

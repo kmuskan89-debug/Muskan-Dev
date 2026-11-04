@@ -72,9 +72,52 @@ const approveGuestbookEntry = async (req, res, next) => {
   }
 };
 
+// GET /api/guestbook/admin/all - Admin only (all entries, pending first)
+const getAllGuestbookEntriesAdmin = async (req, res, next) => {
+  try {
+    const entries = await GuestbookEntry.find().sort({
+      approved: 1, // false (pending) comes before true (approved)
+      createdAt: -1,
+    });
+
+    res.status(200).json({
+      success: true,
+      count: entries.length,
+      data: entries,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// DELETE /api/guestbook/:id - Admin only
+const deleteGuestbookEntry = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const entry = await GuestbookEntry.findByIdAndDelete(id);
+
+    if (!entry) {
+      return res.status(404).json({
+        success: false,
+        message: "Guestbook entry not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Guestbook entry deleted successfully",
+      data: { id: entry._id },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getGuestbookEntries,
   createGuestbookEntry,
   approveGuestbookEntry,
+  getAllGuestbookEntriesAdmin,
+  deleteGuestbookEntry,
 };
 

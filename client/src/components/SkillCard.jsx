@@ -108,3 +108,4 @@ export default function SkillCard({ name, category, icon: Icon, accentColor = "#
     </motion.div>
   );
 }
+

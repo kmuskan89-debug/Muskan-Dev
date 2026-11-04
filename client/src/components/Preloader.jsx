@@ -34,6 +34,7 @@ export default function Preloader({ onComplete }) {
             filter: "blur(10px)",
             transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] },
           }}
+          aria-hidden="true"
           className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#060B16]"
         >
           {/* Subtle Ambient Radial Glow */}

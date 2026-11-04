@@ -44,7 +44,9 @@ export function useProjects() {
         }
       } catch (err) {
         if (!isMounted) return;
-        console.warn("⚠️ Projects API unreachable or timed out. Falling back to local data:", err.message);
+        if (import.meta.env.DEV) {
+          console.warn("⚠️ Projects API unreachable or timed out. Falling back to local data:", err.message);
+        }
         setError(err.message || "Failed to fetch from API");
         setProjects(normalizedFallbackProjects);
         setSource("fallback");
