@@ -16,8 +16,25 @@ const projectRoutes = require("./routes/projectRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const guestbookRoutes = require("./routes/guestbookRoutes");
 
+// Fail fast in production if required environment variables are missing
+if (process.env.NODE_ENV === "production") {
+  const missingVars = [];
+  if (!process.env.MONGO_URI) missingVars.push("MONGO_URI");
+  if (!process.env.JWT_SECRET) missingVars.push("JWT_SECRET");
+
+  if (missingVars.length > 0) {
+    console.error(
+      `❌ FATAL: Missing required environment variable(s) in production: ${missingVars.join(", ")}`
+    );
+    process.exit(1);
+  }
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Trust reverse proxy (Render) to allow express-rate-limit to read real client IP from X-Forwarded-For
+app.set("trust proxy", 1);
 
 // Connect to MongoDB if executed directly
 if (require.main === module) {
@@ -28,18 +45,40 @@ if (require.main === module) {
 app.use(helmet());
 
 // CORS Configuration
-const allowedOriginRegex = /^http:\/\/localhost:(517[3-9]|5180)$/;
-const configuredClientUrl = process.env.CLIENT_URL;
+const isProduction = process.env.NODE_ENV === "production";
+const rawClientUrls = process.env.CLIENT_URL || "";
+
+// Parse configured origins supporting multiple comma-separated URLs
+let allowedOrigins = rawClientUrls
+  .split(",")
+  .map((url) => url.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
+
+if (isProduction) {
+  // In production: strictly no localhost origins and no wildcards
+  allowedOrigins = allowedOrigins.filter(
+    (origin) =>
+      origin !== "*" &&
+      !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)
+  );
+}
+
+const isLocalhostOrigin = (origin) =>
+  /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin);
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (e.g. curl, Postman, mobile apps)
+    // Allow requests with no origin (e.g. curl, Render health checks, Postman)
     if (!origin) return callback(null, true);
 
-    if (
-      (configuredClientUrl && origin === configuredClientUrl) ||
-      allowedOriginRegex.test(origin)
-    ) {
+    const normalizedOrigin = origin.replace(/\/+$/, "");
+
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    }
+
+    // Outside production only, allow localhost origins
+    if (!isProduction && isLocalhostOrigin(normalizedOrigin)) {
       return callback(null, true);
     }
 
@@ -66,11 +105,13 @@ app.use(
   })
 );
 
-// Apply general rate limiter across all /api routes
+// Health check route - unauthenticated and exempt from rate limiting for Render health checks
+app.use("/api", healthRoutes);
+
+// Apply general rate limiter across all other /api routes
 app.use("/api", generalLimiter);
 
 // API Routes
-app.use("/api", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/guestbook", guestbookRoutes);
