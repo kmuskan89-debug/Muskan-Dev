@@ -173,13 +173,13 @@ export default function Portfolio() {
           </LazyBoundary>
         </Suspense>
 
-        {/* 4. Projects Section & Animated Tagline Strip (Lazy ~1950px) */}
+        {/* 4. Projects Section & Animated Tagline Strip */}
         <Suspense
           fallback={
             <SectionSkeleton
               id="projects"
               label="// 03. PROJECTS"
-              minHeight="min-h-[1950px]"
+              minHeight="min-h-[700px]"
             />
           }
         >

@@ -14,6 +14,11 @@ import {
   FiAlertCircle,
   FiRefreshCw,
   FiCheckCircle,
+  FiPlus,
+  FiArrowUp,
+  FiArrowDown,
+  FiX,
+  FiImage,
 } from "react-icons/fi";
 
 export default function Admin() {
@@ -707,27 +712,64 @@ function GuestbookTab({ onPendingCountChange }) {
 }
 
 // ==========================================
-// 5. PROJECTS TAB (FORM EDITOR)
+// 5. PROJECTS TAB (CREATE, EDIT, REORDER, DELETE)
 // ==========================================
 function ProjectsTab() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toast, setToast] = useState(null); // { message, type: 'success' | 'error' }
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+  const [reordering, setReordering] = useState(false);
 
-  // Edit form state
+  // Edit/Create form state
   const [formData, setFormData] = useState({
-    title: "",
+    name: "",
+    subtitle: "",
     description: "",
-    techStack: "",
+    techStack: [],
     imageUrl: "",
     liveUrl: "",
     githubUrl: "",
     featured: false,
-    order: 0,
+    order: 1,
   });
+
+  const [tagInput, setTagInput] = useState("");
+  const [previewError, setPreviewError] = useState(false);
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const populateForm = (proj) => {
+    const rawTitle = proj.title || "";
+    const parts = rawTitle.split(" - ");
+    const name = parts[0]?.trim() || rawTitle;
+    const subtitle = parts.slice(1).join(" - ")?.trim() || "";
+
+    setFormData({
+      name,
+      subtitle,
+      description: proj.description || "",
+      techStack: Array.isArray(proj.techStack)
+        ? [...proj.techStack]
+        : typeof proj.techStack === "string"
+        ? proj.techStack.split(",").map((s) => s.trim()).filter(Boolean)
+        : [],
+      imageUrl: proj.imageUrl || "",
+      liveUrl: proj.liveUrl || "",
+      githubUrl: proj.githubUrl || "",
+      featured: Boolean(proj.featured),
+      order: Number(proj.order) || 1,
+    });
+    setPreviewError(false);
+  };
 
   const fetchProjects = useCallback(async () => {
     setLoading(true);
@@ -736,7 +778,7 @@ function ProjectsTab() {
       const res = await api.get("/projects");
       const list = res.data?.data || [];
       setProjects(list);
-      if (list.length > 0 && !selectedId) {
+      if (list.length > 0 && !selectedId && !isCreating) {
         setSelectedId(list[0]._id);
         populateForm(list[0]);
       }
@@ -745,109 +787,257 @@ function ProjectsTab() {
     } finally {
       setLoading(false);
     }
-  }, [selectedId]);
+  }, [selectedId, isCreating]);
 
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
 
-  const populateForm = (proj) => {
-    setFormData({
-      title: proj.title || "",
-      description: proj.description || "",
-      techStack: Array.isArray(proj.techStack)
-        ? proj.techStack.join(", ")
-        : proj.techStack || "",
-      imageUrl: proj.imageUrl || "",
-      liveUrl: proj.liveUrl || "",
-      githubUrl: proj.githubUrl || "",
-      featured: Boolean(proj.featured),
-      order: Number(proj.order) || 0,
-    });
-  };
-
   const handleSelectProject = (proj) => {
+    setIsCreating(false);
     setSelectedId(proj._id);
     populateForm(proj);
   };
 
+  const handleStartAdd = () => {
+    setIsCreating(true);
+    setSelectedId("");
+    setFormData({
+      name: "",
+      subtitle: "",
+      description: "",
+      techStack: [],
+      imageUrl: "",
+      liveUrl: "",
+      githubUrl: "",
+      featured: false,
+      order: projects.length + 1,
+    });
+    setTagInput("");
+    setPreviewError(false);
+  };
+
+  const handleAddTag = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const raw = tagInput.trim().replace(/^,+|,+$/g, "");
+      if (!raw) return;
+      if (formData.techStack.length >= 12) {
+        showToast("Maximum 12 tags allowed.", "error");
+        return;
+      }
+      if (!formData.techStack.includes(raw)) {
+        setFormData((prev) => ({
+          ...prev,
+          techStack: [...prev.techStack, raw],
+        }));
+      }
+      setTagInput("");
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove) => {
+    setFormData((prev) => ({
+      ...prev,
+      techStack: prev.techStack.filter((t) => t !== tagToRemove),
+    }));
+  };
+
+  const handleReorder = async (currentIndex, direction) => {
+    const targetIndex = currentIndex + direction;
+    if (targetIndex < 0 || targetIndex >= projects.length) return;
+
+    const reordered = [...projects];
+    const temp = reordered[currentIndex];
+    reordered[currentIndex] = reordered[targetIndex];
+    reordered[targetIndex] = temp;
+
+    setProjects(reordered);
+    setReordering(true);
+
+    try {
+      const ids = reordered.map((p) => p._id);
+      const res = await api.patch("/projects/reorder", { ids });
+      if (res.data?.success) {
+        showToast("Projects order updated!");
+      }
+    } catch (err) {
+      showToast(err.response?.data?.message || "Failed to reorder projects", "error");
+      fetchProjects();
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  const validateUrl = (url) => {
+    if (!url || url.trim() === "") return true;
+    try {
+      const parsed = new URL(url.trim());
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+      return false;
+    }
+  };
+
+  const validateImageUrl = (url) => {
+    if (!url || url.trim() === "") return true;
+    if (url.trim().startsWith("/")) return true;
+    try {
+      const parsed = new URL(url.trim());
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+      return false;
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
-    if (!selectedId) return;
 
-    // Validate URLs (must be http/https or empty, imageUrl can also be root-relative)
-    const validateUrl = (url) => {
-      if (!url || url.trim() === "") return true;
-      try {
-        const parsed = new URL(url.trim());
-        return parsed.protocol === "http:" || parsed.protocol === "https:";
-      } catch {
-        return false;
-      }
-    };
-
-    if (!validateUrl(formData.liveUrl)) {
-      alert("Live URL must be a valid http:// or https:// URL (or empty).");
+    if (!formData.name.trim()) {
+      showToast("Project Name is required.", "error");
       return;
     }
-
+    if (!formData.description.trim()) {
+      showToast("Description is required.", "error");
+      return;
+    }
+    if (!validateImageUrl(formData.imageUrl)) {
+      showToast("Image URL must be a valid http/https URL or root-relative path (/projects/...).", "error");
+      return;
+    }
+    if (!validateUrl(formData.liveUrl)) {
+      showToast("Live URL must be a valid http:// or https:// URL (or empty).", "error");
+      return;
+    }
     if (!validateUrl(formData.githubUrl)) {
-      alert("GitHub URL must be a valid http:// or https:// URL (or empty).");
+      showToast("GitHub URL must be a valid http:// or https:// URL (or empty).", "error");
       return;
     }
 
     setSaving(true);
-    try {
-      const payload = {
-        title: formData.title,
-        description: formData.description,
-        techStack: formData.techStack
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        imageUrl: formData.imageUrl,
-        liveUrl: formData.liveUrl,
-        githubUrl: formData.githubUrl,
-        featured: Boolean(formData.featured),
-        order: Number(formData.order),
-      };
+    const combinedTitle = formData.name.trim() + (formData.subtitle.trim() ? ` - ${formData.subtitle.trim()}` : "");
 
-      const res = await api.put(`/projects/${selectedId}`, payload);
-      if (res.data?.success) {
-        const updated = res.data.data;
-        setProjects((prev) =>
-          prev.map((p) => (p._id === selectedId ? updated : p))
-        );
-        setToastMessage("Project updated successfully!");
-        setTimeout(() => setToastMessage(""), 4000);
+    const payload = {
+      title: combinedTitle,
+      description: formData.description.trim(),
+      techStack: formData.techStack,
+      imageUrl: formData.imageUrl.trim(),
+      liveUrl: formData.liveUrl.trim(),
+      githubUrl: formData.githubUrl.trim(),
+      featured: Boolean(formData.featured),
+      order: Number(formData.order) || 1,
+    };
+
+    try {
+      if (isCreating) {
+        const res = await api.post("/projects", payload);
+        if (res.data?.success) {
+          const created = res.data.data;
+          setProjects((prev) => [...prev, created]);
+          setSelectedId(created._id);
+          setIsCreating(false);
+          populateForm(created);
+          showToast(`Project "${formData.name}" created successfully!`);
+        }
+      } else {
+        const res = await api.put(`/projects/${selectedId}`, payload);
+        if (res.data?.success) {
+          const updated = res.data.data;
+          setProjects((prev) =>
+            prev.map((p) => (p._id === selectedId ? updated : p))
+          );
+          populateForm(updated);
+          showToast(`Project "${formData.name}" updated successfully!`);
+        }
       }
     } catch (err) {
-      alert(
-        err.response?.data?.message ||
-          "Failed to update project. Please verify inputs."
-      );
+      showToast(err.response?.data?.message || "Failed to save project. Please check inputs.", "error");
     } finally {
       setSaving(false);
     }
   };
 
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    setDeleting(true);
+    try {
+      await api.delete(`/projects/${itemToDelete._id}`);
+      const remaining = projects.filter((p) => p._id !== itemToDelete._id);
+      setProjects(remaining);
+      showToast(`Project "${itemToDelete.title}" deleted.`);
+      setItemToDelete(null);
+
+      if (remaining.length > 0) {
+        setSelectedId(remaining[0]._id);
+        populateForm(remaining[0]);
+        setIsCreating(false);
+      } else {
+        handleStartAdd();
+      }
+    } catch (err) {
+      showToast(err.response?.data?.message || "Failed to delete project.", "error");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const selectedProject = projects.find((p) => p._id === selectedId);
+
   return (
     <div className="flex flex-col gap-6 relative">
-      {/* Success Toast */}
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-[#0E1626] border border-[#5EEAD4] text-[#5EEAD4] shadow-2xl animate-fade-in font-mono text-xs">
-          <FiCheckCircle className="text-base shrink-0" />
-          <span>{toastMessage}</span>
+      {/* Toast Notification */}
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-[#0E1626] border shadow-2xl animate-fade-in font-mono text-xs ${
+            toast.type === "error"
+              ? "border-red-500 text-red-300"
+              : "border-[#5EEAD4] text-[#5EEAD4]"
+          }`}
+        >
+          {toast.type === "error" ? (
+            <FiAlertCircle className="text-base shrink-0 text-red-400" />
+          ) : (
+            <FiCheckCircle className="text-base shrink-0 text-[#5EEAD4]" />
+          )}
+          <span>{toast.message}</span>
         </div>
       )}
 
-      <div>
-        <h2 className="text-xl font-heading font-bold text-[#E8EDF3]">
-          Projects Editor
-        </h2>
-        <p className="text-xs text-[#8A97AB]">
-          Select a project below to modify its details and published links.
-        </p>
+      {/* Header and Add Button */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-heading font-bold text-[#E8EDF3]">
+            Projects Manager
+          </h2>
+          <p className="text-xs text-[#8A97AB]">
+            Create, edit, reorder and delete published portfolio projects.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={fetchProjects}
+            disabled={loading || reordering}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.03] text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+          >
+            <FiRefreshCw className={`text-xs ${loading ? "animate-spin" : ""}`} />
+            <span>Refresh</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleStartAdd}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer shadow-lg ${
+              isCreating
+                ? "bg-[#5EEAD4] text-[#060B16] ring-2 ring-[#4DA3FF]"
+                : "bg-gradient-to-r from-[#5EEAD4] to-[#4DA3FF] text-[#060B16] hover:brightness-110 shadow-[#5EEAD4]/15"
+            }`}
+          >
+            <FiPlus className="text-sm stroke-[3]" />
+            <span>Add Project</span>
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -864,73 +1054,156 @@ function ProjectsTab() {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Project Selector List (4 cols) */}
-          <div className="lg:col-span-4 flex flex-col gap-3">
-            <span className="text-xs font-mono text-[#8A97AB] uppercase tracking-wider">
-              Select Project ({projects.length})
-            </span>
-            <div className="flex flex-col gap-2">
-              {projects.map((p) => (
-                <button
-                  key={p._id}
-                  type="button"
-                  onClick={() => handleSelectProject(p)}
-                  className={`w-full text-left p-4 rounded-2xl border transition-all cursor-pointer ${
-                    selectedId === p._id
-                      ? "border-[#4DA3FF] bg-[#4DA3FF]/15 text-[#E8EDF3] shadow-lg shadow-[#4DA3FF]/5"
-                      : "border-white/5 bg-[#0E1626]/60 text-[#8A97AB] hover:text-[#E8EDF3] hover:border-white/10"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="font-heading font-semibold text-sm truncate text-[#E8EDF3]">
-                      {p.title}
-                    </span>
-                    {p.featured && (
-                      <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#5EEAD4]/20 text-[#5EEAD4] border border-[#5EEAD4]/30 shrink-0">
-                        Featured
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-[11px] font-mono text-[#8A97AB] truncate">
-                    Order: {p.order} · {p.slug}
-                  </div>
-                </button>
-              ))}
+          {/* Projects List & Reordering Column (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono text-[#8A97AB] uppercase tracking-wider">
+                Projects List ({projects.length})
+              </span>
+              <span className="text-[10px] font-mono text-[#8A97AB]">
+                Use arrows to reorder
+              </span>
             </div>
+
+            {projects.length === 0 ? (
+              <div className="glass-card rounded-2xl p-6 text-center border border-white/5 bg-[#0E1626]/40 text-xs text-[#8A97AB]">
+                No projects yet. Click "Add Project" to create one.
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2">
+                {projects.map((p, idx) => {
+                  const isSelected = !isCreating && selectedId === p._id;
+                  return (
+                    <div
+                      key={p._id}
+                      className={`flex items-center justify-between gap-2 p-3 rounded-2xl border transition-all ${
+                        isSelected
+                          ? "border-[#4DA3FF] bg-[#4DA3FF]/15 shadow-lg shadow-[#4DA3FF]/5"
+                          : "border-white/5 bg-[#0E1626]/60 hover:border-white/10"
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handleSelectProject(p)}
+                        className="flex-1 text-left min-w-0 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="font-heading font-semibold text-xs sm:text-sm truncate text-[#E8EDF3]">
+                            {p.title}
+                          </span>
+                          {p.featured && (
+                            <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#5EEAD4]/20 text-[#5EEAD4] border border-[#5EEAD4]/30 shrink-0">
+                              ★
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[10px] font-mono text-[#8A97AB] truncate">
+                          Order: {p.order} · {p.slug}
+                        </div>
+                      </button>
+
+                      {/* Reorder Arrows */}
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          type="button"
+                          disabled={idx === 0 || reordering}
+                          onClick={() => handleReorder(idx, -1)}
+                          title="Move up"
+                          className="w-7 h-7 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-[#8A97AB] hover:text-[#E8EDF3] disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center transition-all cursor-pointer"
+                        >
+                          <FiArrowUp className="text-xs" />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={idx === projects.length - 1 || reordering}
+                          onClick={() => handleReorder(idx, 1)}
+                          title="Move down"
+                          className="w-7 h-7 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-[#8A97AB] hover:text-[#E8EDF3] disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center transition-all cursor-pointer"
+                        >
+                          <FiArrowDown className="text-xs" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Edit Form (8 cols) */}
-          <div className="lg:col-span-8 glass-card rounded-3xl p-6 sm:p-8 border border-white/10 bg-[#0E1626]/90 shadow-xl">
+          {/* Form Editor Column (7 cols) */}
+          <div className="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-white/10 bg-[#0E1626]/90 shadow-xl">
             <form onSubmit={handleSave} className="flex flex-col gap-5">
               <div className="flex items-center justify-between pb-3 border-b border-white/5">
-                <h3 className="font-heading font-bold text-lg text-[#E8EDF3]">
-                  Edit Project Details
-                </h3>
-                <span className="text-[11px] font-mono text-[#5EEAD4]">
-                  ID: {selectedId.slice(-6)}
-                </span>
+                <div>
+                  <h3 className="font-heading font-bold text-lg text-[#E8EDF3]">
+                    {isCreating ? "Add New Project" : "Edit Project"}
+                  </h3>
+                  <p className="text-[11px] font-mono text-[#5EEAD4]">
+                    {isCreating
+                      ? "Will auto-generate unique slug & append to list"
+                      : `Editing: ${selectedProject?.slug || selectedId}`}
+                  </p>
+                </div>
+
+                {!isCreating && selectedProject && (
+                  <button
+                    type="button"
+                    onClick={() => setItemToDelete(selectedProject)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-red-500/30 hover:border-red-500/50 hover:bg-red-500/10 text-xs font-mono text-red-400 hover:text-red-300 transition-all cursor-pointer"
+                  >
+                    <FiTrash2 className="text-xs" />
+                    <span>Delete Project</span>
+                  </button>
+                )}
               </div>
 
-              {/* Title */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-mono text-[#8A97AB] uppercase">
-                  Project Title
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.title}
-                  onChange={(e) =>
-                    setFormData({ ...formData, title: e.target.value })
-                  }
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body"
-                />
+              {/* Name & Subtitle */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                    Project Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    placeholder="e.g. DevSpace"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                    Subtitle (e.g. Purpose/Type)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.subtitle}
+                    onChange={(e) =>
+                      setFormData({ ...formData, subtitle: e.target.value })
+                    }
+                    placeholder="e.g. Collaborative Project Management"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body"
+                  />
+                </div>
+              </div>
+
+              {/* Preview Formatted Title */}
+              <div className="text-[11px] font-mono text-[#8A97AB] px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5">
+                Display Title:{" "}
+                <span className="text-[#E8EDF3] font-semibold">
+                  {formData.name.trim() || "[Project Name]"}
+                  {formData.subtitle.trim() ? ` - ${formData.subtitle.trim()}` : ""}
+                </span>
               </div>
 
               {/* Description */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-mono text-[#8A97AB] uppercase">
-                  Description
+                  Description *
                 </label>
                 <textarea
                   rows={3}
@@ -939,40 +1212,87 @@ function ProjectsTab() {
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
+                  placeholder="Comprehensive description of the full-stack architecture, key features, and problem solved..."
                   className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body leading-relaxed"
                 />
               </div>
 
-              {/* Tech Stack */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-mono text-[#8A97AB] uppercase">
-                  Tech Stack (comma-separated)
-                </label>
-                <input
-                  type="text"
-                  value={formData.techStack}
-                  onChange={(e) =>
-                    setFormData({ ...formData, techStack: e.target.value })
-                  }
-                  placeholder="React, Tailwind CSS, Node.js, Express, MongoDB"
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
-                />
+              {/* Tech Stack Chips & Input */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                    Tech Stack ({formData.techStack.length}/12 tags)
+                  </label>
+                  <span className="text-[10px] font-mono text-[#8A97AB]">
+                    Press Enter or comma to add
+                  </span>
+                </div>
+
+                {/* Chips Container */}
+                <div className="flex flex-wrap gap-2 min-h-[38px] p-2 rounded-xl bg-white/[0.02] border border-white/10 items-center">
+                  {formData.techStack.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#4DA3FF]/15 border border-[#4DA3FF]/30 text-xs font-mono text-[#E8EDF3]"
+                    >
+                      <span>{tag}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(tag)}
+                        className="text-[#8A97AB] hover:text-red-400 cursor-pointer"
+                        title={`Remove ${tag}`}
+                      >
+                        <FiX className="text-xs" />
+                      </button>
+                    </span>
+                  ))}
+                  {formData.techStack.length < 12 && (
+                    <input
+                      type="text"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      onKeyDown={handleAddTag}
+                      placeholder={formData.techStack.length === 0 ? "Type tag + Enter (e.g. React)" : "+ Add tag"}
+                      className="flex-1 min-w-[120px] bg-transparent text-sm text-[#E8EDF3] placeholder-[#8A97AB]/50 outline-none px-2 font-mono"
+                    />
+                  )}
+                </div>
               </div>
 
-              {/* Image URL */}
-              <div className="flex flex-col gap-1.5">
+              {/* Cover Image URL with Live Thumbnail Preview */}
+              <div className="flex flex-col gap-2">
                 <label className="text-xs font-mono text-[#8A97AB] uppercase">
                   Cover Image URL or Path
                 </label>
-                <input
-                  type="text"
-                  value={formData.imageUrl}
-                  onChange={(e) =>
-                    setFormData({ ...formData, imageUrl: e.target.value })
-                  }
-                  placeholder="/projects/devspace-placeholder.png"
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
-                />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <input
+                    type="text"
+                    value={formData.imageUrl}
+                    onChange={(e) => {
+                      setFormData({ ...formData, imageUrl: e.target.value });
+                      setPreviewError(false);
+                    }}
+                    placeholder="/projects/devspace-placeholder.png or https://..."
+                    className="flex-1 w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
+                  />
+
+                  {/* Thumbnail Preview Card */}
+                  <div className="w-28 h-16 rounded-xl overflow-hidden border border-white/10 bg-[#060B16] shrink-0 flex items-center justify-center relative">
+                    {formData.imageUrl && !previewError ? (
+                      <img
+                        src={formData.imageUrl}
+                        alt="Preview"
+                        onError={() => setPreviewError(true)}
+                        className="w-full h-full object-cover object-center"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-[#8A97AB] text-[10px] font-mono gap-1">
+                        <FiImage className="text-sm" />
+                        <span>Monogram</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* Live URL & GitHub URL */}
@@ -1009,7 +1329,7 @@ function ProjectsTab() {
               </div>
 
               {/* Order & Featured Flag */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-1">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-mono text-[#8A97AB] uppercase">
                     Display Order
@@ -1020,14 +1340,14 @@ function ProjectsTab() {
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        order: parseInt(e.target.value, 10) || 0,
+                        order: parseInt(e.target.value, 10) || 1,
                       })
                     }
                     className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
                   />
                 </div>
 
-                <div className="flex items-center gap-3 pt-6 sm:pt-4">
+                <div className="flex items-center gap-3 pt-4 sm:pt-6">
                   <input
                     type="checkbox"
                     id="featured-toggle"
@@ -1046,8 +1366,28 @@ function ProjectsTab() {
                 </div>
               </div>
 
-              {/* Submit Button */}
-              <div className="flex justify-end pt-4 border-t border-white/5">
+              {/* Submit Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                {isCreating ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (projects.length > 0) {
+                        setIsCreating(false);
+                        setSelectedId(projects[0]._id);
+                        populateForm(projects[0]);
+                      }
+                    }}
+                    className="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5 text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                ) : (
+                  <div className="text-[11px] font-mono text-[#8A97AB]">
+                    Slug: <span className="text-[#5EEAD4]">{selectedProject?.slug}</span>
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={saving}
@@ -1056,12 +1396,12 @@ function ProjectsTab() {
                   {saving ? (
                     <>
                       <div className="w-4 h-4 border-2 border-[#060B16] border-t-transparent rounded-full animate-spin" />
-                      <span>Saving Changes...</span>
+                      <span>{isCreating ? "Creating..." : "Saving..."}</span>
                     </>
                   ) : (
                     <>
                       <FiCheck className="text-base stroke-[3]" />
-                      <span>Save Project</span>
+                      <span>{isCreating ? "Create Project" : "Save Changes"}</span>
                     </>
                   )}
                 </button>
@@ -1069,6 +1409,18 @@ function ProjectsTab() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {itemToDelete && (
+        <ConfirmModal
+          title="Delete Project"
+          message={`Are you sure you want to delete project "${itemToDelete.title}"? This will permanently remove it from the database and public portfolio.`}
+          confirmText="Yes, Delete Project"
+          loading={deleting}
+          onConfirm={confirmDelete}
+          onCancel={() => setItemToDelete(null)}
+        />
       )}
     </div>
   );

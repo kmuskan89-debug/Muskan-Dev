@@ -59,13 +59,16 @@ async function seed() {
     const projectsData = contentModule.projects || [];
     console.log(`📦 Found ${projectsData.length} projects in client content file.`);
 
-    // Clear existing projects to ensure fresh, clean dataset
-    await Project.deleteMany({});
-    console.log("🧹 Cleared existing projects collection.");
-
     for (let i = 0; i < projectsData.length; i++) {
       const p = projectsData[i];
       const projectSlug = slugify(p.title);
+
+      // Check if project with this slug already exists
+      const existing = await Project.findOne({ slug: projectSlug });
+      if (existing) {
+        console.log(`   ~ Skipping existing project [${i + 1}]: ${p.title} (${projectSlug})`);
+        continue;
+      }
 
       await Project.create({
         title: p.title,
@@ -78,10 +81,10 @@ async function seed() {
         featured: i < 2,
         order: i + 1,
       });
-      console.log(`   + Seeded project [${i + 1}]: ${p.title}`);
+      console.log(`   + Seeded new project [${i + 1}]: ${p.title}`);
     }
 
-    console.log("🎉 Seeding completed successfully!");
+    console.log("🎉 Seeding completed successfully (existing projects preserved)!");
     process.exit(0);
   } catch (error) {
     console.error("❌ Seeding error:", error);

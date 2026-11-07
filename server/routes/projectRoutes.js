@@ -5,6 +5,7 @@ const {
   createProject,
   updateProject,
   deleteProject,
+  reorderProjects,
 } = require("../controllers/projectController");
 const { requireAuth } = require("../middleware/auth");
 const { validateProject, validateProjectUpdate } = require("../middleware/validators");
@@ -14,6 +15,7 @@ router.get("/", getProjects);
 
 // Protected (Admin only)
 router.post("/", requireAuth, validateProject, createProject);
+router.patch("/reorder", requireAuth, reorderProjects);
 router.put("/:id", requireAuth, validateProjectUpdate, updateProject);
 router.delete("/:id", requireAuth, deleteProject);
 

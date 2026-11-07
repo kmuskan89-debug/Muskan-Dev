@@ -85,8 +85,8 @@ export default function ProjectCard({ project, index, total }) {
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : index * 0.1 }}
       style={{
-        // Desktop sticky stacking offset
-        top: isMobile ? "auto" : `calc(5.5rem + ${index * 24}px)`,
+        // Desktop sticky stacking offset capped at 4 cards (max 64px offset) so 1-12 projects don't overlap awkwardly
+        top: isMobile ? "auto" : `calc(5rem + ${Math.min(index, 4) * 16}px)`,
       }}
       className={`w-full ${
         isMobile ? "relative mb-8" : "sticky mb-16"

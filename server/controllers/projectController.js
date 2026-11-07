@@ -11,6 +11,26 @@ const slugify = (text) => {
     .replace(/--+/g, "-"); // Replace multiple - with single -
 };
 
+// Helper to generate a guaranteed unique slug (adds -2, -3 if exists)
+const generateUniqueSlug = async (title, currentId = null) => {
+  const baseSlug = slugify(title) || "project";
+  let slug = baseSlug;
+  let counter = 2;
+
+  while (true) {
+    const query = { slug };
+    if (currentId) {
+      query._id = { $ne: currentId };
+    }
+    const existing = await Project.findOne(query);
+    if (!existing) {
+      return slug;
+    }
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+};
+
 // GET /api/projects - Public, sorted by order
 const getProjects = async (req, res, next) => {
   try {
@@ -30,7 +50,6 @@ const createProject = async (req, res, next) => {
   try {
     const {
       title,
-      slug,
       description,
       techStack,
       imageUrl,
@@ -40,33 +59,73 @@ const createProject = async (req, res, next) => {
       order,
     } = req.body;
 
-    const projectSlug = slug || slugify(title);
+    // Auto-generate unique slug
+    const projectSlug = await generateUniqueSlug(title);
 
-    // Check duplicate slug
-    const existing = await Project.findOne({ slug: projectSlug });
-    if (existing) {
-      return res.status(409).json({
-        success: false,
-        message: `Project with slug "${projectSlug}" already exists.`,
-      });
+    // Default order to end of list if not given
+    let projectOrder = Number(order);
+    if (order === undefined || order === null || isNaN(projectOrder) || order === "") {
+      const highest = await Project.findOne().sort({ order: -1 }).select("order");
+      projectOrder = highest && typeof highest.order === "number" ? highest.order + 1 : 1;
+    }
+
+    // Limit techStack to 12 tags
+    let cleanTechStack = Array.isArray(techStack)
+      ? techStack
+      : typeof techStack === "string"
+      ? techStack.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    if (cleanTechStack.length > 12) {
+      cleanTechStack = cleanTechStack.slice(0, 12);
     }
 
     const project = await Project.create({
-      title,
+      title: title.trim(),
       slug: projectSlug,
-      description,
-      techStack: Array.isArray(techStack) ? techStack : [],
-      imageUrl: imageUrl || "",
-      liveUrl: liveUrl || "",
-      githubUrl: githubUrl || "",
+      description: description.trim(),
+      techStack: cleanTechStack,
+      imageUrl: (imageUrl || "").trim(),
+      liveUrl: (liveUrl || "").trim(),
+      githubUrl: (githubUrl || "").trim(),
       featured: Boolean(featured),
-      order: Number(order) || 0,
+      order: projectOrder,
     });
 
     res.status(201).json({
       success: true,
       message: "Project created successfully",
       data: project,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// PATCH /api/projects/reorder - Admin only
+const reorderProjects = async (req, res, next) => {
+  try {
+    const ids = req.body.ids || req.body.projectIds;
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "An array of project IDs is required for reordering.",
+      });
+    }
+
+    // Update order for each project sequentially or in parallel
+    const updatePromises = ids.map((id, index) =>
+      Project.findByIdAndUpdate(id, { order: index + 1 }, { new: true })
+    );
+
+    await Promise.all(updatePromises);
+
+    const reordered = await Project.find().sort({ order: 1, createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "Projects reordered successfully",
+      count: reordered.length,
+      data: reordered,
     });
   } catch (error) {
     next(error);
@@ -158,5 +217,6 @@ module.exports = {
   createProject,
   updateProject,
   deleteProject,
+  reorderProjects,
 };
 

@@ -67,47 +67,6 @@ const validateGuestbook = [
   handleValidationErrors,
 ];
 
-// Project creation/update validator
-const validateProject = [
-  body("title")
-    .trim()
-    .notEmpty()
-    .withMessage("Project title is required")
-    .isLength({ max: 150 })
-    .withMessage("Title cannot exceed 150 characters"),
-  body("description")
-    .trim()
-    .notEmpty()
-    .withMessage("Description is required"),
-  body("slug")
-    .optional()
-    .trim()
-    .matches(/^[a-z0-9-]+$/)
-    .withMessage("Slug must contain lowercase letters, numbers, and hyphens only"),
-  body("techStack")
-    .optional()
-    .isArray()
-    .withMessage("techStack must be an array of strings"),
-  body("liveUrl")
-    .optional()
-    .trim(),
-  body("githubUrl")
-    .optional()
-    .trim(),
-  body("imageUrl")
-    .optional()
-    .trim(),
-  body("featured")
-    .optional()
-    .isBoolean()
-    .withMessage("featured must be a boolean"),
-  body("order")
-    .optional()
-    .isNumeric()
-    .withMessage("order must be a number"),
-  handleValidationErrors,
-];
-
 const isValidHttpUrlOrEmpty = (value) => {
   if (value === undefined || value === null || value === "") return true;
   if (typeof value !== "string") return false;
@@ -135,6 +94,63 @@ const isValidImageUrlOrEmpty = (value) => {
   }
 };
 
+const validateTechStack = (value) => {
+  if (value === undefined || value === null || value === "") return true;
+  const arr = Array.isArray(value)
+    ? value
+    : String(value)
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+  if (arr.length > 12) {
+    throw new Error("techStack cannot exceed 12 tags");
+  }
+  return true;
+};
+
+// Project creation validator
+const validateProject = [
+  body("title")
+    .trim()
+    .notEmpty()
+    .withMessage("Project title is required")
+    .isLength({ max: 150 })
+    .withMessage("Title cannot exceed 150 characters"),
+  body("description")
+    .trim()
+    .notEmpty()
+    .withMessage("Description is required"),
+  body("slug")
+    .optional()
+    .trim()
+    .matches(/^[a-z0-9-]+$/)
+    .withMessage("Slug must contain lowercase letters, numbers, and hyphens only"),
+  body("techStack")
+    .optional()
+    .custom(validateTechStack),
+  body("liveUrl")
+    .optional()
+    .custom(isValidHttpUrlOrEmpty)
+    .withMessage("liveUrl must be a valid http/https URL or empty"),
+  body("githubUrl")
+    .optional()
+    .custom(isValidHttpUrlOrEmpty)
+    .withMessage("githubUrl must be a valid http/https URL or empty"),
+  body("imageUrl")
+    .optional()
+    .custom(isValidImageUrlOrEmpty)
+    .withMessage("imageUrl must be a valid http/https URL, root-relative path, or empty"),
+  body("featured")
+    .optional()
+    .isBoolean()
+    .withMessage("featured must be a boolean"),
+  body("order")
+    .optional()
+    .isNumeric()
+    .withMessage("order must be a number"),
+  handleValidationErrors,
+];
+
 // Project update validator (fields optional)
 const validateProjectUpdate = [
   body("title")
@@ -156,8 +172,7 @@ const validateProjectUpdate = [
     .withMessage("Slug must contain lowercase letters, numbers, and hyphens only"),
   body("techStack")
     .optional()
-    .custom((val) => Array.isArray(val) || typeof val === "string")
-    .withMessage("techStack must be an array of strings or comma-separated string"),
+    .custom(validateTechStack),
   body("liveUrl")
     .optional()
     .custom(isValidHttpUrlOrEmpty)

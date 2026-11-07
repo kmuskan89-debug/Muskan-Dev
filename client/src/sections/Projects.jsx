@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLenis } from "../components/SmoothScroll";
 import { useProjects } from "../hooks/useProjects";
 import ProjectCard from "../components/ProjectCard";
 import TaglineStrip from "../components/TaglineStrip";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Projects() {
   const { projects, loading, error, source } = useProjects();
+  const lenis = useLenis();
+
+  // Recalculate ScrollTrigger markers and smooth-scroll bounds when projects load or change
+  useEffect(() => {
+    if (!loading && projects.length > 0) {
+      const timer = setTimeout(() => {
+        lenis?.resize();
+        ScrollTrigger.refresh();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, projects.length, lenis]);
 
   return (
     <section
