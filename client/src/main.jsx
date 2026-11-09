@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App.jsx";
 import SmoothScroll from "./components/SmoothScroll.jsx";
+import "lenis/dist/lenis.css";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
