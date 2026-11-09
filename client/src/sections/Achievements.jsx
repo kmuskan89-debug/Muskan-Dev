@@ -1,7 +1,8 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import AchievementCard from "../components/AchievementCard";
-import { interpersonal, personalInfo } from "../data/content";
+import LeadershipCard from "../components/LeadershipCard";
+import { interpersonal, personalInfo, leadership } from "../data/content";
 
 // Icons
 import { SiLeetcode } from "react-icons/si";
@@ -78,7 +79,7 @@ export default function Achievements() {
       <div className="flex flex-col gap-3 mb-14">
         <div className="section-label">// 04. ACHIEVEMENTS</div>
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight gradient-text">
-          Proof of the work.
+          Achievements & Activities
         </h2>
       </div>
 
@@ -113,7 +114,24 @@ export default function Achievements() {
         />
       </div>
 
-      {/* 2. Beyond Code: Co-Curricular Cards Grid */}
+      {/* 2. Leadership Sub-Section */}
+      <div className="flex flex-col gap-6 mb-20">
+        <div className="flex flex-col gap-2">
+          <span className="section-label text-xs tracking-[0.2em]">
+            // LEADERSHIP
+          </span>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#E8EDF3]">
+            Leadership
+          </h3>
+        </div>
+
+        <LeadershipCard
+          role={leadership[0]?.role || "Engagement Lead"}
+          organization={leadership[0]?.organization || "GDGC SVIET"}
+        />
+      </div>
+
+      {/* 3. Beyond Code: Co-Curricular Cards Grid */}
       <div className="flex flex-col gap-8 mb-20">
         <div className="flex flex-col gap-2">
           <span className="section-label text-xs tracking-[0.2em]">
@@ -157,7 +175,7 @@ export default function Achievements() {
         </div>
       </div>
 
-      {/* 3. Interpersonal Skills Animated Pills */}
+      {/* 4. Interpersonal Skills Animated Pills */}
       <div className="glass-card rounded-3xl p-8 sm:p-10 border border-white/10 bg-[#0E1626]/80 backdrop-blur-xl flex flex-col gap-6 items-center text-center">
         <div className="flex flex-col gap-1 items-center">
           <span className="section-label text-xs tracking-[0.2em]">

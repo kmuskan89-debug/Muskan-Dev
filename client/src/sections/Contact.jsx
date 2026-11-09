@@ -10,7 +10,6 @@ const Guestbook = lazy(() => import("../components/Guestbook"));
 // Icons
 import {
   FiMail,
-  FiPhone,
   FiLinkedin,
   FiGithub,
   FiMapPin,
@@ -36,7 +35,7 @@ export default function Contact() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState(null); // { type: "success" | "error", message: "" }
-  const [copiedField, setCopiedField] = useState(null); // "email" | "phone" | null
+  const [copiedField, setCopiedField] = useState(null); // "email" | null
 
   // Copy to clipboard handler
   const handleCopy = (text, field) => {
@@ -198,55 +197,6 @@ export default function Contact() {
                 </button>
                 <AnimatePresence>
                   {copiedField === "email" && (
-                    <motion.span
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 5 }}
-                      className="absolute right-0 -top-8 px-2 py-0.5 rounded text-[10px] font-mono bg-[#5EEAD4] text-[#060B16] font-bold shadow-md"
-                    >
-                      Copied!
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          </Magnetic>
-
-          {/* Phone Card with Copy Toast */}
-          <Magnetic strength={0.2} className="w-full">
-            <div className="glass-card rounded-2xl p-5 border border-white/10 hover:border-[#5EEAD4]/40 bg-[#0E1626]/70 transition-all duration-300 flex items-center justify-between group">
-              <a
-                href={`tel:${personalInfo.phone}`}
-                className="flex items-center gap-3.5 min-w-0"
-              >
-                <div className="w-11 h-11 rounded-xl bg-[#5EEAD4]/10 border border-[#5EEAD4]/20 flex items-center justify-center text-[#5EEAD4] group-hover:scale-110 transition-transform">
-                  <FiPhone className="text-xl" />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#8A97AB]">
-                    Phone
-                  </span>
-                  <span className="text-sm font-semibold text-[#E8EDF3] group-hover:text-white truncate">
-                    {personalInfo.phone}
-                  </span>
-                </div>
-              </a>
-
-              <div className="relative shrink-0">
-                <button
-                  type="button"
-                  onClick={() => handleCopy(personalInfo.phone, "phone")}
-                  aria-label="Copy phone number"
-                  className="min-w-[44px] min-h-[44px] p-2.5 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#8A97AB] hover:text-[#5EEAD4] transition-all cursor-pointer"
-                >
-                  {copiedField === "phone" ? (
-                    <FiCheck className="text-sm text-[#5EEAD4]" />
-                  ) : (
-                    <FiCopy className="text-sm" />
-                  )}
-                </button>
-                <AnimatePresence>
-                  {copiedField === "phone" && (
                     <motion.span
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}

@@ -2,7 +2,6 @@ export const personalInfo = {
   name: "Muskan Kumari",
   location: "Banur, Punjab",
   email: "muskank14019@gmail.com",
-  phone: "+91 8700519719",
   linkedin: "https://www.linkedin.com/in/muskan-kumari-4a7105327",
   github: "https://github.com/kmuskan89-debug",
   leetcode: "https://leetcode.com/u/k_muskan89/",
@@ -70,6 +69,13 @@ export const achievements = [
   "participated in various technical hackathons"
 ];
 
+export const leadership = [
+  {
+    role: "Engagement Lead",
+    organization: "GDGC SVIET"
+  }
+];
+
 export const coCurricular = [
   "multiple national-level hackathons and ideations",
   "public speaking (debates, speeches, GD, anchoring)",
@@ -92,6 +98,7 @@ const content = {
   skills,
   projects,
   achievements,
+  leadership,
   coCurricular,
   interpersonal
 };
