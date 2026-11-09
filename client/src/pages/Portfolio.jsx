@@ -56,6 +56,20 @@ export default function Portfolio() {
   const [preloaderComplete, setPreloaderComplete] = useState(false);
   const lenis = useLenis();
 
+  const handlePreloaderComplete = useCallback(() => {
+    setPreloaderComplete(true);
+  }, []);
+
+  // Safeguard: Ensure scroll is unlocked and Lenis resumed once preloader is complete
+  useEffect(() => {
+    if (preloaderComplete) {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      lenis?.start();
+      lenis?.resize();
+    }
+  }, [preloaderComplete, lenis]);
+
   // Unified recalculation handler for ScrollTrigger and Lenis dimensions
   const refreshLayout = useCallback(() => {
     requestAnimationFrame(() => {
@@ -138,8 +152,8 @@ export default function Portfolio() {
         />
       </Helmet>
 
-      {/* 1.2s Preloader with MK Monogram Drawing */}
-      <Preloader onComplete={() => setPreloaderComplete(true)} />
+      {/* Fake Error Screen Preloader */}
+      <Preloader onComplete={handlePreloaderComplete} />
 
       {/* Thin Scroll Progress Bar */}
       <ScrollProgress />

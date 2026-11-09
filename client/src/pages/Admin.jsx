@@ -36,6 +36,12 @@ export default function Admin() {
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState("");
 
+  // Remove static intro overlay on admin view
+  useEffect(() => {
+    const el = document.getElementById("intro-static-overlay");
+    if (el) el.remove();
+  }, []);
+
   // Listen for auth expiration event from Axios interceptor
   useEffect(() => {
     const handleAuthExpired = () => {
