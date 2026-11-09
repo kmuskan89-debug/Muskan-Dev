@@ -5,8 +5,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "../components/SmoothScroll";
 import Preloader from "../components/Preloader";
 import CustomCursor from "../components/CustomCursor";
-import ScrollProgress from "../components/ScrollProgress";
+import TopProgressBar from "../components/TopProgressBar";
 import Navbar from "../components/Navbar";
+import { SectionProvider } from "../context/SectionContext";
 import Hero from "../sections/Hero";
 import About from "../sections/About";
 import { personalInfo } from "../data/content";
@@ -17,14 +18,12 @@ gsap.registerPlugin(ScrollTrigger);
 // Dynamic import declarations for background prefetching
 const loadSkills = () => import("../sections/Skills");
 const loadProjects = () => import("../sections/Projects");
-const loadAchievements = () => import("../sections/Achievements");
 const loadContact = () => import("../sections/Contact");
 const loadFooter = () => import("../components/Footer");
 
 // Below-the-fold sections lazy-loaded for peak production performance
 const Skills = lazy(loadSkills);
 const Projects = lazy(loadProjects);
-const Achievements = lazy(loadAchievements);
 const Contact = lazy(loadContact);
 const Footer = lazy(loadFooter);
 
@@ -83,7 +82,6 @@ export default function Portfolio() {
     const preloadChunks = () => {
       loadSkills();
       loadProjects();
-      loadAchievements();
       loadContact();
       loadFooter();
     };
@@ -122,47 +120,48 @@ export default function Portfolio() {
   }, [refreshLayout]);
 
   return (
-    <div className="relative min-h-screen bg-[#F5F3E7] text-[#1A110A] selection:bg-[#F79F15] selection:text-[#1A110A]">
-      {/* Accessible Skip to Content Link */}
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[300] focus:px-5 focus:py-3 focus:rounded-full focus:bg-[#1A110A] focus:text-[#F5F3E7] focus:font-body focus:font-bold focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#F79F15]"
-      >
-        Skip to content
-      </a>
+    <SectionProvider>
+      <div className="relative min-h-screen bg-[#F5F3E7] text-[#1A110A] selection:bg-[#F79F15] selection:text-[#1A110A]">
+        {/* Accessible Skip to Content Link */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-[52px] focus:left-4 focus:z-[300] focus:px-5 focus:py-3 focus:rounded-full focus:bg-[#1A110A] focus:text-[#F5F3E7] focus:font-body focus:font-bold focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#F79F15]"
+        >
+          Skip to content
+        </a>
 
-      <Helmet>
-        <title>{personalInfo.name} | MERN Stack Developer</title>
-        <meta
-          name="description"
-          content="MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to build scalable web applications. Currently learning AI/ML."
-        />
-        <link rel="canonical" href={`${SITE_URL}/`} />
-        <meta property="og:url" content={`${SITE_URL}/`} />
-        <meta property="og:image" content={`${SITE_URL}/og.png`} />
-        <meta
-          property="og:description"
-          content="MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to build scalable web applications. Currently learning AI/ML."
-        />
-        <meta name="twitter:url" content={`${SITE_URL}/`} />
-        <meta name="twitter:image" content={`${SITE_URL}/og.png`} />
-        <meta
-          name="twitter:description"
-          content="MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to build scalable web applications. Currently learning AI/ML."
-        />
-      </Helmet>
+        <Helmet>
+          <title>{personalInfo.name} | MERN Stack Developer</title>
+          <meta
+            name="description"
+            content="MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to build scalable web applications. Currently learning AI/ML."
+          />
+          <link rel="canonical" href={`${SITE_URL}/`} />
+          <meta property="og:url" content={`${SITE_URL}/`} />
+          <meta property="og:image" content={`${SITE_URL}/og.png`} />
+          <meta
+            property="og:description"
+            content="MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to build scalable web applications. Currently learning AI/ML."
+          />
+          <meta name="twitter:url" content={`${SITE_URL}/`} />
+          <meta name="twitter:image" content={`${SITE_URL}/og.png`} />
+          <meta
+            name="twitter:description"
+            content="MERN stack developer with hands-on project experience and strong DSA fundamentals, seeking an SDE role to build scalable web applications. Currently learning AI/ML."
+          />
+        </Helmet>
 
-      {/* Fake Error Screen Preloader */}
-      <Preloader onComplete={handlePreloaderComplete} />
+        {/* Fake Error Screen Preloader */}
+        <Preloader onComplete={handlePreloaderComplete} />
 
-      {/* Thin Scroll Progress Bar */}
-      <ScrollProgress />
+        {/* Code-Editor Style Top Progress Bar (shown only after 404 intro finishes, never on /admin) */}
+        {preloaderComplete && <TopProgressBar />}
 
-      {/* Desktop Custom Cursor with Trailing Ring */}
-      <CustomCursor />
+        {/* Desktop Custom Cursor with Trailing Ring */}
+        <CustomCursor />
 
-      {/* Floating Glass Navbar */}
-      <Navbar />
+        {/* Floating Glass Navbar */}
+        <Navbar />
 
       {/* Main Page Content */}
       <main id="main" tabIndex={-1} className="relative z-10 flex flex-col focus:outline-none">
@@ -202,27 +201,12 @@ export default function Portfolio() {
           </LazyBoundary>
         </Suspense>
 
-        {/* 5. Achievements Section (Lazy ~1500px) */}
-        <Suspense
-          fallback={
-            <SectionSkeleton
-              id="achievements"
-              label="// 04. ACHIEVEMENTS"
-              minHeight="min-h-[1500px]"
-            />
-          }
-        >
-          <LazyBoundary onLoaded={refreshLayout}>
-            <Achievements />
-          </LazyBoundary>
-        </Suspense>
-
-        {/* 6. Contact Section & Interactive Guestbook (Lazy ~1550px) */}
+        {/* 5. Contact Section & Interactive Guestbook (Lazy ~1550px) */}
         <Suspense
           fallback={
             <SectionSkeleton
               id="contact"
-              label="// 05. CONTACT"
+              label="// 04. CONTACT"
               minHeight="min-h-[1550px]"
             />
           }
@@ -240,6 +224,7 @@ export default function Portfolio() {
         </LazyBoundary>
       </Suspense>
     </div>
+  </SectionProvider>
   );
 }
 
