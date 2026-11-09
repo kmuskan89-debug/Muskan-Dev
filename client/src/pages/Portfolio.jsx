@@ -171,13 +171,13 @@ export default function Portfolio() {
         {/* 2. About Section & Full-Width Marquee Strip (Eager) */}
         <About />
 
-        {/* 3. Skills Section & Philosophy Pull-Quote (Lazy ~1450px) */}
+        {/* 3. Skills Section & Philosophy Pull-Quote (Lazy ~920px) */}
         <Suspense
           fallback={
             <SectionSkeleton
               id="skills"
               label="// 02. SKILLS"
-              minHeight="min-h-[1450px]"
+              minHeight="min-h-[920px]"
             />
           }
         >
