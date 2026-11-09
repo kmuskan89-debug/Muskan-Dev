@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 
-export default function SkillCard({ name, category, icon: Icon }) {
+export default function SkillCard({ name, category, icon: Icon, brandColor }) {
   const cardRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = useState(false);
@@ -60,15 +60,16 @@ export default function SkillCard({ name, category, icon: Icon }) {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={
-        isTouchDevice || shouldReduceMotion
+      style={{
+        ...(isTouchDevice || shouldReduceMotion
           ? {}
           : {
               rotateX,
               rotateY,
               transformStyle: "preserve-3d",
-            }
-      }
+            }),
+        "--brand-color": brandColor || "#F79F15",
+      }}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="group relative bg-[#FFFFFF] rounded-2xl p-5 flex flex-col justify-between gap-4 border border-[#9F9B90]/30 hover:border-[#F79F15] transition-colors duration-300 overflow-hidden select-none shadow-sm"
@@ -87,9 +88,19 @@ export default function SkillCard({ name, category, icon: Icon }) {
       {/* Top: Icon & Category Indicator */}
       <div className="flex items-center justify-between w-full">
         <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center bg-[#F8F5EE] border border-[#9F9B90]/30 group-hover:border-[#F79F15]/50 group-hover:bg-[#FFFFFF] text-[#1A110A] group-hover:text-[#F79F15] transition-colors duration-300 shadow-inner"
+          style={{
+            borderColor: isHovered && brandColor ? `${brandColor}40` : undefined,
+          }}
+          className="w-11 h-11 rounded-xl flex items-center justify-center bg-[#F8F5EE] border border-[#9F9B90]/30 group-hover:bg-[#FFFFFF] text-[#1A110A] transition-all duration-300 shadow-inner"
         >
-          {Icon ? <Icon className="text-2xl transition-transform duration-300 group-hover:scale-110" /> : null}
+          {Icon ? (
+            <Icon
+              style={{
+                color: isHovered && brandColor ? brandColor : undefined,
+              }}
+              className="text-2xl transition-all duration-300 group-hover:scale-110 group-hover:text-[var(--brand-color)]"
+            />
+          ) : null}
         </div>
 
         {/* Category Label in small mono font */}

@@ -39,42 +39,42 @@ const CATEGORIES = [
   "Core CS",
 ];
 
-// Map skill items from content.js with their icons
+// Map skill items from content.js with their icons and authentic brand colors
 const SKILL_ITEMS = [
   // Languages
-  { name: "JavaScript (ES6+)", category: "Languages", icon: SiJavascript },
-  { name: "Java", category: "Languages", icon: FaJava },
-  { name: "Python", category: "Languages", icon: SiPython },
-  { name: "C", category: "Languages", icon: SiC },
+  { name: "JavaScript (ES6+)", category: "Languages", icon: SiJavascript, brandColor: "#F7DF1E" },
+  { name: "Java", category: "Languages", icon: FaJava, brandColor: "#E76F00" },
+  { name: "Python", category: "Languages", icon: SiPython, brandColor: "#3776AB" },
+  { name: "C", category: "Languages", icon: SiC, brandColor: "#00599C" },
 
   // Frontend
-  { name: "React.js", category: "Frontend", icon: SiReact },
-  { name: "HTML5", category: "Frontend", icon: SiHtml5 },
-  { name: "CSS3", category: "Frontend", icon: FaCss3Alt },
-  { name: "Tailwind CSS", category: "Frontend", icon: SiTailwindcss },
+  { name: "React.js", category: "Frontend", icon: SiReact, brandColor: "#61DAFB" },
+  { name: "HTML5", category: "Frontend", icon: SiHtml5, brandColor: "#E34F26" },
+  { name: "CSS3", category: "Frontend", icon: FaCss3Alt, brandColor: "#1572B6" },
+  { name: "Tailwind CSS", category: "Frontend", icon: SiTailwindcss, brandColor: "#06B6D4" },
 
   // Backend
-  { name: "Node.js", category: "Backend", icon: SiNodedotjs },
-  { name: "Express.js", category: "Backend", icon: SiExpress },
-  { name: "REST APIs", category: "Backend", icon: FiServer },
-  { name: "JWT Authentication", category: "Backend", icon: SiJsonwebtokens },
+  { name: "Node.js", category: "Backend", icon: SiNodedotjs, brandColor: "#5FA04E" },
+  { name: "Express.js", category: "Backend", icon: SiExpress, brandColor: "#000000" },
+  { name: "REST APIs", category: "Backend", icon: FiServer, brandColor: "#009688" },
+  { name: "JWT Authentication", category: "Backend", icon: SiJsonwebtokens, brandColor: "#D63AFF" },
 
   // Database
-  { name: "MongoDB", category: "Database", icon: SiMongodb },
-  { name: "Mongoose", category: "Database", icon: FiDatabase },
-  { name: "MySQL", category: "Database", icon: SiMysql },
+  { name: "MongoDB", category: "Database", icon: SiMongodb, brandColor: "#47A248" },
+  { name: "Mongoose", category: "Database", icon: FiDatabase, brandColor: "#880000" },
+  { name: "MySQL", category: "Database", icon: SiMysql, brandColor: "#4479A1" },
 
   // Tools
-  { name: "Git", category: "Tools", icon: SiGit },
-  { name: "GitHub", category: "Tools", icon: SiGithub },
-  { name: "Postman", category: "Tools", icon: SiPostman },
-  { name: "VS Code", category: "Tools", icon: VscVscode },
-  { name: "Vercel", category: "Tools", icon: SiVercel },
-  { name: "MongoDB Atlas", category: "Tools", icon: SiMongodb },
+  { name: "Git", category: "Tools", icon: SiGit, brandColor: "#F05032" },
+  { name: "GitHub", category: "Tools", icon: SiGithub, brandColor: "#181717" },
+  { name: "Postman", category: "Tools", icon: SiPostman, brandColor: "#FF6C37" },
+  { name: "VS Code", category: "Tools", icon: VscVscode, brandColor: "#007ACC" },
+  { name: "Vercel", category: "Tools", icon: SiVercel, brandColor: "#000000" },
+  { name: "MongoDB Atlas", category: "Tools", icon: SiMongodb, brandColor: "#47A248" },
 
   // Core CS
-  { name: "Data Structures & Algorithms", category: "Core CS", icon: FiCpu },
-  { name: "OOPs", category: "Core CS", icon: FiBox },
+  { name: "Data Structures & Algorithms", category: "Core CS", icon: FiCpu, brandColor: "#F79F15" },
+  { name: "OOPs", category: "Core CS", icon: FiBox, brandColor: "#F79F15" },
 ];
 
 export default function Skills() {
@@ -231,6 +231,7 @@ export default function Skills() {
                   name={skill.name}
                   category={skill.category}
                   icon={skill.icon}
+                  brandColor={skill.brandColor}
                 />
               </motion.div>
             ))}

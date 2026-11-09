@@ -36,7 +36,7 @@ export default function Projects() {
       <div className="flex flex-col gap-3 mb-16">
         <div className="flex items-center justify-between">
           <div className="section-label">// 03. PROJECTS</div>
-          
+
           {/* Subtle Live/Cached Source Pill (Development Only) */}
           {!loading && import.meta.env.DEV && (
             <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-[#9F9B90]/30 bg-[#F8F5EE] text-[#6F6B60]">
@@ -46,7 +46,7 @@ export default function Projects() {
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight text-[#1A110A]">
-          Projects that solve real problems.
+          Stuff I Built.
         </h2>
 
         <p className="text-sm md:text-base text-[#6F6B60] max-w-xl">

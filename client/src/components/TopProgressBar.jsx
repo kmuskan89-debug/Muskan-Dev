@@ -9,7 +9,6 @@ const SECTION_MAP = {
   about: "{about}",
   skills: "{skills}",
   projects: "{projects}",
-  achievements: "{achievements}",
   contact: "{contact}",
 };
 
@@ -18,7 +17,6 @@ const DROPDOWN_SECTIONS = [
   { id: "about", name: "About", code: "{about}", href: "#about" },
   { id: "skills", name: "Skills", code: "{skills}", href: "#skills" },
   { id: "projects", name: "Projects", code: "{projects}", href: "#projects" },
-  { id: "achievements", name: "Achievements", code: "{achievements}", href: "#achievements" },
   { id: "contact", name: "Contact", code: "{contact}", href: "#contact" },
 ];
 

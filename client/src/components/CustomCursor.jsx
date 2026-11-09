@@ -45,6 +45,8 @@ export default function CustomCursor() {
     // Detect hover over interactive elements or custom cursor triggers
     const handleMouseOver = (e) => {
       const target = e.target;
+      const copyTrigger = target.closest("[data-cursor='copy']");
+      const openTrigger = target.closest("[data-cursor='open']");
       const viewTrigger = target.closest("[data-cursor='view']");
       const isInteractive =
         target.closest("a") ||
@@ -54,7 +56,13 @@ export default function CustomCursor() {
         target.closest('[role="button"]') ||
         target.closest("[data-cursor='pointer']");
 
-      if (viewTrigger) {
+      if (copyTrigger) {
+        setCursorText("COPY");
+        setIsHovered(true);
+      } else if (openTrigger) {
+        setCursorText("OPEN");
+        setIsHovered(true);
+      } else if (viewTrigger) {
         setCursorText("VIEW");
         setIsHovered(true);
       } else {
@@ -81,11 +89,11 @@ export default function CustomCursor() {
     return null;
   }
 
-  const isViewMode = cursorText === "VIEW";
+  const isTextMode = Boolean(cursorText);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[999] overflow-hidden">
-      {/* Small Precision Dot (hidden in VIEW mode) */}
+      {/* Small Precision Dot (hidden in badge text mode) */}
       <motion.div
         style={{
           x: cursorX,
@@ -94,14 +102,14 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isViewMode ? 0 : isHovered ? 0.4 : 1,
-          opacity: isVisible && !isViewMode ? 1 : 0,
+          scale: isTextMode ? 0 : isHovered ? 0.4 : 1,
+          opacity: isVisible && !isTextMode ? 1 : 0,
         }}
         transition={{ duration: 0.15 }}
         className="w-2 h-2 rounded-full bg-[#1A110A] shadow-[0_0_4px_rgba(26,17,10,0.3)]"
       />
 
-      {/* Trailing Ring / View Badge (Orange Trailing Ring) */}
+      {/* Trailing Ring / Text Badge (Orange Trailing Ring) */}
       <motion.div
         style={{
           x: ringX,
@@ -110,14 +118,14 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isViewMode ? 2.2 : isHovered ? 1.8 : 1,
+          scale: isTextMode ? 2.2 : isHovered ? 1.8 : 1,
           opacity: isVisible ? 1 : 0,
-          backgroundColor: isViewMode
+          backgroundColor: isTextMode
             ? "#1A110A"
             : isHovered
             ? "rgba(247, 159, 21, 0.15)"
             : "rgba(247, 159, 21, 0.0)",
-          borderColor: isViewMode
+          borderColor: isTextMode
             ? "#F79F15"
             : isHovered
             ? "#F79F15"
@@ -126,7 +134,7 @@ export default function CustomCursor() {
         transition={{ duration: 0.2 }}
         className="w-8 h-8 rounded-full border border-[#F79F15]/60 backdrop-blur-sm flex items-center justify-center shadow-[0_0_12px_rgba(247,159,21,0.25)]"
       >
-        {isViewMode && (
+        {isTextMode && (
           <span className="text-[7.5px] font-mono font-bold tracking-widest text-[#F5F3E7] uppercase select-none">
             {cursorText}
           </span>

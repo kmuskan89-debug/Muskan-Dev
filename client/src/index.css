@@ -23,6 +23,7 @@
   --font-heading: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-caveat: "Caveat", cursive, sans-serif;
 }
 
 :root {
@@ -42,6 +43,7 @@
   --font-heading: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-caveat: "Caveat", cursive, sans-serif;
 }
 
 /* Browser Defaults & Overrides */
@@ -373,3 +375,48 @@ h6 {
   -webkit-background-clip: unset;
   -webkit-text-fill-color: initial;
 }
+
+/* Guestbook Sticky Notes Idle Sway and Hover */
+@keyframes guestbook-sway {
+  0% {
+    transform: rotate(calc(var(--base-rot, 0deg) - 0.6deg));
+  }
+  100% {
+    transform: rotate(calc(var(--base-rot, 0deg) + 0.6deg));
+  }
+}
+
+.guestbook-note-inner {
+  transform: rotate(var(--base-rot, 0deg));
+  transform-origin: top center;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+}
+
+.guestbook-note-sway {
+  animation: guestbook-sway var(--sway-dur, 6s) ease-in-out infinite alternate;
+  animation-delay: var(--sway-delay, 0s);
+  will-change: transform;
+}
+
+.guestbook-sway-paused .guestbook-note-sway {
+  animation-play-state: paused !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .guestbook-note-inner:hover {
+    animation-play-state: paused !important;
+    transform: rotate(0deg) scale(1.04) !important;
+    z-index: 30 !important;
+    box-shadow: 0 20px 30px -10px rgba(26, 17, 10, 0.22), 0 10px 12px -6px rgba(26, 17, 10, 0.12) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guestbook-note-sway {
+    animation: none !important;
+  }
+  .guestbook-note-inner {
+    transform: rotate(0deg) !important;
+  }
+}
+

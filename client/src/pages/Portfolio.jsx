@@ -18,14 +18,12 @@ gsap.registerPlugin(ScrollTrigger);
 // Dynamic import declarations for background prefetching
 const loadSkills = () => import("../sections/Skills");
 const loadProjects = () => import("../sections/Projects");
-const loadAchievements = () => import("../sections/Achievements");
 const loadContact = () => import("../sections/Contact");
 const loadFooter = () => import("../components/Footer");
 
 // Below-the-fold sections lazy-loaded for peak production performance
 const Skills = lazy(loadSkills);
 const Projects = lazy(loadProjects);
-const Achievements = lazy(loadAchievements);
 const Contact = lazy(loadContact);
 const Footer = lazy(loadFooter);
 
@@ -84,7 +82,6 @@ export default function Portfolio() {
     const preloadChunks = () => {
       loadSkills();
       loadProjects();
-      loadAchievements();
       loadContact();
       loadFooter();
     };
@@ -204,27 +201,12 @@ export default function Portfolio() {
           </LazyBoundary>
         </Suspense>
 
-        {/* 5. Achievements Section (Lazy ~1500px) */}
-        <Suspense
-          fallback={
-            <SectionSkeleton
-              id="achievements"
-              label="// 04. ACHIEVEMENTS"
-              minHeight="min-h-[1500px]"
-            />
-          }
-        >
-          <LazyBoundary onLoaded={refreshLayout}>
-            <Achievements />
-          </LazyBoundary>
-        </Suspense>
-
-        {/* 6. Contact Section & Interactive Guestbook (Lazy ~1550px) */}
+        {/* 5. Contact Section & Interactive Guestbook (Lazy ~1550px) */}
         <Suspense
           fallback={
             <SectionSkeleton
               id="contact"
-              label="// 05. CONTACT"
+              label="// 04. CONTACT"
               minHeight="min-h-[1550px]"
             />
           }

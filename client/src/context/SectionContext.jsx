@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 
-const NAV_SECTION_IDS = ["home", "about", "skills", "projects", "achievements", "contact"];
+const NAV_SECTION_IDS = ["home", "about", "skills", "projects", "contact"];
 
 const SectionContext = createContext({
   activeSection: "home",

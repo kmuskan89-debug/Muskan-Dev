@@ -10,6 +10,12 @@ const REVEAL_MS = 1000;        // how slowly the site is revealed after the flic
 const FULL_TEXT = "ERROR 404: Conventional developer not found.";
 const SAFETY_TIMEOUT_MS = 8000;
 
+const GLITCH_GLYPHS = "!@#$%^&*()_+-=[]{}|;:,.<>?/0123456789";
+
+function getRandomGlyph() {
+  return GLITCH_GLYPHS[Math.floor(Math.random() * GLITCH_GLYPHS.length)];
+}
+
 export default function Preloader({ onComplete }) {
   const shouldReduceMotion = useReducedMotion();
   const lenis = useLenis();
@@ -18,6 +24,7 @@ export default function Preloader({ onComplete }) {
   const [isDone, setIsDone] = useState(false);
   const [typedText, setTypedText] = useState(shouldReduceMotion ? FULL_TEXT : "");
   const [isFlickering, setIsFlickering] = useState(false);
+  const [flickerGlitchText, setFlickerGlitchText] = useState(FULL_TEXT);
   const [isRevealing, setIsRevealing] = useState(false);
   const [fadeDuration, setFadeDuration] = useState(REVEAL_MS);
 
@@ -96,6 +103,32 @@ export default function Preloader({ onComplete }) {
     }
   }, [lenis, isDone]);
 
+  // Dynamic character glitch & scramble during the flicker phase
+  useEffect(() => {
+    if (!isFlickering || shouldReduceMotion) {
+      setFlickerGlitchText(FULL_TEXT);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      const chars = FULL_TEXT.split("");
+      // Pick 2-4 random characters to glitch into terminal glyphs
+      const glitchCount = Math.floor(Math.random() * 3) + 2;
+      for (let k = 0; k < glitchCount; k++) {
+        const idx = Math.floor(Math.random() * chars.length);
+        if (chars[idx] !== " " && chars[idx] !== ":") {
+          chars[idx] = getRandomGlyph();
+        }
+      }
+      setFlickerGlitchText(chars.join(""));
+    }, 65);
+
+    return () => {
+      clearInterval(interval);
+      setFlickerGlitchText(FULL_TEXT);
+    };
+  }, [isFlickering, shouldReduceMotion]);
+
   // Main animation sequence
   useEffect(() => {
     if (hasRevealedRef.current) {
@@ -131,7 +164,7 @@ export default function Preloader({ onComplete }) {
     timeoutsRef.current.push(safetyTimer);
 
     if (shouldReduceMotion) {
-      // Reduced motion: no typing and no flicker: show full text for 1.5 seconds, then fade out over REVEAL_MS
+      // Reduced motion: no typing, no glitch, no flicker: show full text for 1.5 seconds, then fade out over REVEAL_MS
       const rmTimer = setTimeout(() => {
         startReveal(REVEAL_MS);
       }, 1500);
@@ -145,27 +178,40 @@ export default function Preloader({ onComplete }) {
       };
     }
 
-    // 1. Typing: text types letter by letter at TYPE_MS_PER_CHAR per character
+    // 1. Typing with character glitch & scrambling at leading edge
     const totalChars = FULL_TEXT.length;
     const typingDuration = totalChars * TYPE_MS_PER_CHAR;
+    const tickMs = Math.round(TYPE_MS_PER_CHAR / 2);
     let charIndex = 0;
+    let tickCount = 0;
 
     const typeInterval = setInterval(() => {
-      charIndex++;
-      setTypedText(FULL_TEXT.slice(0, charIndex));
+      tickCount++;
+
+      if (tickCount % 2 === 0) {
+        charIndex++;
+      }
+
       if (charIndex >= totalChars) {
         clearInterval(typeInterval);
+        setTypedText(FULL_TEXT);
+        return;
       }
-    }, TYPE_MS_PER_CHAR);
+
+      const resolved = FULL_TEXT.slice(0, charIndex);
+      const nextChar = FULL_TEXT[charIndex];
+      const glitchChar = nextChar === " " ? " " : getRandomGlyph();
+      setTypedText(resolved + glitchChar);
+    }, tickMs);
 
     // 2. Hold: keep COMPLETE text on screen for HOLD_MS
-    // 3. Flicker on cream: after hold, flicker mildly for FLICKER_MS (text dips to ~0.6, bg to #EBE7D6)
+    // 3. Flicker on cream: after hold, characters glitch and flicker for FLICKER_MS
     const flickerTimer = setTimeout(() => {
       setIsFlickering(true);
     }, typingDuration + HOLD_MS);
     timeoutsRef.current.push(flickerTimer);
 
-    // 4. Reveal: when flicker ends, start slow fade out over REVEAL_MS
+    // 4. Reveal: when flicker ends, start slow fade out over REVEAL_MS (homepage slowly reveals)
     const revealTimer = setTimeout(() => {
       startReveal(REVEAL_MS);
     }, typingDuration + HOLD_MS + FLICKER_MS);
@@ -183,6 +229,9 @@ export default function Preloader({ onComplete }) {
   if (isDone) {
     return null;
   }
+
+  // Active text: during the flicker phase, show character-glitched text; otherwise show typed text
+  const activeText = isFlickering && !shouldReduceMotion ? flickerGlitchText : typedText;
 
   return (
     <motion.div
@@ -220,14 +269,18 @@ export default function Preloader({ onComplete }) {
         isRevealing ? "pointer-events-none" : ""
       }`}
     >
-      {/* Centered Typography: Ink #1A110A, bold monospace, quick fade-out + upward drift during reveal so error text never lingers */}
+      {/* Centered Typography: Ink #1A110A, bold monospace, character glitch shake during flicker, smooth fade-out during reveal */}
       <motion.div
         animate={
           isRevealing
-            ? { opacity: 0, y: shouldReduceMotion ? 0 : -12 }
+            ? { opacity: 0, y: shouldReduceMotion ? 0 : -12, x: 0 }
             : isFlickering
-            ? { opacity: [1, 0.68, 1, 0.6, 1, 0.68, 1], y: 0 }
-            : { opacity: 1, y: 0 }
+            ? {
+                opacity: [1, 0.65, 1, 0.6, 1, 0.68, 1],
+                x: shouldReduceMotion ? 0 : [0, -3, 3, -2, 2, -1, 1, 0],
+                y: 0,
+              }
+            : { opacity: 1, x: 0, y: 0 }
         }
         transition={
           isRevealing
@@ -243,10 +296,14 @@ export default function Preloader({ onComplete }) {
           fontSize: "clamp(1.75rem, 5.5vw, 5.5rem)",
           lineHeight: 1.6,
           maxWidth: "26ch",
+          textShadow:
+            isFlickering && !shouldReduceMotion
+              ? "2px 0 #F79F15, -2px 0 rgba(26, 17, 10, 0.5)"
+              : "none",
         }}
         className="w-full text-center text-[#1A110A] tracking-tight break-words select-none"
       >
-        <span>{typedText}</span>
+        <span>{activeText}</span>
         {/* Blinking block cursor in accent orange #F79F15 */}
         <span
           aria-hidden="true"
