@@ -2,15 +2,15 @@ import React, { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-export default function NeuralNetwork({ count = 120, isMobile = false }) {
+export default function NeuralNetwork({ count = 90, isMobile = false }) {
   const groupRef = useRef();
   const coreRef = useRef();
   const innerCoreRef = useRef();
   const linesMeshRef = useRef();
 
-  // Generate node positions in a sphere
+  // Generate node positions in a sphere (~90 nodes on desktop, 45 on mobile)
   const [nodes, linePositions] = useMemo(() => {
-    const nodeCount = isMobile ? Math.min(count, 50) : count;
+    const nodeCount = isMobile ? 45 : count;
     const pts = [];
     const radius = 3.6;
 
@@ -96,22 +96,22 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
 
   return (
     <group ref={groupRef}>
-      {/* 1. Rotating Wireframe Icosahedron Core */}
+      {/* 1. Rotating Wireframe Icosahedron Core (Cream Wireframe) */}
       <mesh ref={coreRef}>
         <icosahedronGeometry args={[1.5, 1]} />
         <meshBasicMaterial
-          color="#1A110A"
+          color="#F5F3E7"
           wireframe
           transparent
-          opacity={0.3}
+          opacity={0.35}
         />
       </mesh>
 
-      {/* Inner core for depth */}
+      {/* Inner core for depth (Cream Wireframe) */}
       <mesh ref={innerCoreRef}>
         <icosahedronGeometry args={[0.9, 0]} />
         <meshBasicMaterial
-          color="#1A110A"
+          color="#F5F3E7"
           wireframe
           transparent
           opacity={0.4}
@@ -124,7 +124,7 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
         <meshBasicMaterial color="#F79F15" transparent opacity={0.9} />
       </mesh>
 
-      {/* 2. Neural Nodes (Points in Orange) */}
+      {/* 2. Neural Nodes (Points in Orange #F79F15) */}
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -136,12 +136,12 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
           size={isMobile ? 0.08 : 0.09}
           color="#F79F15"
           transparent
-          opacity={0.9}
+          opacity={0.95}
           sizeAttenuation
         />
       </points>
 
-      {/* 3. Interconnecting Synapse Lines (Ink) */}
+      {/* 3. Interconnecting Synapse Lines (Cream Wireframe #F5F3E7) */}
       {linePositions.length > 0 && (
         <lineSegments ref={linesMeshRef}>
           <bufferGeometry>
@@ -151,9 +151,9 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
             />
           </bufferGeometry>
           <lineBasicMaterial
-            color="#1A110A"
+            color="#F5F3E7"
             transparent
-            opacity={0.2}
+            opacity={0.25}
           />
         </lineSegments>
       )}
