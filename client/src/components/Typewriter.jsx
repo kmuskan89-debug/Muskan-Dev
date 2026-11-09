@@ -43,9 +43,9 @@ export default function Typewriter({
   }, [currentText, isDeleting, currentWordIndex, words, typingSpeed, deletingSpeed, pauseDuration, shouldReduceMotion]);
 
   return (
-    <span className="inline-flex items-center text-[#5EEAD4] font-mono font-medium">
+    <span className="inline-flex items-center text-[#F79F15] font-mono font-bold">
       <span>{currentText}</span>
-      <span className="ml-1 w-2 h-5 bg-[#4DA3FF] animate-pulse inline-block" />
+      <span className="ml-1 w-2 h-5 bg-[#1A110A] animate-pulse inline-block" />
     </span>
   );
 }

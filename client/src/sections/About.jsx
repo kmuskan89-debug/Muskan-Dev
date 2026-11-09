@@ -27,8 +27,7 @@ export default function About() {
         className="relative min-h-screen w-full flex flex-col justify-center px-6 py-28 max-w-6xl mx-auto overflow-hidden"
       >
         {/* Subtle Ambient Background Light */}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#4DA3FF]/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#5EEAD4]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#F79F15]/5 rounded-full blur-[140px] pointer-events-none" />
 
         {/* Section Header */}
         <div className="flex flex-col gap-3 mb-14">
@@ -49,7 +48,7 @@ export default function About() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={1}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight gradient-text"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight text-[#1A110A]"
           >
             More than just a developer.
           </motion.h2>
@@ -80,7 +79,7 @@ export default function About() {
               whileInView="visible"
               viewport={{ once: true }}
               custom={2}
-              className="text-lg md:text-xl text-[#E8EDF3] leading-relaxed font-normal"
+              className="text-lg md:text-xl text-[#1A110A] leading-relaxed font-normal"
             >
               {personalInfo.objective}
             </motion.p>
@@ -92,12 +91,12 @@ export default function About() {
               whileInView="visible"
               viewport={{ once: true }}
               custom={3}
-              className="text-sm md:text-base text-[#8A97AB] leading-relaxed"
+              className="text-sm md:text-base text-[#6F6B60] leading-relaxed"
             >
-              Based in <span className="text-[#E8EDF3] font-medium">{personalInfo.location}</span>, I combine disciplined problem-solving in Data Structures & Algorithms with practical full-stack engineering to architect responsive, resilient web platforms.
+              Based in <span className="text-[#1A110A] font-medium">{personalInfo.location}</span>, I combine disciplined problem-solving in Data Structures & Algorithms with practical full-stack engineering to architect responsive, resilient web platforms.
             </motion.p>
 
-            {/* Highlighted Card: Currently Learning AI/ML with Animated Gradient Border */}
+            {/* Highlighted Card: Currently Learning AI/ML with Animated Border */}
             <motion.div
               variants={lineRevealVariants}
               initial="hidden"
@@ -106,21 +105,21 @@ export default function About() {
               custom={4}
               className="relative p-[1.5px] rounded-2xl overflow-hidden mt-2 group"
             >
-              {/* Rotating Gradient Shimmer Border */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#4DA3FF] via-[#5EEAD4] to-[#4DA3FF] animate-pulse opacity-75" />
+              {/* Border */}
+              <div className="absolute inset-0 bg-[#F79F15]/40 opacity-75" />
 
-              <div className="relative glass-card rounded-[14px] p-5 bg-[#0E1626]/95 backdrop-blur-xl flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-gradient-to-br from-[#4DA3FF]/20 to-[#5EEAD4]/20 border border-[#5EEAD4]/30 text-[#5EEAD4] shrink-0">
+              <div className="relative rounded-[14px] p-5 bg-[#FFFFFF] border border-[#9F9B90]/30 shadow-sm flex items-start gap-4">
+                <div className="p-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-[#F79F15] shrink-0">
                   <FiCpu className="text-xl" />
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-semibold text-[#5EEAD4] uppercase tracking-wider">
+                    <span className="text-xs font-mono font-semibold text-[#F79F15] uppercase tracking-wider">
                       Active Exploration
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5EEAD4] animate-ping" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#F79F15] animate-ping" />
                   </div>
-                  <h4 className="text-base md:text-lg font-bold text-[#E8EDF3]">
+                  <h4 className="text-base md:text-lg font-bold text-[#1A110A]">
                     {personalInfo.currentlyLearning}
                   </h4>
                 </div>
@@ -136,17 +135,17 @@ export default function About() {
               custom={5}
               className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2"
             >
-              <div className="glass-card rounded-xl p-3 flex items-center gap-2.5 border border-white/5">
-                <FiMapPin className="text-[#4DA3FF] shrink-0" />
-                <span className="text-xs font-mono text-[#8A97AB]">{personalInfo.location}</span>
+              <div className="bg-[#FFFFFF] rounded-xl p-3 flex items-center gap-2.5 border border-[#9F9B90]/30 shadow-sm">
+                <FiMapPin className="text-[#F79F15] shrink-0" />
+                <span className="text-xs font-mono text-[#1A110A]">{personalInfo.location}</span>
               </div>
-              <div className="glass-card rounded-xl p-3 flex items-center gap-2.5 border border-white/5">
-                <FiCode className="text-[#5EEAD4] shrink-0" />
-                <span className="text-xs font-mono text-[#8A97AB]">100+ LeetCode DSA</span>
+              <div className="bg-[#FFFFFF] rounded-xl p-3 flex items-center gap-2.5 border border-[#9F9B90]/30 shadow-sm">
+                <FiCode className="text-[#1A110A] shrink-0" />
+                <span className="text-xs font-mono text-[#1A110A]">100+ LeetCode DSA</span>
               </div>
-              <div className="glass-card rounded-xl p-3 flex items-center gap-2.5 border border-white/5 col-span-2 sm:col-span-1">
-                <FiZap className="text-amber-400 shrink-0" />
-                <span className="text-xs font-mono text-[#8A97AB]">Ideathon Finalist</span>
+              <div className="bg-[#FFFFFF] rounded-xl p-3 flex items-center gap-2.5 border border-[#9F9B90]/30 shadow-sm col-span-2 sm:col-span-1">
+                <FiZap className="text-[#F79F15] shrink-0" />
+                <span className="text-xs font-mono text-[#1A110A]">Ideathon Finalist</span>
               </div>
             </motion.div>
           </div>

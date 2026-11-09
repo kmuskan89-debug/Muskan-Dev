@@ -35,10 +35,10 @@ export default function Preloader({ onComplete }) {
             transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] },
           }}
           aria-hidden="true"
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#060B16]"
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#F5F3E7]"
         >
           {/* Subtle Ambient Radial Glow */}
-          <div className="absolute w-72 h-72 rounded-full bg-[#4DA3FF]/15 blur-3xl pointer-events-none" />
+          <div className="absolute w-72 h-72 rounded-full bg-[#F79F15]/10 blur-3xl pointer-events-none" />
 
           <div className="relative flex flex-col items-center gap-6">
             {/* MK Monogram SVG with stroke drawing animation */}
@@ -48,12 +48,12 @@ export default function Preloader({ onComplete }) {
               viewBox="0 0 100 100"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="drop-shadow-[0_0_15px_rgba(77,163,255,0.6)]"
+              className="drop-shadow-sm"
             >
               {/* Outer Decorative Hexagon / Frame */}
               <motion.polygon
                 points="50,5 90,28 90,72 50,95 10,72 10,28"
-                stroke="rgba(255, 255, 255, 0.12)"
+                stroke="#9F9B90"
                 strokeWidth="1.5"
                 fill="none"
                 initial={{ pathLength: 0, opacity: 0 }}
@@ -61,10 +61,10 @@ export default function Preloader({ onComplete }) {
                 transition={{ duration: 0.8, ease: "easeInOut" }}
               />
 
-              {/* Letter M Path */}
+              {/* Letter M Path (Ink) */}
               <motion.path
                 d="M26 66 V34 L40 50 L50 38"
-                stroke="url(#gradient-accent)"
+                stroke="#1A110A"
                 strokeWidth="3.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -73,10 +73,10 @@ export default function Preloader({ onComplete }) {
                 transition={{ duration: 0.85, ease: "easeInOut", delay: 0.1 }}
               />
 
-              {/* Letter K Path */}
+              {/* Letter K Path (Ink) */}
               <motion.path
                 d="M56 34 V66 M72 34 L56 50 L73 66"
-                stroke="url(#gradient-accent)"
+                stroke="#1A110A"
                 strokeWidth="3.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -84,20 +84,6 @@ export default function Preloader({ onComplete }) {
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 0.85, ease: "easeInOut", delay: 0.2 }}
               />
-
-              <defs>
-                <linearGradient
-                  id="gradient-accent"
-                  x1="26"
-                  y1="34"
-                  x2="73"
-                  y2="66"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#4DA3FF" />
-                  <stop offset="1" stopColor="#5EEAD4" />
-                </linearGradient>
-              </defs>
             </svg>
 
             {/* Subtitle / Status indicator */}
@@ -105,7 +91,7 @@ export default function Preloader({ onComplete }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="section-label text-xs tracking-[0.25em]"
+              className="text-xs font-mono font-semibold tracking-[0.25em] text-[#6F6B60]"
             >
               MUSKAN KUMARI
             </motion.div>

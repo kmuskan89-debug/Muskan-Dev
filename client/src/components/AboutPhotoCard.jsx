@@ -41,7 +41,7 @@ export default function AboutPhotoCard() {
   return (
     <div className="relative flex items-center justify-center py-6">
       {/* Ambient background glow behind portrait */}
-      <div className="absolute w-72 h-80 bg-[#4DA3FF]/20 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute w-72 h-80 bg-[#F79F15]/10 rounded-full blur-[90px] pointer-events-none" />
 
       {/* Floating Wrapper */}
       <motion.div
@@ -74,10 +74,10 @@ export default function AboutPhotoCard() {
                   transformStyle: "preserve-3d",
                 }
           }
-          className="relative w-72 sm:w-80 h-96 sm:h-[420px] rounded-3xl p-[2px] bg-gradient-to-br from-[#4DA3FF] via-[#5EEAD4]/60 to-[#4DA3FF]/20 shadow-[0_15px_40px_rgba(0,0,0,0.6),0_0_30px_rgba(77,163,255,0.25)] transition-shadow duration-300 group"
+          className="relative w-72 sm:w-80 h-96 sm:h-[420px] rounded-3xl p-[2px] bg-[#FFFFFF] border-2 border-[#1A110A] shadow-xl transition-shadow duration-300 group"
         >
           {/* Inner Photo Container */}
-          <div className="w-full h-full rounded-[22px] overflow-hidden bg-[#0E1626] relative">
+          <div className="w-full h-full rounded-[22px] overflow-hidden bg-[#F8F5EE] relative">
             <img
               src="/me.webp"
               alt="Muskan Kumari"
@@ -85,12 +85,12 @@ export default function AboutPhotoCard() {
             />
 
             {/* Subtle Gradient Overlay for depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#060B16] via-transparent to-transparent opacity-60 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1A110A]/60 via-transparent to-transparent opacity-60 pointer-events-none" />
 
             {/* Corner Badge */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-[#E8EDF3] bg-[#0E1626]/80 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10">
-              <span className="text-[#5EEAD4] font-semibold">Muskan Kumari</span>
-              <span className="text-[#8A97AB]">BTech CSE '28</span>
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-[#FFFFFF] bg-[#1A110A]/85 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10">
+              <span className="text-[#F79F15] font-semibold">Muskan Kumari</span>
+              <span className="text-[#F8F5EE]">BTech CSE '28</span>
             </div>
           </div>
         </motion.div>
@@ -110,9 +110,9 @@ export default function AboutPhotoCard() {
             duration: 4.2,
             ease: "easeInOut",
           }}
-          className="absolute -top-3 -right-4 sm:-right-6 glass-card px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-mono font-semibold text-[#5EEAD4] border border-[#5EEAD4]/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)] pointer-events-none z-10"
+          className="absolute -top-3 -right-4 sm:-right-6 bg-[#FFFFFF] px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-mono font-semibold text-[#1A110A] border border-[#9F9B90]/40 shadow-md pointer-events-none z-10"
         >
-          <span className="w-2 h-2 rounded-full bg-[#5EEAD4] shadow-[0_0_8px_#5EEAD4]" />
+          <span className="w-2 h-2 rounded-full bg-[#F79F15] shadow-sm" />
           <span>MERN</span>
         </motion.div>
 
@@ -131,9 +131,9 @@ export default function AboutPhotoCard() {
             duration: 5.5,
             ease: "easeInOut",
           }}
-          className="absolute bottom-16 -left-4 sm:-left-6 glass-card px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-mono font-semibold text-[#4DA3FF] border border-[#4DA3FF]/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)] pointer-events-none z-10"
+          className="absolute bottom-16 -left-4 sm:-left-6 bg-[#FFFFFF] px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-mono font-semibold text-[#1A110A] border border-[#9F9B90]/40 shadow-md pointer-events-none z-10"
         >
-          <span className="w-2 h-2 rounded-full bg-[#4DA3FF] shadow-[0_0_8px_#4DA3FF]" />
+          <span className="w-2 h-2 rounded-full bg-[#1A110A] shadow-sm" />
           <span>DSA</span>
         </motion.div>
 
@@ -152,9 +152,9 @@ export default function AboutPhotoCard() {
             duration: 3.8,
             ease: "easeInOut",
           }}
-          className="absolute -bottom-4 right-6 glass-card px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-mono font-semibold text-[#E8EDF3] border border-white/20 shadow-[0_4px_20px_rgba(0,0,0,0.4)] pointer-events-none z-10"
+          className="absolute -bottom-4 right-6 bg-[#FFFFFF] px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-mono font-semibold text-[#1A110A] border border-[#9F9B90]/40 shadow-md pointer-events-none z-10"
         >
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] shadow-[0_0_8px_#5EEAD4]" />
+          <span className="w-2 h-2 rounded-full bg-[#F79F15] shadow-sm" />
           <span>AI / ML</span>
         </motion.div>
       </motion.div>

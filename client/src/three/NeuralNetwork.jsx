@@ -100,31 +100,31 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
       <mesh ref={coreRef}>
         <icosahedronGeometry args={[1.5, 1]} />
         <meshBasicMaterial
-          color="#4DA3FF"
+          color="#1A110A"
           wireframe
           transparent
-          opacity={0.35}
+          opacity={0.3}
         />
       </mesh>
 
-      {/* Inner glowing core for depth */}
+      {/* Inner core for depth */}
       <mesh ref={innerCoreRef}>
         <icosahedronGeometry args={[0.9, 0]} />
         <meshBasicMaterial
-          color="#5EEAD4"
+          color="#1A110A"
           wireframe
           transparent
-          opacity={0.45}
+          opacity={0.4}
         />
       </mesh>
 
-      {/* Center glowing focal point */}
+      {/* Center orange focal point */}
       <mesh>
         <sphereGeometry args={[0.25, 16, 16]} />
-        <meshBasicMaterial color="#5EEAD4" transparent opacity={0.8} />
+        <meshBasicMaterial color="#F79F15" transparent opacity={0.9} />
       </mesh>
 
-      {/* 2. Neural Nodes (Points) */}
+      {/* 2. Neural Nodes (Points in Orange) */}
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -134,14 +134,14 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
         </bufferGeometry>
         <pointsMaterial
           size={isMobile ? 0.08 : 0.09}
-          color="#5EEAD4"
+          color="#F79F15"
           transparent
-          opacity={0.85}
+          opacity={0.9}
           sizeAttenuation
         />
       </points>
 
-      {/* 3. Interconnecting Synapse Lines */}
+      {/* 3. Interconnecting Synapse Lines (Ink) */}
       {linePositions.length > 0 && (
         <lineSegments ref={linesMeshRef}>
           <bufferGeometry>
@@ -151,10 +151,9 @@ export default function NeuralNetwork({ count = 120, isMobile = false }) {
             />
           </bufferGeometry>
           <lineBasicMaterial
-            color="#4DA3FF"
+            color="#1A110A"
             transparent
-            opacity={0.22}
-            blending={THREE.AdditiveBlending}
+            opacity={0.2}
           />
         </lineSegments>
       )}

@@ -39,42 +39,42 @@ const CATEGORIES = [
   "Core CS",
 ];
 
-// Map skill items from content.js with their icons and accent colors
+// Map skill items from content.js with their icons
 const SKILL_ITEMS = [
   // Languages
-  { name: "JavaScript (ES6+)", category: "Languages", icon: SiJavascript, color: "#F7DF1E" },
-  { name: "Java", category: "Languages", icon: FaJava, color: "#E76F00" },
-  { name: "Python", category: "Languages", icon: SiPython, color: "#3776AB" },
-  { name: "C", category: "Languages", icon: SiC, color: "#659AD2" },
+  { name: "JavaScript (ES6+)", category: "Languages", icon: SiJavascript },
+  { name: "Java", category: "Languages", icon: FaJava },
+  { name: "Python", category: "Languages", icon: SiPython },
+  { name: "C", category: "Languages", icon: SiC },
 
   // Frontend
-  { name: "React.js", category: "Frontend", icon: SiReact, color: "#61DAFB" },
-  { name: "HTML5", category: "Frontend", icon: SiHtml5, color: "#E34F26" },
-  { name: "CSS3", category: "Frontend", icon: FaCss3Alt, color: "#1572B6" },
-  { name: "Tailwind CSS", category: "Frontend", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "React.js", category: "Frontend", icon: SiReact },
+  { name: "HTML5", category: "Frontend", icon: SiHtml5 },
+  { name: "CSS3", category: "Frontend", icon: FaCss3Alt },
+  { name: "Tailwind CSS", category: "Frontend", icon: SiTailwindcss },
 
   // Backend
-  { name: "Node.js", category: "Backend", icon: SiNodedotjs, color: "#5FA04E" },
-  { name: "Express.js", category: "Backend", icon: SiExpress, color: "#E8EDF3" },
-  { name: "REST APIs", category: "Backend", icon: FiServer, color: "#4DA3FF" },
-  { name: "JWT Authentication", category: "Backend", icon: SiJsonwebtokens, color: "#D63AFF" },
+  { name: "Node.js", category: "Backend", icon: SiNodedotjs },
+  { name: "Express.js", category: "Backend", icon: SiExpress },
+  { name: "REST APIs", category: "Backend", icon: FiServer },
+  { name: "JWT Authentication", category: "Backend", icon: SiJsonwebtokens },
 
   // Database
-  { name: "MongoDB", category: "Database", icon: SiMongodb, color: "#47A248" },
-  { name: "Mongoose", category: "Database", icon: FiDatabase, color: "#880000" },
-  { name: "MySQL", category: "Database", icon: SiMysql, color: "#4479A1" },
+  { name: "MongoDB", category: "Database", icon: SiMongodb },
+  { name: "Mongoose", category: "Database", icon: FiDatabase },
+  { name: "MySQL", category: "Database", icon: SiMysql },
 
   // Tools
-  { name: "Git", category: "Tools", icon: SiGit, color: "#F05032" },
-  { name: "GitHub", category: "Tools", icon: SiGithub, color: "#E8EDF3" },
-  { name: "Postman", category: "Tools", icon: SiPostman, color: "#FF6C37" },
-  { name: "VS Code", category: "Tools", icon: VscVscode, color: "#007ACC" },
-  { name: "Vercel", category: "Tools", icon: SiVercel, color: "#E8EDF3" },
-  { name: "MongoDB Atlas", category: "Tools", icon: SiMongodb, color: "#47A248" },
+  { name: "Git", category: "Tools", icon: SiGit },
+  { name: "GitHub", category: "Tools", icon: SiGithub },
+  { name: "Postman", category: "Tools", icon: SiPostman },
+  { name: "VS Code", category: "Tools", icon: VscVscode },
+  { name: "Vercel", category: "Tools", icon: SiVercel },
+  { name: "MongoDB Atlas", category: "Tools", icon: SiMongodb },
 
   // Core CS
-  { name: "Data Structures & Algorithms", category: "Core CS", icon: FiCpu, color: "#5EEAD4" },
-  { name: "OOPs", category: "Core CS", icon: FiBox, color: "#4DA3FF" },
+  { name: "Data Structures & Algorithms", category: "Core CS", icon: FiCpu },
+  { name: "OOPs", category: "Core CS", icon: FiBox },
 ];
 
 export default function Skills() {
@@ -111,17 +111,13 @@ export default function Skills() {
         id="skills"
         className="relative min-h-screen w-full flex flex-col justify-center px-6 py-28 max-w-6xl mx-auto overflow-hidden"
       >
-        {/* Subtle Ambient Background Lighting */}
-        <div className="absolute top-1/3 -right-36 w-96 h-96 bg-[#4DA3FF]/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-1/3 -left-36 w-96 h-96 bg-[#5EEAD4]/10 rounded-full blur-[140px] pointer-events-none" />
-
         {/* Section Header */}
         <div className="flex flex-col gap-3 mb-10">
           <div className="section-label">// 02. SKILLS</div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight gradient-text">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight text-[#1A110A]">
             Skills that build possibilities.
           </h2>
-          <p className="text-sm md:text-base text-[#8A97AB] max-w-xl">
+          <p className="text-sm md:text-base text-[#6F6B60] max-w-xl">
             A comprehensive overview of programming languages, frontend and backend technologies, databases, and development tooling.
           </p>
         </div>
@@ -134,33 +130,33 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="relative p-[1.5px] rounded-3xl overflow-hidden mb-12 group"
         >
-          {/* Animated Gradient Outer Shimmer */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#4DA3FF] via-[#5EEAD4] to-[#4DA3FF] opacity-75 animate-pulse [animation-duration:4s]" />
+          {/* Subtle Outer Border */}
+          <div className="absolute inset-0 bg-[#F79F15]/40 opacity-75 rounded-3xl" />
 
-          <div className="relative glass-card rounded-[22px] p-6 sm:p-8 bg-[#0E1626]/95 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+          <div className="relative rounded-[22px] p-6 sm:p-8 bg-[#FFFFFF] flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 border border-[#9F9B90]/30 shadow-md">
             <div className="flex flex-col gap-3 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#5EEAD4] shadow-[0_0_8px_#5EEAD4] animate-ping" />
-                <span className="text-xs font-mono font-semibold tracking-widest text-[#5EEAD4] uppercase">
+                <span className="w-2 h-2 rounded-full bg-[#F79F15] shadow-[0_0_8px_#F79F15] animate-ping" />
+                <span className="text-xs font-mono font-semibold tracking-widest text-[#F79F15] uppercase">
                   Currently Exploring
                 </span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#E8EDF3]">
+              <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#1A110A]">
                 AI / Machine Learning
               </h3>
 
-              <p className="text-sm sm:text-base text-[#8A97AB] max-w-xl leading-relaxed">
+              <p className="text-sm sm:text-base text-[#6F6B60] max-w-xl leading-relaxed">
                 Currently exploring AI and Machine Learning concepts alongside core full-stack web development.
               </p>
 
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-1">
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#E8EDF3] bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                  <FiCheckCircle className="text-[#5EEAD4]" />
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#1A110A] bg-[#F8F5EE] px-3 py-1 rounded-full border border-[#9F9B90]/30">
+                  <FiCheckCircle className="text-[#F79F15]" />
                   <span>Mathematics & Model Basics</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#E8EDF3] bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                  <FiCheckCircle className="text-[#4DA3FF]" />
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#1A110A] bg-[#F8F5EE] px-3 py-1 rounded-full border border-[#9F9B90]/30">
+                  <FiCheckCircle className="text-[#F79F15]" />
                   <span>Python Ecosystem</span>
                 </span>
               </div>
@@ -170,8 +166,8 @@ export default function Skills() {
             <div aria-hidden="true" className="flex items-center justify-center">
               <Suspense
                 fallback={
-                  <div className="w-[180px] h-[180px] rounded-2xl bg-[#060B16]/50 animate-pulse flex items-center justify-center">
-                    <div className="w-6 h-6 border-2 border-[#4DA3FF]/30 border-t-[#5EEAD4] rounded-full animate-spin" />
+                  <div className="w-[180px] h-[180px] rounded-2xl bg-[#F8F5EE] animate-pulse flex items-center justify-center">
+                    <div className="w-6 h-6 border-2 border-[#9F9B90]/30 border-t-[#F79F15] rounded-full animate-spin" />
                   </div>
                 }
               >
@@ -192,13 +188,13 @@ export default function Skills() {
                 aria-selected={isActive}
                 onClick={() => setActiveCategory(cat)}
                 className={`relative px-4 py-2.5 min-h-[44px] rounded-full text-xs sm:text-sm font-mono font-medium transition-colors whitespace-nowrap z-10 cursor-pointer flex items-center justify-center ${
-                  isActive ? "text-[#060B16] font-semibold" : "text-[#8A97AB] hover:text-[#E8EDF3] bg-white/[0.03] border border-white/5 hover:border-white/10"
+                  isActive ? "text-[#FFFFFF] font-semibold" : "text-[#6F6B60] hover:text-[#1A110A] bg-[#F8F5EE] border border-[#9F9B90]/30 hover:border-[#1A110A]/30"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="skills-tab-indicator"
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] -z-10 shadow-[0_0_15px_rgba(77,163,255,0.4)]"
+                    className="absolute inset-0 rounded-full bg-[#1A110A] -z-10 shadow-sm"
                     transition={{
                       type: "spring",
                       stiffness: 400,
@@ -235,7 +231,6 @@ export default function Skills() {
                   name={skill.name}
                   category={skill.category}
                   icon={skill.icon}
-                  accentColor={skill.color}
                 />
               </motion.div>
             ))}

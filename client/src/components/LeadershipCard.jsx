@@ -13,7 +13,7 @@ export default function LeadershipCard({
   role = "Engagement Lead",
   organization = "GDGC SVIET",
   icon: Icon = FiUsers,
-  accentColor = "#5EEAD4",
+  accentColor = "#F79F15",
 }) {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, amount: 0.3 });
@@ -79,7 +79,7 @@ export default function LeadershipCard({
               transformStyle: "preserve-3d",
             }
       }
-      className="group relative glass-card rounded-3xl p-5 sm:p-8 flex items-center justify-between border border-white/10 hover:border-[#5EEAD4]/40 transition-colors duration-300 overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.5)] select-none"
+      className="group relative bg-[#FFFFFF] rounded-3xl p-5 sm:p-8 flex items-center justify-between border border-[#9F9B90]/30 hover:border-[#F79F15] transition-colors duration-300 overflow-hidden shadow-sm select-none"
     >
       {/* Cursor-Following Radial Glow (Desktop only) */}
       {!isTouchDevice && (
@@ -87,7 +87,7 @@ export default function LeadershipCard({
           className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300 -z-10"
           style={{
             opacity: isHovered ? 0.35 : 0,
-            background: `radial-gradient(280px circle at ${glowX.get()}px ${glowY.get()}px, rgba(94, 234, 212, 0.25), transparent 75%)`,
+            background: `radial-gradient(280px circle at ${glowX.get()}px ${glowY.get()}px, rgba(247, 159, 21, 0.15), transparent 75%)`,
           }}
         />
       )}
@@ -95,17 +95,16 @@ export default function LeadershipCard({
       {/* Left Icon + Content */}
       <div className="flex items-center gap-3.5 sm:gap-6 min-w-0 flex-1">
         <div
-          className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center bg-[#060B16]/80 border border-white/10 group-hover:border-[#5EEAD4]/40 transition-colors duration-300 shadow-inner shrink-0"
-          style={{ color: accentColor }}
+          className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center bg-[#F8F5EE] border border-[#9F9B90]/30 group-hover:border-[#F79F15]/40 text-[#1A110A] group-hover:text-[#F79F15] transition-colors duration-300 shadow-inner shrink-0"
         >
           <Icon className="text-xl sm:text-3xl transition-transform duration-300 group-hover:scale-110" />
         </div>
 
         <div className="flex flex-col min-w-0">
-          <h4 className="text-base sm:text-2xl font-bold font-heading text-[#E8EDF3] group-hover:text-white transition-colors leading-tight">
+          <h4 className="text-base sm:text-2xl font-bold font-heading text-[#1A110A] group-hover:text-[#F79F15] transition-colors leading-tight">
             {role}
           </h4>
-          <p className="text-xs sm:text-sm font-mono text-[#8A97AB] mt-0.5 sm:mt-1">
+          <p className="text-xs sm:text-sm font-mono text-[#6F6B60] mt-0.5 sm:mt-1">
             {organization}
           </p>
         </div>
@@ -113,11 +112,7 @@ export default function LeadershipCard({
 
       {/* Right Accent Light Indicator */}
       <div
-        className="w-2.5 h-2.5 rounded-full ml-3 sm:ml-4 shrink-0"
-        style={{
-          backgroundColor: accentColor,
-          boxShadow: `0 0 10px ${accentColor}`,
-        }}
+        className="w-2.5 h-2.5 rounded-full ml-3 sm:ml-4 shrink-0 bg-[#F79F15]"
       />
     </motion.div>
   );

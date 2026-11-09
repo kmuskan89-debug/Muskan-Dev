@@ -35,9 +35,9 @@ function SectionSkeleton({ id, label, minHeight = "min-h-screen" }) {
       id={id}
       className={`w-full flex flex-col justify-center items-center px-6 py-28 max-w-6xl mx-auto ${minHeight}`}
     >
-      <div className="glass-card rounded-3xl p-10 flex flex-col items-center gap-4 text-center border border-white/5 bg-[#0E1626]/40 backdrop-blur-sm">
+      <div className="card rounded-[28px] p-10 flex flex-col items-center gap-4 text-center">
         {label && <div className="section-label">{label}</div>}
-        <div className="w-8 h-8 rounded-full border-2 border-[#4DA3FF]/30 border-t-[#5EEAD4] animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-[#9F9B90] border-t-[#F79F15] animate-spin" />
       </div>
     </section>
   );
@@ -108,11 +108,11 @@ export default function Portfolio() {
   }, [refreshLayout]);
 
   return (
-    <div className="relative min-h-screen bg-[#060B16] text-[#E8EDF3] selection:bg-[#4DA3FF]/30 selection:text-[#5EEAD4]">
+    <div className="relative min-h-screen bg-[#F5F3E7] text-[#1A110A] selection:bg-[#F79F15] selection:text-[#1A110A]">
       {/* Accessible Skip to Content Link */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[300] focus:px-5 focus:py-3 focus:rounded-xl focus:bg-[#5EEAD4] focus:text-[#060B16] focus:font-mono focus:font-bold focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#4DA3FF]"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[300] focus:px-5 focus:py-3 focus:rounded-full focus:bg-[#1A110A] focus:text-[#F5F3E7] focus:font-body focus:font-bold focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#F79F15]"
       >
         Skip to content
       </a>
@@ -220,7 +220,7 @@ export default function Portfolio() {
       </main>
 
       {/* Global Footer (Lazy ~380px) */}
-      <Suspense fallback={<div className="w-full min-h-[380px] bg-[#060B16]" />}>
+      <Suspense fallback={<div className="w-full min-h-[380px] bg-[#1A110A]" />}>
         <LazyBoundary onLoaded={refreshLayout}>
           <Footer />
         </LazyBoundary>

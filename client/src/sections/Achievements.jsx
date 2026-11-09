@@ -15,31 +15,26 @@ const CO_CURRICULAR_ITEMS = [
     title: "National-Level Hackathons & Ideations",
     description: "Multiple national-level hackathons and ideations",
     icon: FiAward,
-    accent: "#4DA3FF",
   },
   {
     title: "Public Speaking",
     description: "Debates, speeches, GD, anchoring",
     icon: FiMic,
-    accent: "#5EEAD4",
   },
   {
     title: "Technical Events",
     description: "Cybersecurity, Blockchain, Extended Reality, AI",
     icon: FiShield,
-    accent: "#818CF8",
   },
   {
     title: "College Technical Team",
     description: "Part of the college technical team",
     icon: FiUsers,
-    accent: "#38BDF8",
   },
   {
     title: "Dance Club",
     description: "Part of the dance club",
     icon: FiMusic,
-    accent: "#F472B6",
   },
 ];
 
@@ -72,18 +67,17 @@ export default function Achievements() {
       className="relative min-h-screen w-full flex flex-col justify-center px-6 py-28 max-w-6xl mx-auto overflow-hidden"
     >
       {/* Background Ambient Lighting */}
-      <div className="absolute top-1/4 -left-36 w-96 h-96 bg-[#4DA3FF]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 -right-36 w-96 h-96 bg-[#5EEAD4]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-36 w-96 h-96 bg-[#F79F15]/5 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="flex flex-col gap-3 mb-14">
         <div className="section-label">// 04. ACHIEVEMENTS</div>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight gradient-text">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight text-[#1A110A]">
           Achievements & Activities
         </h2>
       </div>
 
-      {/* 1. Three Large Glass Highlight Cards in a Row */}
+      {/* 1. Three Large Cards in a Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
         {/* Card 1: 100+ LeetCode with animated count-up */}
         <AchievementCard
@@ -92,7 +86,7 @@ export default function Achievements() {
           suffix="+"
           label="DSA problems solved on LeetCode"
           icon={SiLeetcode}
-          accentColor="#FFA116"
+          accentColor="#F79F15"
           link={personalInfo.leetcode}
           linkText="View profile"
         />
@@ -102,7 +96,7 @@ export default function Achievements() {
           type="trophy"
           label="Google Ideate college ideathon"
           icon={FaTrophy}
-          accentColor="#4DA3FF"
+          accentColor="#F79F15"
         />
 
         {/* Card 3: Hackathons (No made-up number) */}
@@ -110,7 +104,7 @@ export default function Achievements() {
           type="badge"
           label="Participated in various technical hackathons"
           icon={FiZap}
-          accentColor="#5EEAD4"
+          accentColor="#F79F15"
         />
       </div>
 
@@ -120,7 +114,7 @@ export default function Achievements() {
           <span className="section-label text-xs tracking-[0.2em]">
             // LEADERSHIP
           </span>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#E8EDF3]">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#1A110A]">
             Leadership
           </h3>
         </div>
@@ -137,7 +131,7 @@ export default function Achievements() {
           <span className="section-label text-xs tracking-[0.2em]">
             // CO-CURRICULAR
           </span>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#E8EDF3]">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#1A110A]">
             Beyond Code
           </h3>
         </div>
@@ -153,19 +147,18 @@ export default function Achievements() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : idx * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="glass-card rounded-2xl p-6 flex flex-col justify-between gap-4 border border-white/5 hover:border-[#4DA3FF]/30 transition-all duration-300 shadow-lg group select-none"
+                className="bg-[#FFFFFF] rounded-2xl p-6 flex flex-col justify-between gap-4 border border-[#9F9B90]/30 hover:border-[#F79F15] transition-all duration-300 shadow-sm group select-none"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#060B16]/80 border border-white/10 group-hover:border-[#4DA3FF]/40 transition-colors"
-                  style={{ color: card.accent }}
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#F8F5EE] border border-[#9F9B90]/30 group-hover:border-[#F79F15]/40 text-[#1A110A] group-hover:text-[#F79F15] transition-colors"
                 >
                   <Icon className="text-xl transition-transform duration-300 group-hover:scale-110" />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <h4 className="text-base sm:text-lg font-bold text-[#E8EDF3] group-hover:text-white transition-colors">
+                  <h4 className="text-base sm:text-lg font-bold text-[#1A110A] group-hover:text-[#F79F15] transition-colors">
                     {card.title}
                   </h4>
-                  <p className="text-xs sm:text-sm text-[#8A97AB] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#6F6B60] leading-relaxed">
                     {card.description}
                   </p>
                 </div>
@@ -176,12 +169,12 @@ export default function Achievements() {
       </div>
 
       {/* 4. Interpersonal Skills Animated Pills */}
-      <div className="glass-card rounded-3xl p-8 sm:p-10 border border-white/10 bg-[#0E1626]/80 backdrop-blur-xl flex flex-col gap-6 items-center text-center">
+      <div className="rounded-3xl p-8 sm:p-10 border border-[#9F9B90]/30 bg-[#FFFFFF] shadow-sm flex flex-col gap-6 items-center text-center">
         <div className="flex flex-col gap-1 items-center">
           <span className="section-label text-xs tracking-[0.2em]">
             // INTERPERSONAL SKILLS
           </span>
-          <h4 className="text-xl sm:text-2xl font-bold font-heading text-[#E8EDF3]">
+          <h4 className="text-xl sm:text-2xl font-bold font-heading text-[#1A110A]">
             Interpersonal Strengths
           </h4>
         </div>
@@ -199,9 +192,9 @@ export default function Achievements() {
               variants={pillVariants}
               whileHover={{ y: -4, scale: 1.05 }}
               transition={{ duration: 0.2 }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card border border-white/10 hover:border-[#5EEAD4]/50 bg-[#060B16]/80 text-sm font-mono font-medium text-[#E8EDF3] hover:text-[#5EEAD4] shadow-sm transition-colors cursor-default"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#9F9B90]/30 hover:border-[#F79F15] bg-[#F8F5EE] text-sm font-mono font-medium text-[#1A110A] hover:text-[#F79F15] shadow-sm transition-colors cursor-default"
             >
-              <FiCheck className="text-xs text-[#4DA3FF]" />
+              <FiCheck className="text-xs text-[#F79F15]" />
               <span>{skill}</span>
             </motion.div>
           ))}

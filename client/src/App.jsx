@@ -17,8 +17,8 @@ export default function App() {
         element={
           <Suspense
             fallback={
-              <div className="min-h-screen bg-[#060B16] flex flex-col items-center justify-center gap-4 text-[#5EEAD4] font-mono">
-                <div className="w-9 h-9 rounded-full border-2 border-[#4DA3FF]/30 border-t-[#5EEAD4] animate-spin" />
+              <div className="min-h-screen bg-[#F5F3E7] flex flex-col items-center justify-center gap-4 text-[#1A110A] font-mono">
+                <div className="w-9 h-9 rounded-full border-2 border-[#9F9B90]/30 border-t-[#F79F15] animate-spin" />
                 <span className="text-xs tracking-wider uppercase">// Initializing Admin Console...</span>
               </div>
             }

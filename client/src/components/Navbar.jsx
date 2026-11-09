@@ -103,7 +103,7 @@ export default function Navbar() {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 pointer-events-none"
       >
-        <nav className="pointer-events-auto glass-card rounded-full px-3 py-2 flex items-center justify-between gap-4 max-w-4xl w-full border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] bg-[#0E1626]/85 backdrop-blur-md">
+        <nav className="pointer-events-auto rounded-full px-3 py-2 flex items-center justify-between gap-4 max-w-4xl w-full border border-black/20 shadow-xl bg-[#1A110A] text-[#F5F3E7]">
           {/* Brand Monogram */}
           <Magnetic strength={0.25}>
             <a
@@ -112,7 +112,7 @@ export default function Navbar() {
               aria-label="Muskan Kumari - Home"
               className="flex items-center gap-2 pl-3 py-1 group min-h-[44px]"
             >
-              <span className="font-mono font-bold text-sm tracking-wider gradient-text-accent">
+              <span className="font-mono font-bold text-sm tracking-wider text-[#F79F15]">
                 // MK
               </span>
             </a>
@@ -128,13 +128,13 @@ export default function Navbar() {
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`relative px-4 py-1.5 text-sm font-medium transition-colors duration-200 z-10 ${
-                    isActive ? "text-[#5EEAD4]" : "text-[#8A97AB] hover:text-[#E8EDF3]"
+                    isActive ? "text-[#F79F15]" : "text-[#9F9B90] hover:text-[#F5F3E7]"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="active-pill"
-                      className="absolute inset-0 rounded-full bg-[#4DA3FF]/15 border border-[#4DA3FF]/30 -z-10 shadow-[0_0_12px_rgba(77,163,255,0.2)]"
+                      className="absolute inset-0 rounded-full bg-white/10 border border-white/10 -z-10 shadow-sm"
                       transition={{
                         type: "spring",
                         stiffness: 380,
@@ -155,7 +155,7 @@ export default function Navbar() {
                 href={personalInfo.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_15px_rgba(77,163,255,0.3)] hover:shadow-[0_0_20px_rgba(94,234,212,0.5)] transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                className="inline-flex items-center gap-1.5 text-xs font-mono font-bold px-4 py-2 rounded-full bg-[#F79F15] text-[#1A110A] hover:bg-[#FFFFFF] transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-sm"
               >
                 <span>Resume</span>
                 <FiDownload className="text-sm" />
@@ -169,7 +169,7 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={mobileMenuOpen}
-              className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-[#E8EDF3] hover:text-[#5EEAD4] hover:bg-white/5 transition-colors flex items-center justify-center cursor-pointer"
+              className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-[#F5F3E7] hover:text-[#F79F15] hover:bg-white/5 transition-colors flex items-center justify-center cursor-pointer"
             >
               {mobileMenuOpen ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
             </button>
@@ -185,10 +185,10 @@ export default function Navbar() {
             animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#060B16]/95 md:hidden flex flex-col justify-center px-8"
+            className="fixed inset-0 z-40 bg-[#1A110A]/95 md:hidden flex flex-col justify-center px-8"
           >
             <div className="flex flex-col gap-6">
-              <span className="section-label text-xs tracking-[0.2em]">
+              <span className="section-label text-xs tracking-[0.2em] text-[#F79F15]">
                 // NAVIGATION
               </span>
 
@@ -205,12 +205,12 @@ export default function Navbar() {
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ delay: index * 0.06, duration: 0.3 }}
                       className={`text-2xl font-bold font-mono tracking-tight flex items-center justify-between min-h-[48px] py-2 ${
-                        isActive ? "text-[#5EEAD4]" : "text-[#8A97AB] hover:text-[#E8EDF3]"
+                        isActive ? "text-[#F79F15]" : "text-[#9F9B90] hover:text-[#F5F3E7]"
                       }`}
                     >
                       <span>{item.name}</span>
                       {isActive && (
-                        <span className="w-2 h-2 rounded-full bg-[#5EEAD4] shadow-[0_0_8px_#5EEAD4]" />
+                        <span className="w-2 h-2 rounded-full bg-[#F79F15] shadow-[0_0_8px_#F79F15]" />
                       )}
                     </motion.a>
                   );
@@ -222,7 +222,7 @@ export default function Navbar() {
                   href={personalInfo.resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 text-sm font-mono font-semibold py-3 px-6 rounded-xl bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_20px_rgba(77,163,255,0.4)]"
+                  className="w-full inline-flex items-center justify-center gap-2 text-sm font-mono font-bold py-3 px-6 rounded-xl bg-[#F79F15] text-[#1A110A] hover:bg-[#FFFFFF] transition-colors"
                 >
                   <span>Download Resume</span>
                   <FiDownload size={16} />

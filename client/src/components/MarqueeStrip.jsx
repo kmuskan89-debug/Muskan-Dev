@@ -34,10 +34,10 @@ export default function MarqueeStrip() {
               duration: 28,
             }}
           >
-            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(232,237,243,0.18)] pr-6">
+            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(26,17,10,0.18)] pr-6">
               {repeatedText}
             </span>
-            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(232,237,243,0.18)] pr-6">
+            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(26,17,10,0.18)] pr-6">
               {repeatedText}
             </span>
           </motion.div>
@@ -58,10 +58,10 @@ export default function MarqueeStrip() {
               duration: 28,
             }}
           >
-            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(77,163,255,0.22)] pr-6">
+            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(247,159,21,0.25)] pr-6">
               {repeatedText}
             </span>
-            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(77,163,255,0.22)] pr-6">
+            <span className="text-4xl md:text-6xl font-black font-heading tracking-widest text-transparent uppercase [-webkit-text-stroke:1.5px_rgba(247,159,21,0.25)] pr-6">
               {repeatedText}
             </span>
           </motion.div>
@@ -69,8 +69,8 @@ export default function MarqueeStrip() {
       </div>
 
       {/* Subtle edge fade overlays */}
-      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#060B16] to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#060B16] to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#F5F3E7] to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#F5F3E7] to-transparent pointer-events-none" />
     </div>
   );
 }
