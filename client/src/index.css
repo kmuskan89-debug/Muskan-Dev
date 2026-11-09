@@ -420,3 +420,50 @@ h6 {
   }
 }
 
+/* Guestbook Wall Scrollbar */
+.guestbook-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #9F9B90 transparent;
+}
+.guestbook-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.guestbook-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.guestbook-scroll::-webkit-scrollbar-thumb {
+  background: #9F9B90;
+  border-radius: 9999px;
+}
+.guestbook-scroll::-webkit-scrollbar-thumb:hover {
+  background: #1A110A;
+}
+
+/* Skills Box Shake Animation */
+@keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  20%, 60% {
+    transform: translate3d(-6px, 0, 0);
+  }
+  40%, 80% {
+    transform: translate3d(6px, 0, 0);
+  }
+}
+
+/* Skills Poof Ring Animation */
+@keyframes poof-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.35);
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+

@@ -498,9 +498,18 @@ export default function Guestbook() {
               backgroundSize: "20px 20px",
             }}
           >
-            {loading ? (
-              // 6. Loading: 4 paper-shaped skeletons softly pulsing
-              <div className="columns-1 sm:columns-2 gap-5 w-full">
+            {/* Scrollable wrapper: activates when there are more than 6 notes */}
+            <div
+              data-lenis-prevent={entries.length > 6 ? "true" : undefined}
+              className={
+                entries.length > 6
+                  ? "max-h-[580px] overflow-y-auto overflow-x-hidden guestbook-scroll pr-1.5 sm:pr-2"
+                  : ""
+              }
+            >
+              {loading ? (
+                // 6. Loading: 4 paper-shaped skeletons softly pulsing
+                <div className="columns-1 sm:columns-2 gap-5 w-full">
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
@@ -715,6 +724,7 @@ export default function Guestbook() {
                 </button>
               </div>
             )}
+            </div>
           </div>
         </div>
       </div>
