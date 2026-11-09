@@ -34,7 +34,7 @@ export default function Hero({ preloaderComplete = true }) {
   const handleScrollToProjects = (e) => {
     e.preventDefault();
     if (lenis) {
-      lenis.scrollTo("#projects", { offset: -70, duration: 1.2 });
+      lenis.scrollTo("#projects", { offset: -116, duration: 1.2 });
     } else {
       document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
     }
@@ -42,7 +42,7 @@ export default function Hero({ preloaderComplete = true }) {
 
   const handleScrollDown = () => {
     if (lenis) {
-      lenis.scrollTo("#about", { offset: -70, duration: 1.2 });
+      lenis.scrollTo("#about", { offset: -116, duration: 1.2 });
     } else {
       document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
     }
@@ -94,7 +94,7 @@ export default function Hero({ preloaderComplete = true }) {
       </div>
 
       {/* 2. Foreground Content Container */}
-      <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center text-center gap-7 pt-16">
+      <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center text-center gap-7 pt-28 sm:pt-32">
         
         {/* Top Badges Row */}
         <motion.div

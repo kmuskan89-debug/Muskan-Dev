@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { useLenis } from "./SmoothScroll";
 import Magnetic from "./Magnetic";
 import { personalInfo } from "../data/content";
+import { useActiveSection } from "../context/SectionContext";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { FiDownload } from "react-icons/fi";
 
@@ -20,7 +21,7 @@ export default function Navbar() {
   const { scrollY } = useScroll();
 
   const [hidden, setHidden] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const { activeSection, setActiveSection } = useActiveSection();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Hide on scroll down, reveal on scroll up
@@ -48,41 +49,18 @@ export default function Navbar() {
     };
   }, [mobileMenuOpen, lenis]);
 
-  // Track active section via IntersectionObserver
-  useEffect(() => {
-    const sectionIds = NAV_ITEMS.map((item) => item.href.substring(1));
-    const observers = [];
-
-    const handleIntersect = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersect, {
-      root: null,
-      rootMargin: "-25% 0px -55% 0px", // focus around center of viewport
-      threshold: 0.1,
-    });
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   const handleNavClick = (e, href) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    const targetId = href.substring(1);
+    setActiveSection(targetId);
 
     if (lenis) {
-      lenis.scrollTo(href, { offset: -70, duration: 1.2 });
+      if (href === "#home") {
+        lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        lenis.scrollTo(href, { offset: -116, duration: 1.2 });
+      }
     } else {
       const targetEl = document.querySelector(href);
       if (targetEl) {
@@ -93,15 +71,15 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Floating Navbar Container */}
+      {/* Floating Navbar Container (sitting at top = 44px + 12px = 56px) */}
       <motion.header
         variants={{
           visible: { y: 0, opacity: 1 },
-          hidden: { y: -90, opacity: 0 },
+          hidden: { y: -120, opacity: 0 },
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 pointer-events-none"
+        className="fixed top-[56px] inset-x-0 z-50 flex justify-center px-4 pointer-events-none"
       >
         <nav className="pointer-events-auto rounded-full px-3 py-2 flex items-center justify-between gap-4 max-w-4xl w-full border border-black/20 shadow-xl bg-[#1A110A] text-[#F5F3E7]">
           {/* Brand Monogram */}
@@ -185,7 +163,7 @@ export default function Navbar() {
             animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#1A110A]/95 md:hidden flex flex-col justify-center px-8"
+            className="fixed inset-0 top-[44px] z-40 bg-[#1A110A]/95 md:hidden flex flex-col justify-center px-8"
           >
             <div className="flex flex-col gap-6">
               <span className="section-label text-xs tracking-[0.2em] text-[#F79F15]">

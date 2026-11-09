@@ -112,6 +112,7 @@ body {
   font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: clip;
   scroll-behavior: auto;
+  scroll-padding-top: 116px;
 }
 
 /* Accessible Keyboard Focus Rings across all interactive elements: 2px ink with 2px orange offset */
