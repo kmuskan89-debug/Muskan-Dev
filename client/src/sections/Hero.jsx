@@ -80,13 +80,13 @@ export default function Hero({ preloaderComplete = true }) {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-screen w-full flex flex-col justify-center items-center px-6 overflow-hidden bg-[#060B16]"
+      className="relative min-h-screen w-full flex flex-col justify-center items-center px-6 overflow-hidden bg-[#F5F3E7]"
     >
       {/* 1. React Three Fiber Canvas Background (Decorative) */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
         <Suspense
           fallback={
-            <div className="absolute inset-0 bg-[#060B16] bg-[radial-gradient(circle_at_center,_#0E1626_0%,_#060B16_100%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[#F5F3E7] pointer-events-none" />
           }
         >
           <HeroCanvas isVisible={isVisible} />
@@ -108,13 +108,13 @@ export default function Hero({ preloaderComplete = true }) {
             // HELLO, WORLD
           </div>
 
-          <span className="text-white/20">•</span>
+          <span className="text-[#9F9B90]">•</span>
 
           {/* Availability Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E1626]/80 border border-emerald-500/30 text-xs font-mono text-emerald-400 backdrop-blur-md shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#2E7D32]/30 text-xs font-mono text-[#2E7D32] shadow-sm">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2E7D32] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2E7D32]" />
             </span>
             <span>Open to opportunities</span>
           </div>
@@ -125,13 +125,13 @@ export default function Hero({ preloaderComplete = true }) {
           variants={containerVariants}
           initial="hidden"
           animate={preloaderComplete ? "visible" : "hidden"}
-          className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight font-heading flex flex-wrap justify-center text-[#E8EDF3] drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] leading-[1.1] max-w-full"
+          className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight font-heading flex flex-wrap justify-center text-[#1A110A] leading-[1.1] max-w-full"
         >
           {nameLetters.map((char, index) => (
             <motion.span
               key={index}
               variants={letterVariants}
-              className={char === " " ? "inline-block w-4" : "inline-block gradient-text"}
+              className={char === " " ? "inline-block w-4" : "inline-block text-[#1A110A]"}
             >
               {char === " " ? "\u00A0" : char}
             </motion.span>
@@ -145,7 +145,7 @@ export default function Hero({ preloaderComplete = true }) {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="text-lg sm:text-2xl md:text-3xl font-medium tracking-tight flex items-center justify-center gap-2"
         >
-          <span className="text-[#8A97AB]">I build as a</span>
+          <span className="text-[#6F6B60]">I build as a</span>
           <Typewriter
             words={["MERN Stack Developer", "DSA Enthusiast", "AI/ML Learner"]}
             typingSpeed={85}
@@ -159,7 +159,7 @@ export default function Hero({ preloaderComplete = true }) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-[#8A97AB] text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed text-center"
+          className="text-[#6F6B60] text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed text-center"
         >
           {personalInfo.objective}
         </motion.p>
@@ -175,7 +175,7 @@ export default function Hero({ preloaderComplete = true }) {
             <a
               href="#projects"
               onClick={handleScrollToProjects}
-              className="group inline-flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full text-sm font-semibold bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_25px_rgba(77,163,255,0.35)] hover:shadow-[0_0_35px_rgba(94,234,212,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full text-sm font-bold bg-[#F79F15] text-[#1A110A] hover:bg-[#1A110A] hover:text-[#FFFFFF] shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono"
             >
               <span>View My Work</span>
               <FiArrowRight className="transition-transform group-hover:translate-x-1 text-base" />
@@ -187,10 +187,10 @@ export default function Hero({ preloaderComplete = true }) {
               href={personalInfo.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full text-sm font-medium border border-white/10 hover:border-[#4DA3FF]/50 bg-[#0E1626]/80 hover:bg-[#0E1626] text-[#E8EDF3] backdrop-blur-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+              className="inline-flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full text-sm font-semibold border border-[#1A110A] bg-[#FFFFFF] hover:bg-[#F8F5EE] text-[#1A110A] transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-mono shadow-sm"
             >
               <span>Download Resume</span>
-              <FiDownload className="text-[#5EEAD4] text-base" />
+              <FiDownload className="text-[#F79F15] text-base" />
             </a>
           </Magnetic>
         </motion.div>
@@ -210,13 +210,13 @@ export default function Hero({ preloaderComplete = true }) {
         className="absolute bottom-8 z-20 flex flex-col items-center gap-2 cursor-pointer group p-2 min-h-[44px] justify-center"
         onClick={handleScrollDown}
       >
-        <span className="text-[11px] font-mono tracking-[0.2em] text-[#8A97AB] group-hover:text-[#5EEAD4] uppercase transition-colors">
+        <span className="text-[11px] font-mono tracking-[0.2em] text-[#6F6B60] group-hover:text-[#F79F15] uppercase transition-colors">
           Scroll to explore
         </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="text-[#4DA3FF] group-hover:text-[#5EEAD4] transition-colors"
+          className="text-[#1A110A] group-hover:text-[#F79F15] transition-colors"
         >
           <FiArrowDown size={16} />
         </motion.div>

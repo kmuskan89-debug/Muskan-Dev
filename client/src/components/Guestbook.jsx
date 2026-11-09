@@ -108,23 +108,23 @@ export default function Guestbook() {
   };
 
   return (
-    <div className="w-full mt-24 pt-16 border-t border-white/10 flex flex-col gap-12">
+    <div className="w-full mt-24 pt-16 border-t border-[#9F9B90]/30 flex flex-col gap-12">
       {/* Sub-section Header */}
       <div className="flex flex-col gap-2">
         <span className="section-label text-xs tracking-[0.2em]">
           // GUESTBOOK
         </span>
-        <h3 className="text-3xl sm:text-4xl font-bold font-heading text-[#E8EDF3]">
+        <h3 className="text-3xl sm:text-4xl font-bold font-heading text-[#1A110A]">
           Leave a Note
         </h3>
-        <p className="text-xs sm:text-sm text-[#8A97AB] max-w-xl">
+        <p className="text-xs sm:text-sm text-[#6F6B60] max-w-xl">
           Drop a friendly note, feedback, or quick greeting. Submissions appear here once approved.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left / Top: Guestbook Note Form */}
-        <div className="lg:col-span-5 glass-card rounded-3xl p-6 sm:p-8 border border-white/10 bg-[#0E1626]/80 backdrop-blur-xl shadow-xl">
+        <div className="lg:col-span-5 bg-[#FFFFFF] rounded-3xl p-6 sm:p-8 border border-[#9F9B90]/30 shadow-sm">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             {/* Honeypot field for bot protection */}
             <input
@@ -138,7 +138,7 @@ export default function Guestbook() {
             />
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="gb-name" className="text-xs font-mono text-[#8A97AB]">
+              <label htmlFor="gb-name" className="text-xs font-mono text-[#6F6B60]">
                 Your Name *
               </label>
               <div className="relative">
@@ -151,14 +151,14 @@ export default function Guestbook() {
                   maxLength={80}
                   required
                   placeholder="e.g. Alex"
-                  className="w-full px-4 py-3 pl-10 rounded-xl bg-[#060B16]/80 border border-white/10 text-sm text-[#E8EDF3] placeholder:text-white/20 focus:outline-none focus:border-[#5EEAD4] focus:ring-1 focus:ring-[#5EEAD4]/50 transition-all"
+                  className="w-full px-4 py-3 pl-10 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-sm text-[#1A110A] placeholder:text-[#9F9B90] focus:outline-none focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15]/50 transition-all"
                 />
-                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-[#8A97AB]" />
+                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-[#6F6B60]" />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="gb-note" className="text-xs font-mono text-[#8A97AB]">
+              <label htmlFor="gb-note" className="text-xs font-mono text-[#6F6B60]">
                 Your Note *
               </label>
               <div className="relative">
@@ -171,20 +171,20 @@ export default function Guestbook() {
                   maxLength={1000}
                   required
                   placeholder="Write a message, encouragement, or question..."
-                  className="w-full px-4 py-3 pl-10 rounded-xl bg-[#060B16]/80 border border-white/10 text-sm text-[#E8EDF3] placeholder:text-white/20 focus:outline-none focus:border-[#5EEAD4] focus:ring-1 focus:ring-[#5EEAD4]/50 transition-all resize-none"
+                  className="w-full px-4 py-3 pl-10 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-sm text-[#1A110A] placeholder:text-[#9F9B90] focus:outline-none focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15]/50 transition-all resize-none"
                 />
-                <FiMessageSquare className="absolute left-3.5 top-4 text-sm text-[#8A97AB]" />
+                <FiMessageSquare className="absolute left-3.5 top-4 text-sm text-[#6F6B60]" />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl font-mono text-xs font-semibold uppercase tracking-wider text-[#060B16] bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] hover:shadow-[0_0_25px_rgba(77,163,255,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-xl font-mono text-xs font-semibold uppercase tracking-wider text-[#F5F3E7] bg-[#1A110A] hover:bg-[#F79F15] hover:text-[#1A110A] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 cursor-pointer shadow-sm"
             >
               {submitting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-[#060B16] border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-[#F5F3E7] border-t-transparent rounded-full animate-spin" />
                   <span>Submitting...</span>
                 </>
               ) : (
@@ -206,8 +206,8 @@ export default function Guestbook() {
                   exit={{ opacity: 0, y: -8 }}
                   className={`flex items-start gap-2.5 p-3.5 rounded-xl text-xs ${
                     status.type === "success"
-                      ? "bg-[#5EEAD4]/10 text-[#5EEAD4] border border-[#5EEAD4]/30"
-                      : "bg-red-500/10 text-red-400 border border-red-500/30"
+                      ? "bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/30"
+                      : "bg-[#C62828]/10 text-[#C62828] border border-[#C62828]/30"
                   }`}
                 >
                   {status.type === "success" ? (
@@ -225,11 +225,11 @@ export default function Guestbook() {
         {/* Right: Approved Notes Feed */}
         <div className="lg:col-span-7 flex flex-col gap-4">
           <div className="flex items-center justify-between px-1">
-            <span className="text-xs font-mono uppercase text-[#8A97AB] tracking-wider">
+            <span className="text-xs font-mono uppercase text-[#6F6B60] tracking-wider">
               Approved Notes ({entries.length})
             </span>
-            <span className="text-[11px] font-mono text-[#5EEAD4]/80 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5EEAD4] animate-pulse" />
+            <span className="text-[11px] font-mono text-[#F79F15] flex items-center gap-1 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F79F15] animate-pulse" />
               Live Feed
             </span>
           </div>
@@ -240,26 +240,26 @@ export default function Guestbook() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="glass-card rounded-2xl p-5 border border-white/5 animate-pulse flex flex-col gap-2.5"
+                  className="bg-[#FFFFFF] rounded-2xl p-5 border border-[#9F9B90]/20 animate-pulse flex flex-col gap-2.5"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="w-24 h-4 bg-white/10 rounded-md" />
-                    <div className="w-16 h-3 bg-white/5 rounded-md" />
+                    <div className="w-24 h-4 bg-[#F8F5EE] rounded-md" />
+                    <div className="w-16 h-3 bg-[#F8F5EE] rounded-md" />
                   </div>
-                  <div className="w-full h-10 bg-white/5 rounded-md" />
+                  <div className="w-full h-10 bg-[#F8F5EE] rounded-md" />
                 </div>
               ))}
             </div>
           ) : entries.length === 0 ? (
             // Empty state fallback
-            <div className="glass-card rounded-2xl p-8 border border-white/5 text-center flex flex-col items-center justify-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#8A97AB]">
+            <div className="bg-[#FFFFFF] rounded-2xl p-8 border border-[#9F9B90]/30 text-center flex flex-col items-center justify-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-[#F8F5EE] flex items-center justify-center text-[#6F6B60]">
                 <FiMessageSquare className="text-2xl" />
               </div>
-              <p className="text-sm font-semibold text-[#E8EDF3]">
+              <p className="text-sm font-semibold text-[#1A110A]">
                 No public notes yet.
               </p>
-              <p className="text-xs text-[#8A97AB] max-w-sm">
+              <p className="text-xs text-[#6F6B60] max-w-sm">
                 Be the first to sign the guestbook! Use the form to write a note.
               </p>
             </div>
@@ -286,19 +286,19 @@ export default function Guestbook() {
                     hidden: { opacity: 0, y: 15 },
                     visible: { opacity: 1, y: 0 },
                   }}
-                  className="glass-card rounded-2xl p-5 border border-white/10 bg-[#0E1626]/60 hover:border-[#4DA3FF]/30 transition-all duration-300 flex flex-col gap-2"
+                  className="bg-[#FFFFFF] rounded-2xl p-5 border border-[#9F9B90]/30 hover:border-[#F79F15] transition-all duration-300 flex flex-col gap-2 shadow-sm"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-[#4DA3FF]/15 border border-[#4DA3FF]/30 flex items-center justify-center text-xs font-mono font-bold text-[#4DA3FF]">
+                      <div className="w-7 h-7 rounded-lg bg-[#F8F5EE] border border-[#9F9B90]/30 flex items-center justify-center text-xs font-mono font-bold text-[#1A110A]">
                         {entry.name?.charAt(0)?.toUpperCase() || "A"}
                       </div>
-                      <span className="text-sm font-bold text-[#E8EDF3]">
+                      <span className="text-sm font-bold text-[#1A110A]">
                         {entry.name}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-1 text-[11px] font-mono text-[#8A97AB]">
+                    <div className="flex items-center gap-1 text-[11px] font-mono text-[#6F6B60]">
                       <FiClock className="text-xs" />
                       <span>
                         {entry.createdAt
@@ -311,7 +311,7 @@ export default function Guestbook() {
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#8A97AB] leading-relaxed break-words pl-9">
+                  <p className="text-xs sm:text-sm text-[#6F6B60] leading-relaxed break-words pl-9">
                     {entry.note}
                   </p>
                 </motion.div>

@@ -90,7 +90,7 @@ export default function ProjectCard({ project, index, total }) {
       }}
       className={`w-full ${
         isMobile ? "relative mb-8" : "sticky mb-16"
-      } glass-card rounded-3xl p-6 sm:p-8 md:p-10 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] bg-[#0E1626]/95 backdrop-blur-xl transition-all duration-300`}
+      } bg-[#FFFFFF] rounded-3xl p-6 sm:p-8 md:p-10 border border-[#9F9B90]/30 shadow-md transition-all duration-300`}
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
         
@@ -109,14 +109,14 @@ export default function ProjectCard({ project, index, total }) {
                   transformStyle: "preserve-3d",
                 }
           }
-          className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-[#060B16] border border-white/10 group cursor-pointer aspect-video select-none shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+          className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-[#F8F5EE] border border-[#9F9B90]/30 group cursor-pointer aspect-video select-none shadow-sm"
         >
           {/* Spotlight Glow following cursor */}
           {!isMobile && (
             <motion.div
               className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
               style={{
-                background: `radial-gradient(280px circle at ${spotlightX.get()}px ${spotlightY.get()}px, rgba(77, 163, 255, 0.22), transparent 70%)`,
+                background: `radial-gradient(280px circle at ${spotlightX.get()}px ${spotlightY.get()}px, rgba(247, 159, 21, 0.15), transparent 70%)`,
               }}
             />
           )}
@@ -133,25 +133,25 @@ export default function ProjectCard({ project, index, total }) {
               className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
             />
           ) : (
-            // Generated Visual Gradient Fallback with Initials
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#0E1626] via-[#060B16] to-[#0E1626] relative p-6 text-center">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#4DA3FF]/20 to-[#5EEAD4]/20 border border-[#5EEAD4]/30 flex items-center justify-center shadow-[0_0_25px_rgba(77,163,255,0.2)] mb-3 group-hover:scale-110 transition-transform duration-500">
-                <span className="text-3xl font-bold font-mono gradient-text">
+            // Generated Visual Fallback with Initials
+            <div className="w-full h-full flex flex-col items-center justify-center bg-[#F8F5EE] relative p-6 text-center">
+              <div className="w-20 h-20 rounded-2xl bg-[#FFFFFF] border border-[#9F9B90]/30 flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform duration-500">
+                <span className="text-3xl font-bold font-mono text-[#1A110A]">
                   {initials}
                 </span>
               </div>
-              <span className="text-xs font-mono text-[#8A97AB]">
+              <span className="text-xs font-mono text-[#6F6B60]">
                 // Screenshot: client/public/projects/
               </span>
             </div>
           )}
 
-          {/* Dark gradient overlay for typography readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060B16]/80 via-transparent to-transparent opacity-40 pointer-events-none" />
+          {/* Subtle gradient overlay for typography readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A110A]/50 via-transparent to-transparent opacity-30 pointer-events-none" />
 
           {/* Corner Project Index Tag */}
           <div className="absolute top-3 left-3 z-10">
-            <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-[#060B16]/85 backdrop-blur-md border border-white/10 text-[#5EEAD4]">
+            <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-[#FFFFFF]/90 backdrop-blur-md border border-[#9F9B90]/30 text-[#1A110A]">
               0{index + 1}
             </span>
           </div>
@@ -164,8 +164,8 @@ export default function ProjectCard({ project, index, total }) {
             {/* Header: Featured Badge & Subtitle */}
             <div className="flex flex-wrap items-center gap-2.5">
               {isFeatured && (
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold px-3 py-0.5 rounded-full bg-gradient-to-r from-[#4DA3FF]/20 to-[#5EEAD4]/20 border border-[#5EEAD4]/40 text-[#5EEAD4] shadow-[0_0_12px_rgba(94,234,212,0.2)]">
-                  <FiStar className="text-xs" />
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold px-3 py-0.5 rounded-full bg-[#F8F5EE] border border-[#F79F15]/40 text-[#1A110A] shadow-sm">
+                  <FiStar className="text-xs text-[#F79F15]" />
                   <span>Featured Project</span>
                 </span>
               )}
@@ -173,18 +173,18 @@ export default function ProjectCard({ project, index, total }) {
 
             {/* Split Title */}
             <div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#E8EDF3] tracking-tight">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#1A110A] tracking-tight">
                 {mainTitle}
               </h3>
               {subTitle && (
-                <p className="text-sm sm:text-base font-medium text-[#4DA3FF] mt-1 font-sans">
+                <p className="text-sm sm:text-base font-semibold text-[#F79F15] mt-1 font-sans">
                   {subTitle}
                 </p>
               )}
             </div>
 
             {/* Project Description */}
-            <p className="text-sm md:text-base text-[#8A97AB] leading-relaxed mt-1">
+            <p className="text-sm md:text-base text-[#6F6B60] leading-relaxed mt-1">
               {project.description}
             </p>
 
@@ -193,7 +193,7 @@ export default function ProjectCard({ project, index, total }) {
               {(project.techStack || []).map((tech, i) => (
                 <span
                   key={i}
-                  className="text-xs font-mono px-3 py-1 rounded-lg bg-white/[0.04] border border-white/5 text-[#E8EDF3] transition-colors hover:border-[#4DA3FF]/40"
+                  className="text-xs font-mono px-3 py-1 rounded-lg bg-[#F8F5EE] border border-[#9F9B90]/30 text-[#1A110A] transition-colors hover:border-[#F79F15]"
                 >
                   {tech}
                 </span>
@@ -202,7 +202,7 @@ export default function ProjectCard({ project, index, total }) {
           </div>
 
           {/* Action Buttons: Live Demo & GitHub */}
-          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-white/5">
+          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-[#9F9B90]/20">
             {hasLiveUrl ? (
               <Magnetic strength={0.25}>
                 <a
@@ -210,7 +210,7 @@ export default function ProjectCard({ project, index, total }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`View live demo of ${mainTitle}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-semibold bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] text-[#060B16] shadow-[0_0_18px_rgba(77,163,255,0.3)] hover:shadow-[0_0_25px_rgba(94,234,212,0.5)] transition-all transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-semibold bg-[#F79F15] text-[#1A110A] hover:bg-[#1A110A] hover:text-[#FFFFFF] transition-all transform hover:-translate-y-0.5 shadow-sm"
                 >
                   <span>Live Demo</span>
                   <FiExternalLink className="text-sm" />
@@ -220,7 +220,7 @@ export default function ProjectCard({ project, index, total }) {
               <button
                 disabled
                 aria-label={`Live demo for ${mainTitle} coming soon`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-medium bg-white/5 border border-white/10 text-[#8A97AB] opacity-60 cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-medium bg-[#F8F5EE] border border-[#9F9B90]/30 text-[#6F6B60] opacity-70 cursor-not-allowed"
               >
                 <FiClock className="text-xs" />
                 <span>Live Demo (Coming soon)</span>
@@ -234,9 +234,9 @@ export default function ProjectCard({ project, index, total }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`View GitHub repository for ${mainTitle}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-semibold bg-[#060B16] border border-white/15 hover:border-[#4DA3FF]/50 text-[#E8EDF3] transition-all transform hover:-translate-y-0.5 shadow-sm"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-semibold bg-[#1A110A] border border-[#1A110A] hover:bg-[#F79F15] hover:text-[#1A110A] text-[#F5F3E7] transition-all transform hover:-translate-y-0.5 shadow-sm"
                 >
-                  <FiGithub className="text-sm text-[#5EEAD4]" />
+                  <FiGithub className="text-sm text-[#F79F15]" />
                   <span>GitHub</span>
                 </a>
               </Magnetic>
@@ -244,7 +244,7 @@ export default function ProjectCard({ project, index, total }) {
               <button
                 disabled
                 aria-label={`GitHub repository for ${mainTitle} coming soon`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-medium bg-white/5 border border-white/10 text-[#8A97AB] opacity-60 cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-xs font-mono font-medium bg-[#F8F5EE] border border-[#9F9B90]/30 text-[#6F6B60] opacity-70 cursor-not-allowed"
               >
                 <FiGithub className="text-xs" />
                 <span>GitHub (Coming soon)</span>

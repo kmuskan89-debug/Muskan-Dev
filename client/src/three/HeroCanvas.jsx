@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import NeuralNetwork from "./NeuralNetwork";
 
 function CameraScrollController() {
@@ -65,32 +64,18 @@ export default function HeroCanvas({ isVisible = true }) {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         frameloop={isVisible ? "always" : "never"} // Pause rendering when off-screen
       >
-        <color attach="background" args={["#060B16"]} />
-        <ambientLight intensity={0.4} />
-        <pointLight position={[10, 10, 10]} intensity={1.5} color="#4DA3FF" />
-        <pointLight position={[-10, -10, -10]} intensity={1.2} color="#5EEAD4" />
+        <ambientLight intensity={0.6} />
+        <pointLight position={[10, 10, 10]} intensity={1.5} color="#F79F15" />
+        <pointLight position={[-10, -10, -10]} intensity={1.0} color="#1A110A" />
 
         <CameraScrollController />
 
         <NeuralNetwork count={120} isMobile={isMobileOrLowPower} />
-
-        {/* Subtle, non-intrusive bloom for glowing effect without washing out text */}
-        {!isMobileOrLowPower && (
-          <EffectComposer multisampling={0} disableNormalPass>
-            <Bloom
-              luminanceThreshold={0.25}
-              luminanceSmoothing={0.9}
-              intensity={0.45}
-              levels={4}
-            />
-          </EffectComposer>
-        )}
       </Canvas>
 
-      {/* Radial vignette overlay to keep foreground text extremely legible */}
-      <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_0%,#060B16_90%] opacity-75 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#060B16]/40 via-transparent to-[#060B16] pointer-events-none" />
+      {/* Subtle vignette overlay in cream tone */}
+      <div className="absolute inset-0 bg-radial-[circle_at_center,transparent_0%,#F5F3E7_90%] opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F5F3E7]/40 via-transparent to-[#F5F3E7] pointer-events-none" />
     </div>
   );
 }
-

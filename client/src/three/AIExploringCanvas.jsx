@@ -19,25 +19,25 @@ function RotatingGeometry() {
 
   return (
     <group>
-      {/* Outer Torus Knot in Electric Blue Wireframe */}
+      {/* Outer Torus Knot in Ink Wireframe */}
       <mesh ref={meshRef}>
         <torusKnotGeometry args={[1.0, 0.28, 80, 14]} />
         <meshBasicMaterial
-          color="#4DA3FF"
+          color="#1A110A"
           wireframe
           transparent
-          opacity={0.55}
+          opacity={0.45}
         />
       </mesh>
 
-      {/* Inner Glowing Cyan Icosahedron */}
+      {/* Inner Glowing Orange Icosahedron */}
       <mesh ref={innerRef}>
         <icosahedronGeometry args={[0.65, 0]} />
         <meshBasicMaterial
-          color="#5EEAD4"
+          color="#F79F15"
           wireframe
           transparent
-          opacity={0.8}
+          opacity={0.85}
         />
       </mesh>
     </group>
@@ -60,9 +60,9 @@ export default function AIExploringCanvas({ isVisible = true }) {
   // Static high-performance fallback on mobile or reduced-motion
   if (isMobile || shouldReduceMotion) {
     return (
-      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center bg-gradient-to-br from-[#4DA3FF]/20 to-[#5EEAD4]/20 border border-[#5EEAD4]/30 shadow-[0_0_20px_rgba(94,234,212,0.2)]">
-        <div className="w-12 h-12 rounded-full border-2 border-dashed border-[#5EEAD4] animate-spin flex items-center justify-center [animation-duration:12s]">
-          <div className="w-4 h-4 rounded-full bg-[#4DA3FF] shadow-[0_0_10px_#4DA3FF]" />
+      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center bg-[#F8F5EE] border border-[#9F9B90]/30 shadow-sm">
+        <div className="w-12 h-12 rounded-full border-2 border-dashed border-[#F79F15] animate-spin flex items-center justify-center [animation-duration:12s]">
+          <div className="w-4 h-4 rounded-full bg-[#1A110A]" />
         </div>
       </div>
     );

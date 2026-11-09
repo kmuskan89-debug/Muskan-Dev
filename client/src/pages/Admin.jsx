@@ -81,7 +81,7 @@ export default function Admin() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060B16] text-[#E8EDF3] selection:bg-[#4DA3FF]/30 selection:text-[#5EEAD4] font-body flex flex-col">
+    <div className="min-h-screen bg-[#F5F3E7] text-[#1A110A] selection:bg-[#F79F15] selection:text-[#1A110A] font-body flex flex-col">
       <Helmet>
         <title>Admin Console | Private</title>
         <meta name="robots" content="noindex, nofollow" />
@@ -114,21 +114,21 @@ export default function Admin() {
 function LoginView({ email, setEmail, password, setPassword, loading, error, onSubmit }) {
   return (
     <div className="flex-1 flex items-center justify-center px-4 py-16">
-      <div className="w-full max-w-md glass-card rounded-3xl p-8 sm:p-10 border border-white/10 bg-[#0E1626]/90 backdrop-blur-xl shadow-2xl relative">
-        <div className="absolute top-0 right-1/4 w-40 h-40 bg-[#4DA3FF]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-[#5EEAD4]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="w-full max-w-md bg-[#FFFFFF] rounded-3xl p-8 sm:p-10 border border-[#9F9B90]/30 bg-[#FFFFFF] backdrop-blur-xl shadow-2xl relative">
+        <div className="absolute top-0 right-1/4 w-40 h-40 bg-[#F8F5EE] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-[#F8F5EE] rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col items-center gap-3 text-center mb-8 relative z-10">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#4DA3FF]/20 to-[#5EEAD4]/20 border border-white/10 flex items-center justify-center text-[#5EEAD4] shadow-lg">
+          <div className="w-14 h-14 rounded-2xl bg-[#F8F5EE] border border-[#9F9B90]/30 flex items-center justify-center text-[#F79F15] shadow-lg">
             <FiLock className="text-2xl" />
           </div>
-          <span className="text-xs font-mono font-semibold text-[#5EEAD4] tracking-widest uppercase">
+          <span className="text-xs font-mono font-semibold text-[#F79F15] tracking-widest uppercase">
             // PRIVATE ACCESS
           </span>
-          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-[#E8EDF3]">
+          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-[#1A110A]">
             Admin Console
           </h1>
-          <p className="text-xs text-[#8A97AB]">
+          <p className="text-xs text-[#6F6B60]">
             Please enter your administrator credentials to continue.
           </p>
         </div>
@@ -147,7 +147,7 @@ function LoginView({ email, setEmail, password, setPassword, loading, error, onS
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="admin-email"
-              className="text-xs font-mono text-[#8A97AB] uppercase tracking-wider"
+              className="text-xs font-mono text-[#6F6B60] uppercase tracking-wider"
             >
               Email Address
             </label>
@@ -159,14 +159,14 @@ function LoginView({ email, setEmail, password, setPassword, loading, error, onS
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@example.com"
-              className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] placeholder-[#8A97AB]/50 text-sm transition-all outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] placeholder-[#6F6B60]/50 text-sm transition-all outline-none"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="admin-password"
-              className="text-xs font-mono text-[#8A97AB] uppercase tracking-wider"
+              className="text-xs font-mono text-[#6F6B60] uppercase tracking-wider"
             >
               Password
             </label>
@@ -177,18 +177,18 @@ function LoginView({ email, setEmail, password, setPassword, loading, error, onS
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••••"
-              className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] placeholder-[#8A97AB]/50 text-sm transition-all outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] placeholder-[#6F6B60]/50 text-sm transition-all outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="mt-3 w-full py-3.5 px-6 rounded-xl font-mono text-sm font-semibold text-[#060B16] bg-gradient-to-r from-[#5EEAD4] to-[#4DA3FF] hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#5EEAD4]/10"
+            className="mt-3 w-full py-3.5 px-6 rounded-xl font-mono text-sm font-semibold text-[#1A110A] bg-[#F79F15] hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-sm"
           >
             {loading ? (
               <>
-                <div className="w-4 h-4 border-2 border-[#060B16] border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#1A110A] border-t-transparent rounded-full animate-spin" />
                 <span>Verifying...</span>
               </>
             ) : (
@@ -211,20 +211,20 @@ function DashboardView({ activeTab, setActiveTab, onLogout }) {
   return (
     <div className="flex-1 flex flex-col">
       {/* Admin Top Navigation */}
-      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#060B16]/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 w-full border-b border-[#9F9B90]/30 bg-[#FFFFFF]/95 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#4DA3FF] to-[#5EEAD4] flex items-center justify-center font-mono font-bold text-[#060B16] text-sm shadow-md">
+            <div className="w-9 h-9 rounded-xl bg-[#F79F15] flex items-center justify-center font-mono font-bold text-[#1A110A] text-sm shadow-md">
               MK
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-heading font-bold text-sm tracking-tight text-[#E8EDF3]">
+                <span className="font-heading font-bold text-sm tracking-tight text-[#1A110A]">
                   Admin Dashboard
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#5EEAD4] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F79F15] animate-pulse" />
               </div>
-              <p className="text-[10px] font-mono text-[#8A97AB]">
+              <p className="text-[10px] font-mono text-[#6F6B60]">
                 banur-node-cluster · production
               </p>
             </div>
@@ -233,7 +233,7 @@ function DashboardView({ activeTab, setActiveTab, onLogout }) {
           <div className="flex items-center gap-3">
             <button
               onClick={onLogout}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 hover:border-red-400/30 hover:bg-red-500/10 text-xs font-mono text-[#8A97AB] hover:text-red-300 transition-all cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#9F9B90]/30 hover:border-red-400/30 hover:bg-red-500/10 text-xs font-mono text-[#6F6B60] hover:text-red-300 transition-all cursor-pointer"
               title="Sign out of admin session"
             >
               <FiLogOut className="text-sm" />
@@ -243,19 +243,19 @@ function DashboardView({ activeTab, setActiveTab, onLogout }) {
         </div>
 
         {/* Tab Switcher */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-2 overflow-x-auto border-t border-white/5 py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-2 overflow-x-auto border-t border-[#9F9B90]/20 py-2">
           <button
             onClick={() => setActiveTab("messages")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
               activeTab === "messages"
-                ? "bg-[#4DA3FF]/15 text-[#5EEAD4] border border-[#5EEAD4]/30 shadow-sm"
-                : "text-[#8A97AB] hover:text-[#E8EDF3] hover:bg-white/5 border border-transparent"
+                ? "bg-[#F8F5EE] text-[#F79F15] border border-[#F79F15]/40 shadow-sm"
+                : "text-[#6F6B60] hover:text-[#1A110A] hover:bg-white/5 border border-transparent"
             }`}
           >
             <FiMail className="text-sm" />
             <span>Messages</span>
             {unreadCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-[#5EEAD4] text-[#060B16] font-bold text-[10px]">
+              <span className="px-1.5 py-0.2 rounded-full bg-[#F79F15] text-[#1A110A] font-bold text-[10px]">
                 {unreadCount}
               </span>
             )}
@@ -265,14 +265,14 @@ function DashboardView({ activeTab, setActiveTab, onLogout }) {
             onClick={() => setActiveTab("guestbook")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
               activeTab === "guestbook"
-                ? "bg-[#4DA3FF]/15 text-[#5EEAD4] border border-[#5EEAD4]/30 shadow-sm"
-                : "text-[#8A97AB] hover:text-[#E8EDF3] hover:bg-white/5 border border-transparent"
+                ? "bg-[#F8F5EE] text-[#F79F15] border border-[#F79F15]/40 shadow-sm"
+                : "text-[#6F6B60] hover:text-[#1A110A] hover:bg-white/5 border border-transparent"
             }`}
           >
             <FiBookOpen className="text-sm" />
             <span>Guestbook</span>
             {pendingCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-amber-400 text-[#060B16] font-bold text-[10px]">
+              <span className="px-1.5 py-0.2 rounded-full bg-amber-400 text-[#1A110A] font-bold text-[10px]">
                 {pendingCount}
               </span>
             )}
@@ -282,8 +282,8 @@ function DashboardView({ activeTab, setActiveTab, onLogout }) {
             onClick={() => setActiveTab("projects")}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
               activeTab === "projects"
-                ? "bg-[#4DA3FF]/15 text-[#5EEAD4] border border-[#5EEAD4]/30 shadow-sm"
-                : "text-[#8A97AB] hover:text-[#E8EDF3] hover:bg-white/5 border border-transparent"
+                ? "bg-[#F8F5EE] text-[#F79F15] border border-[#F79F15]/40 shadow-sm"
+                : "text-[#6F6B60] hover:text-[#1A110A] hover:bg-white/5 border border-transparent"
             }`}
           >
             <FiFolder className="text-sm" />
@@ -374,17 +374,17 @@ function MessagesTab({ onUnreadCountChange }) {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-heading font-bold text-[#E8EDF3]">
+          <h2 className="text-xl font-heading font-bold text-[#1A110A]">
             Inbox Messages
           </h2>
-          <p className="text-xs text-[#8A97AB]">
+          <p className="text-xs text-[#6F6B60]">
             Showing contact inquiries ordered newest first.
           </p>
         </div>
         <button
           onClick={fetchMessages}
           disabled={loading}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.03] text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#9F9B90]/30 hover:border-[#9F9B90]/30 bg-[#F8F5EE] text-xs font-mono text-[#6F6B60] hover:text-[#1A110A] transition-all cursor-pointer"
         >
           <FiRefreshCw className={`text-xs ${loading ? "animate-spin" : ""}`} />
           <span>Refresh</span>
@@ -403,7 +403,7 @@ function MessagesTab({ onUnreadCountChange }) {
           {[1, 2, 3].map((n) => (
             <div
               key={n}
-              className="glass-card rounded-2xl p-6 border border-white/5 animate-pulse flex flex-col gap-3"
+              className="bg-[#FFFFFF] rounded-2xl p-6 border border-[#9F9B90]/20 animate-pulse flex flex-col gap-3"
             >
               <div className="h-4 w-48 bg-white/10 rounded" />
               <div className="h-4 w-32 bg-white/5 rounded" />
@@ -412,10 +412,10 @@ function MessagesTab({ onUnreadCountChange }) {
           ))}
         </div>
       ) : messages.length === 0 ? (
-        <div className="glass-card rounded-3xl p-12 text-center border border-white/5 bg-[#0E1626]/40 flex flex-col items-center gap-3">
-          <FiMail className="text-4xl text-[#8A97AB]/40" />
-          <h3 className="font-heading font-semibold text-[#E8EDF3]">No messages yet</h3>
-          <p className="text-xs text-[#8A97AB]">
+        <div className="bg-[#FFFFFF] rounded-3xl p-12 text-center border border-[#9F9B90]/20 bg-[#FFFFFF] flex flex-col items-center gap-3">
+          <FiMail className="text-4xl text-[#6F6B60]/40" />
+          <h3 className="font-heading font-semibold text-[#1A110A]">No messages yet</h3>
+          <p className="text-xs text-[#6F6B60]">
             When visitors submit the contact form, their inquiries will appear here.
           </p>
         </div>
@@ -424,32 +424,32 @@ function MessagesTab({ onUnreadCountChange }) {
           {messages.map((msg) => (
             <div
               key={msg._id}
-              className={`glass-card rounded-2xl p-6 border transition-all ${
+              className={`bg-[#FFFFFF] rounded-2xl p-6 border transition-all ${
                 !msg.read
-                  ? "border-[#5EEAD4]/30 bg-[#0E1626]/90 shadow-lg shadow-[#5EEAD4]/5"
-                  : "border-white/5 bg-[#0E1626]/50"
+                  ? "border-[#F79F15]/40 bg-[#FFFFFF] shadow-lg shadow-sm"
+                  : "border-[#9F9B90]/20 bg-[#FFFFFF]"
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2.5 flex-wrap">
-                  <h3 className="font-bold text-base text-[#E8EDF3]">{msg.name}</h3>
+                  <h3 className="font-bold text-base text-[#1A110A]">{msg.name}</h3>
                   <a
                     href={`mailto:${msg.email}`}
-                    className="text-xs font-mono text-[#4DA3FF] hover:underline"
+                    className="text-xs font-mono text-[#F79F15] hover:underline"
                   >
                     {msg.email}
                   </a>
                   {!msg.read ? (
-                    <span className="px-2 py-0.5 rounded-full bg-[#5EEAD4]/20 border border-[#5EEAD4]/40 text-[#5EEAD4] font-mono text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-[#F8F5EE] border border-[#F79F15]/40 text-[#F79F15] font-mono text-[10px] font-bold">
                       UNREAD
                     </span>
                   ) : (
-                    <span className="px-2 py-0.5 rounded-full bg-white/5 text-[#8A97AB] font-mono text-[10px]">
+                    <span className="px-2 py-0.5 rounded-full bg-white/5 text-[#6F6B60] font-mono text-[10px]">
                       Read
                     </span>
                   )}
                 </div>
-                <span className="text-[11px] font-mono text-[#8A97AB]">
+                <span className="text-[11px] font-mono text-[#6F6B60]">
                   {new Date(msg.createdAt).toLocaleString(undefined, {
                     month: "short",
                     day: "numeric",
@@ -461,19 +461,19 @@ function MessagesTab({ onUnreadCountChange }) {
               </div>
 
               {msg.subject && (
-                <div className="mb-2 text-xs font-mono text-[#5EEAD4]/90 font-medium">
+                <div className="mb-2 text-xs font-mono text-[#1A110A] font-medium">
                   Subject: {msg.subject}
                 </div>
               )}
 
-              <p className="text-sm text-[#CBD5E1] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-white/[0.02] border border-white/5 font-body">
+              <p className="text-sm text-[#6F6B60] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-white/[0.02] border border-[#9F9B90]/20 font-body">
                 {msg.message}
               </p>
 
-              <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-white/5">
+              <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-[#9F9B90]/20">
                 <button
                   onClick={() => handleToggleRead(msg._id, msg.read)}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg border border-[#9F9B90]/30 hover:border-[#9F9B90]/30 hover:bg-white/5 text-xs font-mono text-[#6F6B60] hover:text-[#1A110A] transition-all cursor-pointer"
                 >
                   {msg.read ? "Mark as Unread" : "Mark as Read"}
                 </button>
@@ -482,7 +482,7 @@ function MessagesTab({ onUnreadCountChange }) {
                   href={`mailto:${msg.email}?subject=${encodeURIComponent(
                     `Re: ${msg.subject || "Your portfolio inquiry"}`
                   )}`}
-                  className="px-3 py-1.5 rounded-lg bg-[#4DA3FF]/20 border border-[#4DA3FF]/40 hover:bg-[#4DA3FF]/30 text-xs font-mono text-[#4DA3FF] hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg bg-[#F8F5EE] border border-[#9F9B90]/40 hover:bg-[#F8F5EE] text-xs font-mono text-[#F79F15] hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <FiExternalLink className="text-xs" />
                   <span>Reply</span>
@@ -584,17 +584,17 @@ function GuestbookTab({ onPendingCountChange }) {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-heading font-bold text-[#E8EDF3]">
+          <h2 className="text-xl font-heading font-bold text-[#1A110A]">
             Guestbook Moderation
           </h2>
-          <p className="text-xs text-[#8A97AB]">
+          <p className="text-xs text-[#6F6B60]">
             Showing all entries with pending moderation notes listed first.
           </p>
         </div>
         <button
           onClick={fetchEntries}
           disabled={loading}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.03] text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#9F9B90]/30 hover:border-[#9F9B90]/30 bg-[#F8F5EE] text-xs font-mono text-[#6F6B60] hover:text-[#1A110A] transition-all cursor-pointer"
         >
           <FiRefreshCw className={`text-xs ${loading ? "animate-spin" : ""}`} />
           <span>Refresh</span>
@@ -613,7 +613,7 @@ function GuestbookTab({ onPendingCountChange }) {
           {[1, 2, 3].map((n) => (
             <div
               key={n}
-              className="glass-card rounded-2xl p-6 border border-white/5 animate-pulse flex flex-col gap-3"
+              className="bg-[#FFFFFF] rounded-2xl p-6 border border-[#9F9B90]/20 animate-pulse flex flex-col gap-3"
             >
               <div className="h-4 w-40 bg-white/10 rounded" />
               <div className="h-12 w-full bg-white/5 rounded" />
@@ -621,10 +621,10 @@ function GuestbookTab({ onPendingCountChange }) {
           ))}
         </div>
       ) : entries.length === 0 ? (
-        <div className="glass-card rounded-3xl p-12 text-center border border-white/5 bg-[#0E1626]/40 flex flex-col items-center gap-3">
-          <FiBookOpen className="text-4xl text-[#8A97AB]/40" />
-          <h3 className="font-heading font-semibold text-[#E8EDF3]">No guestbook entries</h3>
-          <p className="text-xs text-[#8A97AB]">
+        <div className="bg-[#FFFFFF] rounded-3xl p-12 text-center border border-[#9F9B90]/20 bg-[#FFFFFF] flex flex-col items-center gap-3">
+          <FiBookOpen className="text-4xl text-[#6F6B60]/40" />
+          <h3 className="font-heading font-semibold text-[#1A110A]">No guestbook entries</h3>
+          <p className="text-xs text-[#6F6B60]">
             Submissions from the public guestbook will appear here for review.
           </p>
         </div>
@@ -633,26 +633,26 @@ function GuestbookTab({ onPendingCountChange }) {
           {entries.map((entry) => (
             <div
               key={entry._id}
-              className={`glass-card rounded-2xl p-6 border transition-all ${
+              className={`bg-[#FFFFFF] rounded-2xl p-6 border transition-all ${
                 !entry.approved
-                  ? "border-amber-400/30 bg-[#0E1626]/90 shadow-lg shadow-amber-400/5"
-                  : "border-white/5 bg-[#0E1626]/50"
+                  ? "border-amber-400/30 bg-[#FFFFFF] shadow-lg shadow-amber-400/5"
+                  : "border-[#9F9B90]/20 bg-[#FFFFFF]"
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2.5">
-                  <h3 className="font-bold text-base text-[#E8EDF3]">{entry.name}</h3>
+                  <h3 className="font-bold text-base text-[#1A110A]">{entry.name}</h3>
                   {!entry.approved ? (
                     <span className="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 font-mono text-[10px] font-bold">
                       PENDING REVIEW
                     </span>
                   ) : (
-                    <span className="px-2 py-0.5 rounded-full bg-[#5EEAD4]/20 border border-[#5EEAD4]/40 text-[#5EEAD4] font-mono text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-[#F8F5EE] border border-[#F79F15]/40 text-[#F79F15] font-mono text-[10px] font-bold">
                       APPROVED & PUBLIC
                     </span>
                   )}
                 </div>
-                <span className="text-[11px] font-mono text-[#8A97AB]">
+                <span className="text-[11px] font-mono text-[#6F6B60]">
                   {new Date(entry.createdAt).toLocaleDateString(undefined, {
                     month: "short",
                     day: "numeric",
@@ -661,15 +661,15 @@ function GuestbookTab({ onPendingCountChange }) {
                 </span>
               </div>
 
-              <p className="text-sm text-[#CBD5E1] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-white/[0.02] border border-white/5 font-body">
+              <p className="text-sm text-[#6F6B60] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-white/[0.02] border border-[#9F9B90]/20 font-body">
                 "{entry.note}"
               </p>
 
-              <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-white/5">
+              <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-[#9F9B90]/20">
                 {!entry.approved ? (
                   <button
                     onClick={() => handleApprove(entry._id, true)}
-                    className="px-4 py-1.5 rounded-lg bg-[#5EEAD4] text-[#060B16] font-mono font-bold text-xs hover:brightness-110 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm shadow-[#5EEAD4]/20"
+                    className="px-4 py-1.5 rounded-lg bg-[#F79F15] text-[#1A110A] font-mono font-bold text-xs hover:brightness-110 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm shadow-sm"
                   >
                     <FiCheck className="text-xs stroke-[3]" />
                     <span>Approve Entry</span>
@@ -990,16 +990,16 @@ function ProjectsTab() {
         <div
           role="status"
           aria-live="polite"
-          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-[#0E1626] border shadow-2xl animate-fade-in font-mono text-xs ${
+          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-[#FFFFFF] border shadow-2xl animate-fade-in font-mono text-xs ${
             toast.type === "error"
               ? "border-red-500 text-red-300"
-              : "border-[#5EEAD4] text-[#5EEAD4]"
+              : "border-[#2E7D32] text-[#F79F15]"
           }`}
         >
           {toast.type === "error" ? (
             <FiAlertCircle className="text-base shrink-0 text-red-400" />
           ) : (
-            <FiCheckCircle className="text-base shrink-0 text-[#5EEAD4]" />
+            <FiCheckCircle className="text-base shrink-0 text-[#F79F15]" />
           )}
           <span>{toast.message}</span>
         </div>
@@ -1008,10 +1008,10 @@ function ProjectsTab() {
       {/* Header and Add Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-heading font-bold text-[#E8EDF3]">
+          <h2 className="text-xl font-heading font-bold text-[#1A110A]">
             Projects Manager
           </h2>
-          <p className="text-xs text-[#8A97AB]">
+          <p className="text-xs text-[#6F6B60]">
             Create, edit, reorder and delete published portfolio projects.
           </p>
         </div>
@@ -1020,7 +1020,7 @@ function ProjectsTab() {
             type="button"
             onClick={fetchProjects}
             disabled={loading || reordering}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.03] text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#9F9B90]/30 hover:border-[#9F9B90]/30 bg-[#F8F5EE] text-xs font-mono text-[#6F6B60] hover:text-[#1A110A] transition-all cursor-pointer"
           >
             <FiRefreshCw className={`text-xs ${loading ? "animate-spin" : ""}`} />
             <span>Refresh</span>
@@ -1030,8 +1030,8 @@ function ProjectsTab() {
             onClick={handleStartAdd}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer shadow-lg ${
               isCreating
-                ? "bg-[#5EEAD4] text-[#060B16] ring-2 ring-[#4DA3FF]"
-                : "bg-gradient-to-r from-[#5EEAD4] to-[#4DA3FF] text-[#060B16] hover:brightness-110 shadow-[#5EEAD4]/15"
+                ? "bg-[#F79F15] text-[#1A110A] ring-2 ring-[#F79F15]"
+                : "bg-[#F79F15] text-[#1A110A] hover:brightness-110 shadow-sm"
             }`}
           >
             <FiPlus className="text-sm stroke-[3]" />
@@ -1048,7 +1048,7 @@ function ProjectsTab() {
       )}
 
       {loading ? (
-        <div className="glass-card rounded-2xl p-8 border border-white/5 animate-pulse flex flex-col gap-4">
+        <div className="bg-[#FFFFFF] rounded-2xl p-8 border border-[#9F9B90]/20 animate-pulse flex flex-col gap-4">
           <div className="h-6 w-48 bg-white/10 rounded" />
           <div className="h-40 w-full bg-white/5 rounded" />
         </div>
@@ -1057,16 +1057,16 @@ function ProjectsTab() {
           {/* Projects List & Reordering Column (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-[#8A97AB] uppercase tracking-wider">
+              <span className="text-xs font-mono text-[#6F6B60] uppercase tracking-wider">
                 Projects List ({projects.length})
               </span>
-              <span className="text-[10px] font-mono text-[#8A97AB]">
+              <span className="text-[10px] font-mono text-[#6F6B60]">
                 Use arrows to reorder
               </span>
             </div>
 
             {projects.length === 0 ? (
-              <div className="glass-card rounded-2xl p-6 text-center border border-white/5 bg-[#0E1626]/40 text-xs text-[#8A97AB]">
+              <div className="bg-[#FFFFFF] rounded-2xl p-6 text-center border border-[#9F9B90]/20 bg-[#FFFFFF] text-xs text-[#6F6B60]">
                 No projects yet. Click "Add Project" to create one.
               </div>
             ) : (
@@ -1078,8 +1078,8 @@ function ProjectsTab() {
                       key={p._id}
                       className={`flex items-center justify-between gap-2 p-3 rounded-2xl border transition-all ${
                         isSelected
-                          ? "border-[#4DA3FF] bg-[#4DA3FF]/15 shadow-lg shadow-[#4DA3FF]/5"
-                          : "border-white/5 bg-[#0E1626]/60 hover:border-white/10"
+                          ? "border-[#F79F15] bg-[#F8F5EE] shadow-lg shadow-sm"
+                          : "border-[#9F9B90]/20 bg-[#FFFFFF] hover:border-[#9F9B90]/30"
                       }`}
                     >
                       <button
@@ -1088,16 +1088,16 @@ function ProjectsTab() {
                         className="flex-1 text-left min-w-0 cursor-pointer"
                       >
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-heading font-semibold text-xs sm:text-sm truncate text-[#E8EDF3]">
+                          <span className="font-heading font-semibold text-xs sm:text-sm truncate text-[#1A110A]">
                             {p.title}
                           </span>
                           {p.featured && (
-                            <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#5EEAD4]/20 text-[#5EEAD4] border border-[#5EEAD4]/30 shrink-0">
+                            <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#F8F5EE] text-[#F79F15] border border-[#F79F15]/40 shrink-0">
                               ★
                             </span>
                           )}
                         </div>
-                        <div className="text-[10px] font-mono text-[#8A97AB] truncate">
+                        <div className="text-[10px] font-mono text-[#6F6B60] truncate">
                           Order: {p.order} · {p.slug}
                         </div>
                       </button>
@@ -1109,7 +1109,7 @@ function ProjectsTab() {
                           disabled={idx === 0 || reordering}
                           onClick={() => handleReorder(idx, -1)}
                           title="Move up"
-                          className="w-7 h-7 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-[#8A97AB] hover:text-[#E8EDF3] disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center transition-all cursor-pointer"
+                          className="w-7 h-7 rounded-lg border border-[#9F9B90]/30 hover:border-[#9F9B90]/30 hover:bg-white/5 text-[#6F6B60] hover:text-[#1A110A] disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center transition-all cursor-pointer"
                         >
                           <FiArrowUp className="text-xs" />
                         </button>
@@ -1118,7 +1118,7 @@ function ProjectsTab() {
                           disabled={idx === projects.length - 1 || reordering}
                           onClick={() => handleReorder(idx, 1)}
                           title="Move down"
-                          className="w-7 h-7 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-[#8A97AB] hover:text-[#E8EDF3] disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center transition-all cursor-pointer"
+                          className="w-7 h-7 rounded-lg border border-[#9F9B90]/30 hover:border-[#9F9B90]/30 hover:bg-white/5 text-[#6F6B60] hover:text-[#1A110A] disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center transition-all cursor-pointer"
                         >
                           <FiArrowDown className="text-xs" />
                         </button>
@@ -1131,14 +1131,14 @@ function ProjectsTab() {
           </div>
 
           {/* Form Editor Column (7 cols) */}
-          <div className="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-white/10 bg-[#0E1626]/90 shadow-xl">
+          <div className="lg:col-span-7 bg-[#FFFFFF] rounded-3xl p-6 sm:p-8 border border-[#9F9B90]/30 bg-[#FFFFFF] shadow-xl">
             <form onSubmit={handleSave} className="flex flex-col gap-5">
-              <div className="flex items-center justify-between pb-3 border-b border-white/5">
+              <div className="flex items-center justify-between pb-3 border-b border-[#9F9B90]/20">
                 <div>
-                  <h3 className="font-heading font-bold text-lg text-[#E8EDF3]">
+                  <h3 className="font-heading font-bold text-lg text-[#1A110A]">
                     {isCreating ? "Add New Project" : "Edit Project"}
                   </h3>
-                  <p className="text-[11px] font-mono text-[#5EEAD4]">
+                  <p className="text-[11px] font-mono text-[#F79F15]">
                     {isCreating
                       ? "Will auto-generate unique slug & append to list"
                       : `Editing: ${selectedProject?.slug || selectedId}`}
@@ -1160,7 +1160,7 @@ function ProjectsTab() {
               {/* Name & Subtitle */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                  <label className="text-xs font-mono text-[#6F6B60] uppercase">
                     Project Name *
                   </label>
                   <input
@@ -1171,12 +1171,12 @@ function ProjectsTab() {
                       setFormData({ ...formData, name: e.target.value })
                     }
                     placeholder="e.g. DevSpace"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-body"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                  <label className="text-xs font-mono text-[#6F6B60] uppercase">
                     Subtitle (e.g. Purpose/Type)
                   </label>
                   <input
@@ -1186,15 +1186,15 @@ function ProjectsTab() {
                       setFormData({ ...formData, subtitle: e.target.value })
                     }
                     placeholder="e.g. Collaborative Project Management"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-body"
                   />
                 </div>
               </div>
 
               {/* Preview Formatted Title */}
-              <div className="text-[11px] font-mono text-[#8A97AB] px-3 py-2 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="text-[11px] font-mono text-[#6F6B60] px-3 py-2 rounded-xl bg-white/[0.02] border border-[#9F9B90]/20">
                 Display Title:{" "}
-                <span className="text-[#E8EDF3] font-semibold">
+                <span className="text-[#1A110A] font-semibold">
                   {formData.name.trim() || "[Project Name]"}
                   {formData.subtitle.trim() ? ` - ${formData.subtitle.trim()}` : ""}
                 </span>
@@ -1202,7 +1202,7 @@ function ProjectsTab() {
 
               {/* Description */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                <label className="text-xs font-mono text-[#6F6B60] uppercase">
                   Description *
                 </label>
                 <textarea
@@ -1213,33 +1213,33 @@ function ProjectsTab() {
                     setFormData({ ...formData, description: e.target.value })
                   }
                   placeholder="Comprehensive description of the full-stack architecture, key features, and problem solved..."
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-body leading-relaxed"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-body leading-relaxed"
                 />
               </div>
 
               {/* Tech Stack Chips & Input */}
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                  <label className="text-xs font-mono text-[#6F6B60] uppercase">
                     Tech Stack ({formData.techStack.length}/12 tags)
                   </label>
-                  <span className="text-[10px] font-mono text-[#8A97AB]">
+                  <span className="text-[10px] font-mono text-[#6F6B60]">
                     Press Enter or comma to add
                   </span>
                 </div>
 
                 {/* Chips Container */}
-                <div className="flex flex-wrap gap-2 min-h-[38px] p-2 rounded-xl bg-white/[0.02] border border-white/10 items-center">
+                <div className="flex flex-wrap gap-2 min-h-[38px] p-2 rounded-xl bg-white/[0.02] border border-[#9F9B90]/30 items-center">
                   {formData.techStack.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#4DA3FF]/15 border border-[#4DA3FF]/30 text-xs font-mono text-[#E8EDF3]"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F8F5EE] border border-[#9F9B90]/40 text-xs font-mono text-[#1A110A]"
                     >
                       <span>{tag}</span>
                       <button
                         type="button"
                         onClick={() => handleRemoveTag(tag)}
-                        className="text-[#8A97AB] hover:text-red-400 cursor-pointer"
+                        className="text-[#6F6B60] hover:text-red-400 cursor-pointer"
                         title={`Remove ${tag}`}
                       >
                         <FiX className="text-xs" />
@@ -1253,7 +1253,7 @@ function ProjectsTab() {
                       onChange={(e) => setTagInput(e.target.value)}
                       onKeyDown={handleAddTag}
                       placeholder={formData.techStack.length === 0 ? "Type tag + Enter (e.g. React)" : "+ Add tag"}
-                      className="flex-1 min-w-[120px] bg-transparent text-sm text-[#E8EDF3] placeholder-[#8A97AB]/50 outline-none px-2 font-mono"
+                      className="flex-1 min-w-[120px] bg-transparent text-sm text-[#1A110A] placeholder-[#6F6B60]/50 outline-none px-2 font-mono"
                     />
                   )}
                 </div>
@@ -1261,7 +1261,7 @@ function ProjectsTab() {
 
               {/* Cover Image URL with Live Thumbnail Preview */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                <label className="text-xs font-mono text-[#6F6B60] uppercase">
                   Cover Image URL or Path
                 </label>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -1273,11 +1273,11 @@ function ProjectsTab() {
                       setPreviewError(false);
                     }}
                     placeholder="/projects/devspace-placeholder.png or https://..."
-                    className="flex-1 w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
+                    className="flex-1 w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-mono"
                   />
 
                   {/* Thumbnail Preview Card */}
-                  <div className="w-28 h-16 rounded-xl overflow-hidden border border-white/10 bg-[#060B16] shrink-0 flex items-center justify-center relative">
+                  <div className="w-28 h-16 rounded-xl overflow-hidden border border-[#9F9B90]/30 bg-[#F8F5EE] shrink-0 flex items-center justify-center relative">
                     {formData.imageUrl && !previewError ? (
                       <img
                         src={formData.imageUrl}
@@ -1286,7 +1286,7 @@ function ProjectsTab() {
                         className="w-full h-full object-cover object-center"
                       />
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-[#8A97AB] text-[10px] font-mono gap-1">
+                      <div className="flex flex-col items-center justify-center text-[#6F6B60] text-[10px] font-mono gap-1">
                         <FiImage className="text-sm" />
                         <span>Monogram</span>
                       </div>
@@ -1298,7 +1298,7 @@ function ProjectsTab() {
               {/* Live URL & GitHub URL */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                  <label className="text-xs font-mono text-[#6F6B60] uppercase">
                     Live Demo URL (http/https or empty)
                   </label>
                   <input
@@ -1308,12 +1308,12 @@ function ProjectsTab() {
                       setFormData({ ...formData, liveUrl: e.target.value })
                     }
                     placeholder="https://example.com/live"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-mono"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                  <label className="text-xs font-mono text-[#6F6B60] uppercase">
                     GitHub Repo URL (http/https or empty)
                   </label>
                   <input
@@ -1323,7 +1323,7 @@ function ProjectsTab() {
                       setFormData({ ...formData, githubUrl: e.target.value })
                     }
                     placeholder="https://github.com/..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-mono"
                   />
                 </div>
               </div>
@@ -1331,7 +1331,7 @@ function ProjectsTab() {
               {/* Order & Featured Flag */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-1">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-mono text-[#8A97AB] uppercase">
+                  <label className="text-xs font-mono text-[#6F6B60] uppercase">
                     Display Order
                   </label>
                   <input
@@ -1343,7 +1343,7 @@ function ProjectsTab() {
                         order: parseInt(e.target.value, 10) || 1,
                       })
                     }
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF] text-[#E8EDF3] text-sm outline-none font-mono"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15] text-[#1A110A] text-sm outline-none font-mono"
                   />
                 </div>
 
@@ -1355,11 +1355,11 @@ function ProjectsTab() {
                     onChange={(e) =>
                       setFormData({ ...formData, featured: e.target.checked })
                     }
-                    className="w-5 h-5 rounded accent-[#5EEAD4] cursor-pointer"
+                    className="w-5 h-5 rounded accent-[#F79F15] cursor-pointer"
                   />
                   <label
                     htmlFor="featured-toggle"
-                    className="text-sm font-body text-[#E8EDF3] cursor-pointer select-none"
+                    className="text-sm font-body text-[#1A110A] cursor-pointer select-none"
                   >
                     Mark as Featured Project
                   </label>
@@ -1367,7 +1367,7 @@ function ProjectsTab() {
               </div>
 
               {/* Submit Buttons */}
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
+              <div className="flex items-center justify-between pt-4 border-t border-[#9F9B90]/20">
                 {isCreating ? (
                   <button
                     type="button"
@@ -1378,24 +1378,24 @@ function ProjectsTab() {
                         populateForm(projects[0]);
                       }
                     }}
-                    className="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5 text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+                    className="px-4 py-2 rounded-xl border border-[#9F9B90]/30 hover:bg-white/5 text-xs font-mono text-[#6F6B60] hover:text-[#1A110A] transition-all cursor-pointer"
                   >
                     Cancel
                   </button>
                 ) : (
-                  <div className="text-[11px] font-mono text-[#8A97AB]">
-                    Slug: <span className="text-[#5EEAD4]">{selectedProject?.slug}</span>
+                  <div className="text-[11px] font-mono text-[#6F6B60]">
+                    Slug: <span className="text-[#F79F15]">{selectedProject?.slug}</span>
                   </div>
                 )}
 
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-3 rounded-xl font-mono text-sm font-semibold text-[#060B16] bg-gradient-to-r from-[#5EEAD4] to-[#4DA3FF] hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-60 flex items-center gap-2 cursor-pointer shadow-lg shadow-[#5EEAD4]/10"
+                  className="px-6 py-3 rounded-xl font-mono text-sm font-semibold text-[#1A110A] bg-[#F79F15] hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-60 flex items-center gap-2 cursor-pointer shadow-lg shadow-sm"
                 >
                   {saving ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-[#060B16] border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-[#1A110A] border-t-transparent rounded-full animate-spin" />
                       <span>{isCreating ? "Creating..." : "Saving..."}</span>
                     </>
                   ) : (
@@ -1436,22 +1436,22 @@ function ConfirmModal({ title, message, confirmText, loading, onConfirm, onCance
       aria-modal="true"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
     >
-      <div className="w-full max-w-md glass-card rounded-3xl p-6 sm:p-8 border border-white/15 bg-[#0E1626] shadow-2xl flex flex-col gap-4">
+      <div className="w-full max-w-md bg-[#FFFFFF] rounded-3xl p-6 sm:p-8 border border-[#9F9B90]/30 bg-[#FFFFFF] shadow-2xl flex flex-col gap-4">
         <div className="flex items-center gap-3 text-red-400">
           <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
             <FiAlertCircle className="text-xl" />
           </div>
-          <h3 className="text-lg font-heading font-bold text-[#E8EDF3]">{title}</h3>
+          <h3 className="text-lg font-heading font-bold text-[#1A110A]">{title}</h3>
         </div>
 
-        <p className="text-sm text-[#8A97AB] leading-relaxed">{message}</p>
+        <p className="text-sm text-[#6F6B60] leading-relaxed">{message}</p>
 
         <div className="flex items-center justify-end gap-3 pt-3">
           <button
             type="button"
             disabled={loading}
             onClick={onCancel}
-            className="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5 text-xs font-mono text-[#8A97AB] hover:text-[#E8EDF3] transition-all cursor-pointer"
+            className="px-4 py-2 rounded-xl border border-[#9F9B90]/30 hover:bg-white/5 text-xs font-mono text-[#6F6B60] hover:text-[#1A110A] transition-all cursor-pointer"
           >
             Cancel
           </button>

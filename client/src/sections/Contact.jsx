@@ -144,16 +144,15 @@ export default function Contact() {
       className="relative min-h-screen w-full flex flex-col justify-center px-6 py-28 max-w-6xl mx-auto overflow-hidden"
     >
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 -right-36 w-96 h-96 bg-[#4DA3FF]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 -left-36 w-96 h-96 bg-[#5EEAD4]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 -right-36 w-96 h-96 bg-[#F79F15]/5 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="flex flex-col gap-3 mb-16">
         <div className="section-label">// 05. CONTACT</div>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight gradient-text">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-heading tracking-tight text-[#1A110A]">
           Let's Build Something Amazing Together.
         </h2>
-        <p className="text-sm md:text-base text-[#8A97AB] max-w-xl">
+        <p className="text-sm md:text-base text-[#6F6B60] max-w-xl">
           Whether you have a project idea, an open engineering role, or just want to connect, feel free to reach out.
         </p>
       </div>
@@ -164,19 +163,19 @@ export default function Contact() {
         <div className="lg:col-span-5 flex flex-col gap-4">
           {/* Email Card with Copy Toast */}
           <Magnetic strength={0.2} className="w-full">
-            <div className="glass-card rounded-2xl p-5 border border-white/10 hover:border-[#4DA3FF]/40 bg-[#0E1626]/70 transition-all duration-300 flex items-center justify-between group">
+            <div className="bg-[#FFFFFF] rounded-2xl p-5 border border-[#9F9B90]/30 hover:border-[#F79F15] shadow-sm transition-all duration-300 flex items-center justify-between group">
               <a
                 href={`mailto:${personalInfo.email}`}
                 className="flex items-center gap-3.5 min-w-0"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#4DA3FF]/10 border border-[#4DA3FF]/20 flex items-center justify-center text-[#4DA3FF] group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 flex items-center justify-center text-[#F79F15] group-hover:scale-110 transition-transform">
                   <FiMail className="text-xl" />
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#8A97AB]">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#6F6B60]">
                     Email
                   </span>
-                  <span className="text-sm font-semibold text-[#E8EDF3] group-hover:text-white truncate">
+                  <span className="text-sm font-semibold text-[#1A110A] group-hover:text-[#F79F15] truncate">
                     {personalInfo.email}
                   </span>
                 </div>
@@ -187,10 +186,10 @@ export default function Contact() {
                   type="button"
                   onClick={() => handleCopy(personalInfo.email, "email")}
                   aria-label="Copy email address"
-                  className="min-w-[44px] min-h-[44px] p-2.5 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#8A97AB] hover:text-[#5EEAD4] transition-all cursor-pointer"
+                  className="min-w-[44px] min-h-[44px] p-2.5 flex items-center justify-center rounded-xl bg-[#F8F5EE] hover:bg-[#FFFFFF] border border-[#9F9B90]/30 text-[#1A110A] hover:text-[#F79F15] transition-all cursor-pointer"
                 >
                   {copiedField === "email" ? (
-                    <FiCheck className="text-sm text-[#5EEAD4]" />
+                    <FiCheck className="text-sm text-[#2E7D32]" />
                   ) : (
                     <FiCopy className="text-sm" />
                   )}
@@ -201,7 +200,7 @@ export default function Contact() {
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 5 }}
-                      className="absolute right-0 -top-8 px-2 py-0.5 rounded text-[10px] font-mono bg-[#5EEAD4] text-[#060B16] font-bold shadow-md"
+                      className="absolute right-0 -top-8 px-2 py-0.5 rounded text-[10px] font-mono bg-[#F79F15] text-[#1A110A] font-bold shadow-md"
                     >
                       Copied!
                     </motion.span>
@@ -220,10 +219,10 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visit Muskan's LinkedIn profile"
-                className="glass-card rounded-2xl p-4 min-h-[44px] border border-white/10 hover:border-[#4DA3FF]/40 bg-[#0E1626]/70 flex flex-col items-center justify-center text-center gap-2 group transition-all"
+                className="bg-[#FFFFFF] rounded-2xl p-4 min-h-[44px] border border-[#9F9B90]/30 hover:border-[#F79F15] shadow-sm flex flex-col items-center justify-center text-center gap-2 group transition-all"
               >
-                <FiLinkedin className="text-2xl text-[#4DA3FF] group-hover:scale-110 transition-transform" />
-                <span className="text-xs font-mono font-medium text-[#E8EDF3]">
+                <FiLinkedin className="text-2xl text-[#1A110A] group-hover:text-[#F79F15] group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-mono font-medium text-[#1A110A]">
                   LinkedIn
                 </span>
               </a>
@@ -236,10 +235,10 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visit Muskan's GitHub profile"
-                className="glass-card rounded-2xl p-4 min-h-[44px] border border-white/10 hover:border-[#5EEAD4]/40 bg-[#0E1626]/70 flex flex-col items-center justify-center text-center gap-2 group transition-all"
+                className="bg-[#FFFFFF] rounded-2xl p-4 min-h-[44px] border border-[#9F9B90]/30 hover:border-[#F79F15] shadow-sm flex flex-col items-center justify-center text-center gap-2 group transition-all"
               >
-                <FiGithub className="text-2xl text-[#5EEAD4] group-hover:scale-110 transition-transform" />
-                <span className="text-xs font-mono font-medium text-[#E8EDF3]">
+                <FiGithub className="text-2xl text-[#1A110A] group-hover:text-[#F79F15] group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-mono font-medium text-[#1A110A]">
                   GitHub
                 </span>
               </a>
@@ -252,10 +251,10 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visit Muskan's LeetCode profile"
-                className="glass-card rounded-2xl p-4 min-h-[44px] border border-white/10 hover:border-[#FFA116]/40 bg-[#0E1626]/70 flex flex-col items-center justify-center text-center gap-2 group transition-all"
+                className="bg-[#FFFFFF] rounded-2xl p-4 min-h-[44px] border border-[#9F9B90]/30 hover:border-[#F79F15] shadow-sm flex flex-col items-center justify-center text-center gap-2 group transition-all"
               >
-                <SiLeetcode className="text-2xl text-[#FFA116] group-hover:scale-110 transition-transform" />
-                <span className="text-xs font-mono font-medium text-[#E8EDF3]">
+                <SiLeetcode className="text-2xl text-[#1A110A] group-hover:text-[#F79F15] group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-mono font-medium text-[#1A110A]">
                   LeetCode
                 </span>
               </a>
@@ -264,15 +263,15 @@ export default function Contact() {
 
           {/* Location Card */}
           <Magnetic strength={0.15} className="w-full">
-            <div className="glass-card rounded-2xl p-4 border border-white/10 bg-[#0E1626]/70 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#5EEAD4]">
+            <div className="bg-[#FFFFFF] rounded-2xl p-4 border border-[#9F9B90]/30 shadow-sm flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 flex items-center justify-center text-[#F79F15]">
                 <FiMapPin className="text-lg" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#8A97AB]">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#6F6B60]">
                   Location
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-[#E8EDF3]">
+                <span className="text-xs sm:text-sm font-semibold text-[#1A110A]">
                   {personalInfo.location}
                 </span>
               </div>
@@ -285,18 +284,18 @@ export default function Contact() {
               <a
                 href={personalInfo.resume}
                 download="Muskan_Kumari_Resume.pdf"
-                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-mono text-xs font-semibold uppercase tracking-wider text-[#E8EDF3] glass-card border border-white/10 hover:border-[#4DA3FF]/50 hover:bg-[#4DA3FF]/10 transition-all duration-300 group shadow-md"
+                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-mono text-xs font-semibold uppercase tracking-wider text-[#1A110A] bg-[#FFFFFF] border border-[#1A110A] hover:bg-[#F8F5EE] transition-all duration-300 group shadow-sm"
               >
-                <FiDownload className="text-sm text-[#4DA3FF] group-hover:translate-y-0.5 transition-transform" />
+                <FiDownload className="text-sm text-[#F79F15] group-hover:translate-y-0.5 transition-transform" />
                 <span>Download Resume</span>
               </a>
             </Magnetic>
           </div>
         </div>
 
-        {/* Right Column: Glass Contact Form */}
+        {/* Right Column: Contact Form */}
         <div className="lg:col-span-7">
-          <div className="glass-card rounded-3xl p-7 sm:p-9 border border-white/10 bg-[#0E1626]/80 backdrop-blur-xl shadow-2xl relative">
+          <div className="bg-[#FFFFFF] rounded-3xl p-7 sm:p-9 border border-[#9F9B90]/30 shadow-md relative">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               {/* Bot Protection Honeypot */}
               <input
@@ -312,7 +311,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* Name */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-name" className="text-xs font-mono text-[#8A97AB]">
+                  <label htmlFor="contact-name" className="text-xs font-mono text-[#6F6B60]">
                     Name *
                   </label>
                   <input
@@ -323,13 +322,13 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     placeholder="Your name"
-                    className="w-full px-4 py-3 rounded-xl bg-[#060B16]/80 border border-white/10 text-sm text-[#E8EDF3] placeholder:text-white/20 focus:outline-none focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-sm text-[#1A110A] placeholder:text-[#9F9B90] focus:outline-none focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15]/50 transition-all"
                   />
                 </div>
 
                 {/* Email */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-email" className="text-xs font-mono text-[#8A97AB]">
+                  <label htmlFor="contact-email" className="text-xs font-mono text-[#6F6B60]">
                     Email *
                   </label>
                   <input
@@ -340,14 +339,14 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     placeholder="name@example.com"
-                    className="w-full px-4 py-3 rounded-xl bg-[#060B16]/80 border border-white/10 text-sm text-[#E8EDF3] placeholder:text-white/20 focus:outline-none focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-sm text-[#1A110A] placeholder:text-[#9F9B90] focus:outline-none focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15]/50 transition-all"
                   />
                 </div>
               </div>
 
               {/* Subject */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="contact-subject" className="text-xs font-mono text-[#8A97AB]">
+                <label htmlFor="contact-subject" className="text-xs font-mono text-[#6F6B60]">
                   Subject
                 </label>
                 <input
@@ -357,13 +356,13 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleInputChange}
                   placeholder="What is this regarding?"
-                  className="w-full px-4 py-3 rounded-xl bg-[#060B16]/80 border border-white/10 text-sm text-[#E8EDF3] placeholder:text-white/20 focus:outline-none focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF]/50 transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-sm text-[#1A110A] placeholder:text-[#9F9B90] focus:outline-none focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15]/50 transition-all"
                 />
               </div>
 
               {/* Message */}
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="contact-message" className="text-xs font-mono text-[#8A97AB]">
+                <label htmlFor="contact-message" className="text-xs font-mono text-[#6F6B60]">
                   Message *
                 </label>
                 <textarea
@@ -374,7 +373,7 @@ export default function Contact() {
                   rows={5}
                   required
                   placeholder="Share details about your project, idea, or questions..."
-                  className="w-full px-4 py-3 rounded-xl bg-[#060B16]/80 border border-white/10 text-sm text-[#E8EDF3] placeholder:text-white/20 focus:outline-none focus:border-[#4DA3FF] focus:ring-1 focus:ring-[#4DA3FF]/50 transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F8F5EE] border border-[#9F9B90]/30 text-sm text-[#1A110A] placeholder:text-[#9F9B90] focus:outline-none focus:border-[#F79F15] focus:ring-1 focus:ring-[#F79F15]/50 transition-all resize-none"
                 />
               </div>
 
@@ -383,11 +382,11 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-mono text-xs font-semibold uppercase tracking-wider text-[#060B16] bg-gradient-to-r from-[#4DA3FF] to-[#5EEAD4] hover:shadow-[0_0_30px_rgba(77,163,255,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-mono text-xs font-semibold uppercase tracking-wider text-[#1A110A] bg-[#F79F15] hover:bg-[#1A110A] hover:text-[#FFFFFF] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm cursor-pointer"
                 >
                   {submitting ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-[#060B16] border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-[#1A110A] border-t-transparent rounded-full animate-spin" />
                       <span>Sending message...</span>
                     </>
                   ) : (
@@ -410,8 +409,8 @@ export default function Contact() {
                     exit={{ opacity: 0, y: -10 }}
                     className={`flex items-start gap-3 p-4 rounded-xl text-xs leading-relaxed ${
                       status.type === "success"
-                        ? "bg-[#5EEAD4]/10 text-[#5EEAD4] border border-[#5EEAD4]/30"
-                        : "bg-red-500/10 text-red-400 border border-red-500/30"
+                        ? "bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/30"
+                        : "bg-[#C62828]/10 text-[#C62828] border border-[#C62828]/30"
                     }`}
                   >
                     {status.type === "success" ? (
@@ -431,9 +430,9 @@ export default function Contact() {
       {/* Guestbook Sub-section (Lazy-loaded) */}
       <Suspense
         fallback={
-          <div className="w-full mt-24 pt-16 border-t border-white/10 flex flex-col items-center justify-center min-h-[250px] gap-3">
-            <div className="w-6 h-6 border-2 border-[#4DA3FF]/30 border-t-[#5EEAD4] rounded-full animate-spin" />
-            <span className="text-xs font-mono text-[#8A97AB]">Loading guestbook...</span>
+          <div className="w-full mt-24 pt-16 border-t border-[#9F9B90]/30 flex flex-col items-center justify-center min-h-[250px] gap-3">
+            <div className="w-6 h-6 border-2 border-[#9F9B90]/30 border-t-[#F79F15] rounded-full animate-spin" />
+            <span className="text-xs font-mono text-[#6F6B60]">Loading guestbook...</span>
           </div>
         }
       >

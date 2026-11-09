@@ -98,10 +98,10 @@ export default function CustomCursor() {
           opacity: isVisible && !isViewMode ? 1 : 0,
         }}
         transition={{ duration: 0.15 }}
-        className="w-2 h-2 rounded-full bg-[#5EEAD4] shadow-[0_0_8px_#5EEAD4]"
+        className="w-2 h-2 rounded-full bg-[#1A110A] shadow-[0_0_4px_rgba(26,17,10,0.3)]"
       />
 
-      {/* Trailing Ring / View Badge */}
+      {/* Trailing Ring / View Badge (Orange Trailing Ring) */}
       <motion.div
         style={{
           x: ringX,
@@ -113,21 +113,21 @@ export default function CustomCursor() {
           scale: isViewMode ? 2.2 : isHovered ? 1.8 : 1,
           opacity: isVisible ? 1 : 0,
           backgroundColor: isViewMode
-            ? "rgba(14, 22, 38, 0.85)"
+            ? "#1A110A"
             : isHovered
-            ? "rgba(77, 163, 255, 0.12)"
-            : "rgba(77, 163, 255, 0.0)",
+            ? "rgba(247, 159, 21, 0.15)"
+            : "rgba(247, 159, 21, 0.0)",
           borderColor: isViewMode
-            ? "#5EEAD4"
+            ? "#F79F15"
             : isHovered
-            ? "rgba(94, 234, 212, 0.7)"
-            : "rgba(77, 163, 255, 0.4)",
+            ? "#F79F15"
+            : "rgba(247, 159, 21, 0.6)",
         }}
         transition={{ duration: 0.2 }}
-        className="w-8 h-8 rounded-full border border-[#4DA3FF]/40 backdrop-blur-md flex items-center justify-center shadow-[0_0_15px_rgba(77,163,255,0.2)]"
+        className="w-8 h-8 rounded-full border border-[#F79F15]/60 backdrop-blur-sm flex items-center justify-center shadow-[0_0_12px_rgba(247,159,21,0.25)]"
       >
         {isViewMode && (
-          <span className="text-[7.5px] font-mono font-bold tracking-widest text-[#5EEAD4] uppercase select-none">
+          <span className="text-[7.5px] font-mono font-bold tracking-widest text-[#F5F3E7] uppercase select-none">
             {cursorText}
           </span>
         )}

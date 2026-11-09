@@ -35,9 +35,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full border-t border-white/10 bg-[#060B16] text-[#8A97AB] overflow-hidden pt-20 pb-12">
+    <footer className="relative w-full border-t border-[#1A110A] bg-[#1A110A] text-[#9F9B90] overflow-hidden pt-20 pb-12">
       {/* Background radial accent glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-gradient-to-t from-[#4DA3FF]/10 via-[#5EEAD4]/5 to-transparent blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-gradient-to-t from-[#F79F15]/10 to-transparent blur-[140px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 flex flex-col gap-16 relative z-10">
         {/* Oversized "THANKS FOR VISITING" Typography with subtle scroll reveal */}
@@ -48,13 +48,13 @@ export default function Footer() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full text-center select-none"
         >
-          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black font-heading tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white/20 via-white/10 to-transparent uppercase leading-tight sm:leading-none break-words">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black font-heading tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-[#F5F3E7]/20 via-[#F5F3E7]/10 to-transparent uppercase leading-tight sm:leading-none break-words">
             THANKS FOR VISITING
           </h2>
         </motion.div>
 
         {/* Middle Navigation & Social Row */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 pt-8 border-t border-white/5">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 pt-8 border-t border-white/10">
           {/* Quick Links */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             {NAV_LINKS.map((link) => (
@@ -62,7 +62,7 @@ export default function Footer() {
                 key={link.label}
                 type="button"
                 onClick={() => handleScrollTo(link.href)}
-                className="text-xs font-mono uppercase tracking-wider text-[#8A97AB] hover:text-[#5EEAD4] transition-colors cursor-pointer min-h-[44px] flex items-center px-2"
+                className="text-xs font-mono uppercase tracking-wider text-[#9F9B90] hover:text-[#F79F15] transition-colors cursor-pointer min-h-[44px] flex items-center px-2"
               >
                 {link.label}
               </button>
@@ -79,7 +79,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 title="GitHub"
                 aria-label="Visit Muskan's GitHub profile"
-                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl glass-card border border-white/10 hover:border-[#5EEAD4]/50 flex items-center justify-center text-[#8A97AB] hover:text-[#5EEAD4] transition-all"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white/5 border border-white/10 hover:border-[#F79F15] flex items-center justify-center text-[#9F9B90] hover:text-[#F79F15] transition-all"
               >
                 <FiGithub className="text-lg" />
               </a>
@@ -93,7 +93,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 title="LinkedIn"
                 aria-label="Visit Muskan's LinkedIn profile"
-                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl glass-card border border-white/10 hover:border-[#4DA3FF]/50 flex items-center justify-center text-[#8A97AB] hover:text-[#4DA3FF] transition-all"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white/5 border border-white/10 hover:border-[#F79F15] flex items-center justify-center text-[#9F9B90] hover:text-[#F79F15] transition-all"
               >
                 <FiLinkedin className="text-lg" />
               </a>
@@ -107,7 +107,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 title="LeetCode"
                 aria-label="Visit Muskan's LeetCode profile"
-                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl glass-card border border-white/10 hover:border-[#FFA116]/50 flex items-center justify-center text-[#8A97AB] hover:text-[#FFA116] transition-all"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white/5 border border-white/10 hover:border-[#F79F15] flex items-center justify-center text-[#9F9B90] hover:text-[#F79F15] transition-all"
               >
                 <SiLeetcode className="text-lg" />
               </a>
@@ -120,7 +120,7 @@ export default function Footer() {
                 onClick={() => handleScrollTo(0)}
                 title="Back to top"
                 aria-label="Scroll back to top"
-                className="inline-flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl glass-card border border-white/10 hover:border-[#5EEAD4]/50 text-xs font-mono font-medium text-[#E8EDF3] hover:text-[#5EEAD4] transition-all cursor-pointer shadow-sm group"
+                className="inline-flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl bg-white/5 border border-white/10 hover:border-[#F79F15] text-xs font-mono font-medium text-[#F5F3E7] hover:text-[#F79F15] transition-all cursor-pointer shadow-sm group"
               >
                 <span>Back to top</span>
                 <FiArrowUp className="text-sm transition-transform group-hover:-translate-y-1" />
@@ -130,11 +130,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright & Built With Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8A97AB]/70 pt-6 border-t border-white/5">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#9F9B90]/70 pt-6 border-t border-white/10">
           <p>© 2026 {personalInfo.name}</p>
           <p className="flex items-center gap-1.5">
             <span>Crafted with</span>
-            <FiHeart className="text-xs text-[#4DA3FF]" />
+            <FiHeart className="text-xs text-[#F79F15]" />
             <span>using React, Tailwind CSS & Lenis</span>
           </p>
         </div>

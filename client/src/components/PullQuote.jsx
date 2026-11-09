@@ -32,10 +32,10 @@ export default function PullQuote() {
   return (
     <div className="w-full py-20 px-6 flex justify-center relative overflow-hidden select-none">
       {/* Ambient background glow */}
-      <div className="absolute w-80 h-32 bg-[#4DA3FF]/10 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute w-80 h-32 bg-[#F79F15]/5 rounded-full blur-[90px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto flex flex-col items-center text-center relative z-10">
-        <span className="text-4xl sm:text-5xl font-mono text-[#5EEAD4]/30 leading-none mb-3">
+        <span className="text-4xl sm:text-5xl font-mono text-[#F79F15]/40 leading-none mb-3">
           “
         </span>
 
@@ -44,7 +44,7 @@ export default function PullQuote() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.6 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#E8EDF3] leading-snug tracking-tight max-w-3xl"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold font-heading text-[#1A110A] leading-snug tracking-tight max-w-3xl"
         >
           {words.map((word, index) => {
             const isHighlight =
@@ -57,7 +57,7 @@ export default function PullQuote() {
                 key={index}
                 variants={wordVariants}
                 className={`inline-block mr-2 sm:mr-3 ${
-                  isHighlight ? "gradient-text" : "text-[#E8EDF3]/90"
+                  isHighlight ? "text-[#F79F15]" : "text-[#1A110A]"
                 }`}
               >
                 {word}
@@ -73,11 +73,11 @@ export default function PullQuote() {
           transition={{ delay: 0.7, duration: 0.5 }}
           className="mt-6 flex items-center gap-3"
         >
-          <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#4DA3FF]" />
-          <span className="text-xs font-mono tracking-widest uppercase text-[#8A97AB]">
+          <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-[#F79F15]" />
+          <span className="text-xs font-mono tracking-widest uppercase text-[#6F6B60]">
             Core Philosophy
           </span>
-          <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#5EEAD4]" />
+          <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-[#F79F15]" />
         </motion.div>
       </div>
     </div>
