@@ -162,12 +162,12 @@ function buildCleanBaseTexture(img) {
     const a = data[o + 3];
     origA[i] = a / 255;
     if (a > 128) workA[i] = 1;
-    if (r > 72 && a > 204) bright[i] = 1;
-    if (r < 70 && g < 42 && b < 40) dark[i] = 1;
+    if (r > 78 && a > 204) bright[i] = 1;
+    if (r < 76 && g < 46 && b < 44) dark[i] = 1;
   }
 
-  // Peel dark background crust attached near warm lit hair (y < 670, or right hair curl y < 860 && x > 590)
-  const brightNear = dilateBinaryMask(bright, width, height, 18);
+  // Peel dark background crust attached near warm lit hair (y < 670, or right hair curl y < 895 && x > 575)
+  const brightNear = dilateBinaryMask(bright, width, height, 20);
   const dist = new Uint8Array(total);
   const queue = new Int32Array(total);
   let qHead = 0;
@@ -177,7 +177,7 @@ function buildCleanBaseTexture(img) {
     for (let x = 0; x < width; x++) {
       const idx = y * width + x;
       if (!workA[idx] || !dark[idx] || !brightNear[idx]) continue;
-      const inHair = y < 670 || (y < 860 && x > 590);
+      const inHair = y < 670 || (y < 895 && x > 575);
       if (!inHair) continue;
 
       const isEdge =
@@ -201,7 +201,7 @@ function buildCleanBaseTexture(img) {
   while (qHead < qTail) {
     const idx = queue[qHead++];
     const d = dist[idx];
-    if (d >= 22) continue;
+    if (d >= 24) continue;
 
     const x = idx % width;
     const y = (idx - x) / width;
@@ -210,7 +210,7 @@ function buildCleanBaseTexture(img) {
       if (nx < 0 || nx >= width || ny < 0 || ny >= height) return;
       const nIdx = ny * width + nx;
       if (!workA[nIdx] || !dark[nIdx] || !brightNear[nIdx]) return;
-      if (!(ny < 670 || (ny < 860 && nx > 590))) return;
+      if (!(ny < 670 || (ny < 895 && nx > 575))) return;
       dist[nIdx] = d + 1;
       workA[nIdx] = 0;
       queue[qTail++] = nIdx;
@@ -222,12 +222,12 @@ function buildCleanBaseTexture(img) {
     tryPush(x, y + 1);
   }
 
-  // Morphological opening (radius 2) + Gaussian-like smoothing on contour
-  const eroded = erodeBinaryMask(workA, width, height, 2);
-  const opened = dilateBinaryMask(eroded, width, height, 2);
-  const blurred = smoothMaskFloat(opened, width, height, 2, 3);
+  // Morphological opening (radius 3) + smoother Gaussian-like blur on side hair contours
+  const eroded = erodeBinaryMask(workA, width, height, 3);
+  const opened = dilateBinaryMask(eroded, width, height, 3);
+  const blurred = smoothMaskFloat(opened, width, height, 3, 3);
 
-  // Propagate clean interior RGB outward 6px into smoothed boundary to prevent dark matte fringe
+  // Propagate clean interior RGB outward 7px into smoothed boundary to prevent dark matte fringe
   const validRgb = new Uint8Array(total);
   for (let i = 0; i < total; i++) {
     if (workA[i] && origA[i] > 0.9) validRgb[i] = 1;
@@ -249,7 +249,7 @@ function buildCleanBaseTexture(img) {
     }
   }
 
-  for (let pass = 0; pass < 6 && frontier.length > 0; pass++) {
+  for (let pass = 0; pass < 7 && frontier.length > 0; pass++) {
     const nextFrontier = [];
     const updates = [];
     for (let k = 0; k < frontier.length; k++) {
@@ -303,9 +303,9 @@ function buildCleanBaseTexture(img) {
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const idx = y * width + x;
-      const smoothA = smoothstepJS(0.52, 0.78, blurred[idx]);
+      const smoothA = smoothstepJS(0.50, 0.78, blurred[idx]);
       const cleanOrig = smoothstepJS(0.55, 0.92, origA[idx]);
-      const shirtBlend = x <= 590 ? Math.max(0, Math.min(1, (y - 670) / 40)) : 0;
+      const shirtBlend = x <= 575 ? Math.max(0, Math.min(1, (y - 670) / 40)) : 0;
       const finalA =
         smoothA * (1 - shirtBlend) + Math.min(cleanOrig, smoothA) * shirtBlend;
       data[idx * 4 + 3] = Math.round(finalA * 255);
