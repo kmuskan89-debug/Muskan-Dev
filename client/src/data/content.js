@@ -57,7 +57,7 @@ export const projects = [
     title: "Home Service Booking System - System Design",
     description: "backend architecture for a service marketplace with UML class diagrams and C++ logic for bookings, provider scheduling and service management.",
     stack: ["C++", "UML", "OOP"],
-    image: "/projects/home-service-placeholder.jpg",
+    image: "/projects/chess-arena.png",
     liveUrl: "https://example.com/home-service-booking",
     githubUrl: "https://github.com/kmuskan89-debug/home-service-booking"
   }
