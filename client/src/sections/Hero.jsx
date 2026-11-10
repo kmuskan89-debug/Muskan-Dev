@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLenis } from "../components/SmoothScroll";
 import Magnetic from "../components/Magnetic";
@@ -7,8 +7,7 @@ import { personalInfo, achievements } from "../data/content";
 import { FiArrowRight, FiDownload, FiArrowDown, FiGithub, FiLinkedin } from "react-icons/fi";
 import { SiLeetcode } from "react-icons/si";
 
-// Lazy-loaded R3F Canvas with RobotGirl
-const HeroCanvas = lazy(() => import("../three/HeroCanvas"));
+import HeroCharacter from "../components/HeroCharacter";
 
 // Rotating circular sticker "SEEKING SDE ROLES - "
 function CircularSticker() {
@@ -131,26 +130,10 @@ export default function Hero({ preloaderComplete = true }) {
       {/* ======================================================== */}
       <div className="relative z-20 w-full max-w-7xl mx-auto flex-1 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-8 my-auto min-h-[520px]">
         {/* ====================================================== */}
-        {/* MOBILE ROBOT CONTAINER (Rendered above text on mobile) */}
+        {/* MOBILE CHARACTER CONTAINER (Rendered above text)       */}
         {/* ====================================================== */}
-        <div className="lg:hidden w-full flex justify-center -mb-4 mt-2">
-          <div
-            aria-hidden="true"
-            className="w-[280px] h-[300px] sm:w-[320px] sm:h-[340px] relative pointer-events-auto"
-          >
-            <Suspense
-              fallback={
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-full border-2 border-[#1A110A] border-t-[#F79F15] animate-spin" />
-                </div>
-              }
-            >
-              <HeroCanvas
-                isVisible={isVisible && preloaderComplete}
-                shouldReduceMotion={shouldReduceMotion}
-              />
-            </Suspense>
-          </div>
+        <div className="lg:hidden w-full flex justify-center -mb-3 mt-2">
+          <HeroCharacter className="w-[280px] sm:w-[320px] max-w-[85vw]" />
         </div>
 
         {/* ====================================================== */}
@@ -245,24 +228,10 @@ export default function Hero({ preloaderComplete = true }) {
         </motion.div>
 
         {/* ====================================================== */}
-        {/* DESKTOP CENTER-BOTTOM: 3D Robot Girl (Large & Cropped) */}
+        {/* DESKTOP CENTER-BOTTOM: Illustrated Character (Cropped) */}
         {/* ====================================================== */}
-        <div
-          aria-hidden="true"
-          className="hidden lg:block absolute left-1/2 -translate-x-1/2 bottom-[-45px] w-[460px] xl:w-[540px] 2xl:w-[580px] h-[540px] xl:h-[620px] 2xl:h-[660px] pointer-events-auto z-10"
-        >
-          <Suspense
-            fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full border-2 border-[#1A110A] border-t-[#F79F15] animate-spin" />
-              </div>
-            }
-          >
-            <HeroCanvas
-              isVisible={isVisible && preloaderComplete}
-              shouldReduceMotion={shouldReduceMotion}
-            />
-          </Suspense>
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 bottom-[-40px] xl:bottom-[-50px] w-[420px] xl:w-[480px] 2xl:w-[530px] pointer-events-auto z-10">
+          <HeroCharacter className="w-full" />
         </div>
 
         {/* ====================================================== */}
