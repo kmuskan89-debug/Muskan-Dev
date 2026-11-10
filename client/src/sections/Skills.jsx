@@ -846,7 +846,7 @@ export default function Skills() {
     <section
       ref={sectionRef}
       id="skills"
-      className="relative w-full flex flex-col px-6 pt-14 pb-24 max-w-6xl mx-auto overflow-hidden"
+      className="relative w-full flex flex-col px-6 pt-14 pb-10 max-w-6xl mx-auto overflow-hidden"
     >
       {/* Background ambient glow */}
       <div className="absolute top-1/4 -right-36 w-96 h-96 bg-[#F79F15]/5 rounded-full blur-[140px] pointer-events-none" />
@@ -1224,7 +1224,7 @@ export default function Skills() {
       {/* ======================================================== */}
       {/* 4. PHILOSOPHY PULL-QUOTE (Preserved below section)       */}
       {/* ======================================================== */}
-      <div className="mt-16 w-full">
+      <div className="mt-10 w-full">
         <PullQuote />
       </div>
     </section>

@@ -30,7 +30,7 @@ export default function PullQuote() {
   };
 
   return (
-    <div className="w-full py-20 px-6 flex justify-center relative overflow-hidden select-none">
+    <div className="w-full pt-12 pb-6 px-6 flex justify-center relative overflow-hidden select-none">
       {/* Ambient background glow */}
       <div className="absolute w-80 h-32 bg-[#F79F15]/5 rounded-full blur-[90px] pointer-events-none" />
 

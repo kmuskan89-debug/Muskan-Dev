@@ -27,7 +27,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative min-h-screen w-full flex flex-col justify-center px-6 py-28 max-w-6xl mx-auto"
+      className="relative min-h-screen w-full flex flex-col justify-center px-6 pt-12 pb-12 max-w-6xl mx-auto"
     >
       {/* Background Ambient Glows */}
       <div className="absolute top-1/4 -right-36 w-96 h-96 bg-[#F79F15]/5 rounded-full blur-[140px] pointer-events-none" />
