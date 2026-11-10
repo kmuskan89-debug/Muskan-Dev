@@ -86,20 +86,20 @@ const CATEGORIES = [
   "Core CS",
 ];
 
-// Reusable category color classes
+// Reusable category color classes for cubes
 function getCategoryPillClasses(category) {
   switch (category) {
     case "Languages":
-      return "bg-[#F79F15] text-[#1A110A] border border-[#1A110A]/20";
+      return "bg-[#F79F15] text-[#1A110A] border-2 border-[#1A110A] shadow-[0_4px_0_#1A110A]";
     case "Frontend":
     case "Core CS":
-      return "bg-[#1A110A] text-[#F5F3E7] border border-[#F5F3E7]/20";
+      return "bg-[#1A110A] text-[#F5F3E7] border-2 border-[#F5F3E7]/25 shadow-[0_4px_0_#000000]";
     case "Database":
-      return "bg-[#F8F5EE] text-[#1A110A] border border-[#1A110A]";
+      return "bg-[#F8F5EE] text-[#1A110A] border-2 border-[#1A110A] shadow-[0_4px_0_#1A110A]";
     case "Backend":
     case "Tools":
     default:
-      return "bg-[#FFFFFF] text-[#1A110A] border border-[#1A110A]";
+      return "bg-[#FFFFFF] text-[#1A110A] border-2 border-[#1A110A] shadow-[0_4px_0_#1A110A]";
   }
 }
 
@@ -275,23 +275,21 @@ export default function Skills() {
         label: "aiml-special",
       });
     } else {
-      // Measured pill dimensions
+      // Measured cube dimensions (square 84x84 with chamfered corners)
       const el = pillElementsRef.current.get(id);
-      let width = 160;
-      let height = 48;
+      let size = 84;
       if (el) {
         const rect = el.getBoundingClientRect();
-        if (rect.width > 20) width = Math.round(rect.width);
-        if (rect.height > 20) height = Math.round(rect.height);
+        if (rect.width > 20) size = Math.round(rect.width);
       }
-      pillDimsRef.current.set(id, { width, height });
+      pillDimsRef.current.set(id, { width: size, height: size });
 
-      body = Bodies.rectangle(spawnX, spawnY, width, height, {
-        chamfer: { radius: height / 2 },
+      body = Bodies.rectangle(spawnX, spawnY, size, size, {
+        chamfer: { radius: 14 },
         restitution: 0.35,
-        friction: 0.1,
+        friction: 0.12,
         frictionAir: 0.015,
-        density: 0.001,
+        density: 0.0012,
         label: id,
       });
     }
@@ -710,7 +708,7 @@ export default function Skills() {
             id: `${item.id}-${Date.now()}-${Math.random()}`,
             x: body.position.x,
             y: body.position.y,
-            size: item.isAiml ? 120 : 52,
+            size: item.isAiml ? 120 : 84,
           });
 
           // Trigger scale down and fade out on inner DOM
@@ -944,7 +942,7 @@ export default function Skills() {
               <button
                 type="button"
                 onClick={handleShake}
-                aria-label="Shake pill container"
+                aria-label="Shake skills container"
                 className="px-4 py-2 min-h-[44px] rounded-full font-mono text-xs font-bold uppercase tracking-wider bg-[#FFFFFF] text-[#1A110A] border border-[#1A110A]/15 hover:border-[#F79F15] transition-all cursor-pointer shadow-sm flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
               >
                 <FiActivity className="text-sm text-[#F79F15]" />
@@ -971,7 +969,7 @@ export default function Skills() {
               <button
                 type="button"
                 onClick={handleDropAgain}
-                aria-label="Replay pill drop sequence"
+                aria-label="Replay cube drop sequence"
                 className="px-4 py-2 min-h-[44px] rounded-full font-mono text-xs font-bold uppercase tracking-wider bg-[#FFFFFF] text-[#1A110A] border border-[#1A110A]/15 hover:border-[#F79F15] transition-all cursor-pointer shadow-sm flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
               >
                 <FiRefreshCw className="text-sm" />
@@ -996,11 +994,11 @@ export default function Skills() {
             {/* Grab hint indicator */}
             <div className="absolute top-4 left-6 pointer-events-none select-none z-0">
               <span className="font-mono text-[11px] text-[#6F6B60]/60 uppercase tracking-widest">
-                // Grab, throw & explore skills
+                // Grab, throw & stack skill cubes
               </span>
             </div>
 
-            {/* Orange Poof Rings on Vanishing Pills */}
+            {/* Orange Poof Rings on Vanishing Cubes */}
             {poofs.map((poof) => (
               <span
                 key={poof.id}
@@ -1015,7 +1013,7 @@ export default function Skills() {
               />
             ))}
 
-            {/* DOM Pills: Transformed by Matter.js animation loop */}
+            {/* DOM Cubes: Transformed by Matter.js animation loop */}
             {SKILL_ITEMS.map((item, idx) => {
               const Icon = item.icon;
               const isSelected = activeCategory === "All" || item.category === activeCategory;
@@ -1037,7 +1035,7 @@ export default function Skills() {
                   className="absolute top-0 left-0 select-none will-change-transform z-10"
                 >
                   <div
-                    className={`h-12 rounded-full px-5 py-2.5 flex items-center gap-2.5 shadow-md cursor-grab active:cursor-grabbing transition-all duration-[380ms] ease-out ${baseStyles} ${
+                    className={`w-[84px] h-[84px] rounded-2xl p-2 flex flex-col items-center justify-center text-center cursor-grab active:cursor-grabbing transition-all duration-[380ms] ease-out ${baseStyles} ${
                       isSelected
                         ? "scale-100 opacity-100"
                         : "scale-0 opacity-0 pointer-events-none"
@@ -1047,8 +1045,8 @@ export default function Skills() {
                         : ""
                     }`}
                   >
-                    <Icon className="text-lg shrink-0" />
-                    <span className="font-body font-semibold text-sm whitespace-nowrap">
+                    <Icon className="text-2xl sm:text-[26px] mb-1 shrink-0" />
+                    <span className="font-body font-bold text-[10px] sm:text-[10.5px] leading-[1.15] text-center line-clamp-2 px-0.5 break-words select-none">
                       {item.name}
                     </span>
                   </div>
