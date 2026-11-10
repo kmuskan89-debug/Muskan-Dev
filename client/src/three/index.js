@@ -1,3 +1,2 @@
 export { default as HeroCanvas } from "./HeroCanvas";
-export { default as RobotGirl } from "./RobotGirl";
 export { default as NeuralNetwork } from "./NeuralNetwork";

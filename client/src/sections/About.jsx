@@ -24,7 +24,7 @@ export default function About() {
     <>
       <section
         id="about"
-        className="relative min-h-screen w-full flex flex-col justify-center px-6 py-28 max-w-6xl mx-auto overflow-hidden"
+        className="relative w-full flex flex-col justify-center px-6 pt-24 pb-12 max-w-6xl mx-auto overflow-hidden"
       >
         {/* Subtle Ambient Background Light */}
         <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#F79F15]/5 rounded-full blur-[140px] pointer-events-none" />
@@ -57,7 +57,7 @@ export default function About() {
         {/* Main Grid: Left Photo Card | Right Biography */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: 3D Tilting Portrait & Drifting Glass Chips */}
+          {/* Left Column: Interactive Hanging ID Card & Scanner */}
           <motion.div
             variants={lineRevealVariants}
             initial="hidden"
