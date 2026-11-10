@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "units": "All positions are in pixels of avatar-base.webp (881 x 936). Origin top-left, y points down. UV = pixels / size.",
+  "files": {
+    "base": "avatar-base.webp",
+    "rest": "avatar-rest.webp",
+    "irisLeft": "iris-left.png",
+    "irisRight": "iris-right.png",
+    "eyeMask": "eye-mask.png (R = left eye opening, G = right eye opening; load as LINEAR data, not sRGB)"
+  },
+  "size": [
+    881,
+    936
+  ],
+  "irises": {
+    "left": {
+      "center": [
+        415.5,
+        278.5
+      ],
+      "radius": 19.3,
+      "spriteSize": 64,
+      "spriteCenter": [
+        31.5,
+        32.5
+      ]
+    },
+    "right": {
+      "center": [
+        532.5,
+        308.0
+      ],
+      "radius": 17.2,
+      "spriteSize": 64,
+      "spriteCenter": [
+        32.5,
+        32.0
+      ]
+    }
+  },
+  "headPivot": [
+    465,
+    602
+  ],
+  "headWeight": {
+    "fullAboveY": 472,
+    "zeroBelowY": 632
+  },
+  "face": {
+    "center": [
+      470,
+      342
+    ],
+    "sigma": [
+      85,
+      100
+    ]
+  },
+  "amplitude": {
+    "headShift": [
+      9,
+      5
+    ],
+    "rollDeg": 2.2,
+    "faceShift": [
+      11,
+      6
+    ],
+    "irisShift": {
+      "x": 7,
+      "up": 3,
+      "down": 2
+    }
+  },
+  "smoothing": {
+    "headLambda": 5,
+    "eyeLambda": 14
+  }
+}

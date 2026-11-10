@@ -1,21 +1,53 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, {
+  lazy,
+  Suspense,
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLenis } from "../components/SmoothScroll";
 import Magnetic from "../components/Magnetic";
 import Typewriter from "../components/Typewriter";
 import { personalInfo, achievements } from "../data/content";
-import { FiArrowRight, FiDownload, FiArrowDown, FiGithub, FiLinkedin } from "react-icons/fi";
+import avatarRig from "../../public/hero/avatar-rig.json";
+import {
+  FiArrowRight,
+  FiDownload,
+  FiArrowDown,
+  FiGithub,
+  FiLinkedin,
+} from "react-icons/fi";
 import { SiLeetcode } from "react-icons/si";
 
-import HeroCharacter from "../components/HeroCharacter";
+// Lazy-loaded R3F ShaderMaterial Canvas
+const HeroCanvas = lazy(() => import("../three/HeroCanvas"));
+
+function checkWebGLSupport() {
+  if (typeof window === "undefined") return false;
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext("webgl2") ||
+        canvas.getContext("webgl") ||
+        canvas.getContext("experimental-webgl"))
+    );
+  } catch {
+    return false;
+  }
+}
 
 // Rotating circular sticker "SEEKING SDE ROLES - "
-function CircularSticker() {
+function CircularSticker({ shouldReduceMotion }) {
   return (
     <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center select-none shrink-0 text-[#1A110A]">
       <svg
         viewBox="0 0 100 100"
-        className="w-full h-full animate-[spin_14s_linear_infinite]"
+        className={`w-full h-full ${
+          shouldReduceMotion ? "" : "animate-[spin_14s_linear_infinite]"
+        }`}
         style={{ transformOrigin: "center center" }}
       >
         <path
@@ -41,9 +73,19 @@ function CircularSticker() {
 
 export default function Hero({ preloaderComplete = true }) {
   const heroRef = useRef(null);
+  const avatarContainerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [hasWebGL, setHasWebGL] = useState(false);
+  const [canvasReady, setCanvasReady] = useState(false);
+  const [hidePlaceholder, setHidePlaceholder] = useState(false);
+
   const lenis = useLenis();
   const shouldReduceMotion = useReducedMotion();
+
+  // Detect WebGL capability on mount
+  useEffect(() => {
+    setHasWebGL(checkWebGLSupport());
+  }, []);
 
   // Pause R3F when hero is off-screen
   useEffect(() => {
@@ -59,6 +101,17 @@ export default function Hero({ preloaderComplete = true }) {
     }
 
     return () => observer.disconnect();
+  }, []);
+
+  // Crossfade out static placeholder as soon as canvas is ready so its 1px halo never peeks
+  useEffect(() => {
+    if (canvasReady) {
+      setHidePlaceholder(true);
+    }
+  }, [canvasReady]);
+
+  const handleCanvasReady = useCallback(() => {
+    setCanvasReady(true);
   }, []);
 
   const handleScrollToProjects = useCallback(
@@ -90,6 +143,8 @@ export default function Hero({ preloaderComplete = true }) {
     ? "1st Runner Up, Google Ideate"
     : achievements?.[1] || "1st Runner Up, Google Ideate";
 
+  const enableWebGLCanvas = hasWebGL && !shouldReduceMotion;
+
   return (
     <section
       ref={heroRef}
@@ -119,31 +174,80 @@ export default function Hero({ preloaderComplete = true }) {
         </div>
 
         {/* Rotating Circular Sticker */}
-        <CircularSticker />
+        <CircularSticker shouldReduceMotion={!!shouldReduceMotion} />
       </div>
 
       {/* ======================================================== */}
       {/* 2. MAIN HERO STAGE                                       */}
-      {/* Desktop: Left (Headline/Buttons/Socials), Center (Robot), */}
-      {/*          Right (Roles/Fact chips/Scroll)                 */}
-      {/* Mobile: Robot on Top, then Content Centered              */}
+      {/* Desktop: Left (Headline/Buttons/Socials), Center Flush   */}
+      {/*          Avatar at Bottom, Right (Roles/Fact chips)      */}
+      {/* Mobile: Avatar Centered on Top, then Content Centered    */}
       {/* ======================================================== */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto flex-1 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-8 my-auto min-h-[520px]">
+      <div className="relative lg:static z-20 w-full max-w-7xl mx-auto flex-1 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-6 lg:gap-8 my-auto">
         {/* ====================================================== */}
-        {/* MOBILE CHARACTER CONTAINER (Rendered above text)       */}
+        {/* CENTERED FIGURE (LCP <img> + Lazy R3F Shader Canvas)   */}
+        {/* Flush with bottom of hero on desktop, height min(78vh,820px) */}
         {/* ====================================================== */}
-        <div className="lg:hidden w-full flex justify-center -mb-3 mt-2">
-          <HeroCharacter className="w-[280px] sm:w-[320px] max-w-[85vw]" />
+        <div
+          ref={avatarContainerRef}
+          className="relative mx-auto mt-1 -mb-2 w-[min(82vw,310px)] sm:w-[min(70vw,360px)] lg:w-auto lg:h-[min(78vh,820px)] lg:max-w-[92vw] lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:bottom-[-3px] lg:m-0 z-10 pointer-events-none shrink-0"
+          style={{
+            aspectRatio: `${avatarRig.size[0]} / ${avatarRig.size[1]}`,
+          }}
+        >
+          {/* Soft Orange Disc Behind Her */}
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 w-[78%] aspect-square rounded-full bg-[#F79F15]/20 blur-md pointer-events-none"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 w-[94%] aspect-square rounded-full bg-[#F79F15]/12 blur-3xl pointer-events-none"
+          />
+
+          {/* Immediate LCP & Fallback <img> (resting pose) */}
+          <img
+            src={`/hero/${avatarRig.files.rest}`}
+            alt="Illustration of Muskan Kumari"
+            width={avatarRig.size[0]}
+            height={avatarRig.size[1]}
+            decoding="async"
+            fetchPriority="high"
+            draggable={false}
+            className={`relative z-10 w-full h-full object-contain select-none pointer-events-none block transition-opacity duration-300 ${
+              enableWebGLCanvas && hidePlaceholder ? "opacity-0" : "opacity-100"
+            }`}
+          />
+
+          {/* Lazy-Loaded R3F ShaderMaterial Canvas (fades in when textures are ready) */}
+          {enableWebGLCanvas && (
+            <div
+              aria-hidden="true"
+              className={`absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none ${
+                canvasReady ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <Suspense fallback={null}>
+                <HeroCanvas
+                  rig={avatarRig}
+                  containerRef={avatarContainerRef}
+                  isVisible={isVisible && preloaderComplete}
+                  shouldReduceMotion={!!shouldReduceMotion}
+                  onReady={handleCanvasReady}
+                />
+              </Suspense>
+            </div>
+          )}
         </div>
 
         {/* ====================================================== */}
         {/* LEFT COLUMN: Name, Pitch, Action Buttons, Socials      */}
         {/* ====================================================== */}
         <motion.div
-          initial={{ opacity: 0, x: -25 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, x: -25 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="flex flex-col items-center lg:items-start text-center lg:text-left gap-5 max-w-lg z-20 lg:pb-12"
+          className="relative flex flex-col items-center lg:items-start text-center lg:text-left gap-5 max-w-lg z-20 lg:pb-12"
         >
           {/* Headline with Bricolage Grotesque 800 */}
           <h1 className="font-heading font-black tracking-tight leading-[1.02] text-[#1A110A] text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl">
@@ -162,7 +266,7 @@ export default function Hero({ preloaderComplete = true }) {
               <a
                 href="#projects"
                 onClick={handleScrollToProjects}
-                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 min-h-[44px] rounded-full text-xs sm:text-sm font-bold bg-[#F79F15] text-[#1A110A] hover:bg-[#1A110A] hover:text-[#F5F3E7] shadow-md transition-all font-mono group"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 min-h-[44px] rounded-full text-xs sm:text-sm font-bold bg-[#F79F15] text-[#1A110A] hover:bg-[#1A110A] hover:text-[#F5F3E7] shadow-md transition-all font-mono group focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
               >
                 <span>View My Work</span>
                 <FiArrowRight className="transition-transform group-hover:translate-x-1 text-sm sm:text-base shrink-0" />
@@ -174,7 +278,7 @@ export default function Hero({ preloaderComplete = true }) {
                 href={personalInfo.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 min-h-[44px] rounded-full text-xs sm:text-sm font-semibold border border-[#1A110A] bg-[#FFFFFF] hover:bg-[#F8F5EE] text-[#1A110A] shadow-sm transition-all font-mono"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 min-h-[44px] rounded-full text-xs sm:text-sm font-semibold border border-[#1A110A] bg-[#FFFFFF] hover:bg-[#F8F5EE] text-[#1A110A] shadow-sm transition-all font-mono focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
               >
                 <span>Download Resume</span>
                 <FiDownload className="text-[#F79F15] text-sm sm:text-base shrink-0" />
@@ -194,7 +298,7 @@ export default function Hero({ preloaderComplete = true }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Muskan Kumari's GitHub profile"
-                  className="w-9 h-9 rounded-full bg-[#FFFFFF] border border-[#1A110A]/15 text-[#1A110A] hover:border-[#F79F15] hover:text-[#F79F15] shadow-sm flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-full bg-[#FFFFFF] border border-[#1A110A]/15 text-[#1A110A] hover:border-[#F79F15] hover:text-[#F79F15] shadow-sm flex items-center justify-center transition-all focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
                 >
                   <FiGithub className="text-sm" />
                 </a>
@@ -206,7 +310,7 @@ export default function Hero({ preloaderComplete = true }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Muskan Kumari's LinkedIn profile"
-                  className="w-9 h-9 rounded-full bg-[#FFFFFF] border border-[#1A110A]/15 text-[#1A110A] hover:border-[#F79F15] hover:text-[#F79F15] shadow-sm flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-full bg-[#FFFFFF] border border-[#1A110A]/15 text-[#1A110A] hover:border-[#F79F15] hover:text-[#F79F15] shadow-sm flex items-center justify-center transition-all focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
                 >
                   <FiLinkedin className="text-sm" />
                 </a>
@@ -218,7 +322,7 @@ export default function Hero({ preloaderComplete = true }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Muskan Kumari's LeetCode profile"
-                  className="w-9 h-9 rounded-full bg-[#FFFFFF] border border-[#1A110A]/15 text-[#1A110A] hover:border-[#F79F15] hover:text-[#F79F15] shadow-sm flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-full bg-[#FFFFFF] border border-[#1A110A]/15 text-[#1A110A] hover:border-[#F79F15] hover:text-[#F79F15] shadow-sm flex items-center justify-center transition-all focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2"
                 >
                   <SiLeetcode className="text-sm" />
                 </a>
@@ -228,20 +332,13 @@ export default function Hero({ preloaderComplete = true }) {
         </motion.div>
 
         {/* ====================================================== */}
-        {/* DESKTOP CENTER-BOTTOM: Illustrated Character (Cropped) */}
-        {/* ====================================================== */}
-        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 bottom-[-40px] xl:bottom-[-50px] w-[420px] xl:w-[480px] 2xl:w-[530px] pointer-events-auto z-10">
-          <HeroCharacter className="w-full" />
-        </div>
-
-        {/* ====================================================== */}
         {/* RIGHT COLUMN: Roles, Fact Chips & Scroll Cue           */}
         {/* ====================================================== */}
         <motion.div
-          initial={{ opacity: 0, x: 25 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, x: 25 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.25 }}
-          className="flex flex-col items-center lg:items-end text-center lg:text-right gap-6 max-w-sm z-20 lg:pb-12"
+          className="relative flex flex-col items-center lg:items-end text-center lg:text-right gap-6 max-w-sm z-20 lg:pb-12"
         >
           {/* Roles Block with Typewriter */}
           <div className="flex flex-col items-center lg:items-end gap-1.5">
@@ -277,7 +374,7 @@ export default function Hero({ preloaderComplete = true }) {
             type="button"
             onClick={handleScrollToAbout}
             aria-label="Scroll to explore about section"
-            className="flex flex-col items-center lg:items-end gap-1.5 cursor-pointer group pt-2 min-h-[44px] justify-center"
+            className="flex flex-col items-center lg:items-end gap-1.5 cursor-pointer group pt-2 min-h-[44px] justify-center focus-visible:outline-2 focus-visible:outline-[#1A110A] focus-visible:outline-offset-2 rounded-lg"
           >
             <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-[#6F6B60] group-hover:text-[#F79F15] transition-colors">
               Scroll to explore
